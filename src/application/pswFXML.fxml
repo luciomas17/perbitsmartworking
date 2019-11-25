@@ -88,6 +88,7 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Username:" />
@@ -181,6 +182,21 @@
                                     <Insets left="20.0" />
                                  </GridPane.margin>
                               </Text>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Smart working:" GridPane.rowIndex="8" />
+                              <Text fill="#86b225" strokeType="OUTSIDE" strokeWidth="0.0" text="←  Type your smart days count" GridPane.columnIndex="2" GridPane.rowIndex="8">
+                                 <font>
+                                    <Font name="System Italic" size="11.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets left="20.0" />
+                                 </GridPane.margin>
+                              </Text>
+                              <HBox alignment="CENTER_LEFT" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="8" GridPane.valignment="CENTER">
+                                 <children>
+                                    <TextField fx:id="txtSmartDays" maxWidth="100.0" style="-fx-border-color: #86b225; -fx-border-radius: 3;" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="days (in 2019)" />
+                                 </children>
+                              </HBox>
                            </children>
                            <VBox.margin>
                               <Insets left="10.0" top="10.0" />
@@ -423,9 +439,9 @@
                               </Text>
                            </children>
                         </GridPane>
-                        <ScrollPane hbarPolicy="NEVER" maxHeight="480.0" maxWidth="670.0" minHeight="480.0" style="-fx-border-color: #86b225;" vbarPolicy="ALWAYS">
+                        <ScrollPane hbarPolicy="NEVER" maxHeight="520.0" maxWidth="670.0" minHeight="520.0" style="-fx-border-color: #86b225;" vbarPolicy="ALWAYS">
                            <content>
-                              <TextArea fx:id="txtUsersOutput" minHeight="476.0" minWidth="655.0" />
+                              <TextArea fx:id="txtUsersOutput" editable="false" minHeight="516.0" minWidth="655.0" />
                            </content>
                            <VBox.margin>
                               <Insets top="2.0" />
@@ -563,9 +579,9 @@
                               </VBox>
                            </children>
                         </GridPane>
-                        <ScrollPane hbarPolicy="NEVER" maxHeight="480.0" maxWidth="670.0" minHeight="480.0" style="-fx-border-color: #86b225;" vbarPolicy="ALWAYS">
+                        <ScrollPane hbarPolicy="NEVER" maxHeight="520.0" maxWidth="670.0" minHeight="520.0" style="-fx-border-color: #86b225;" vbarPolicy="ALWAYS">
                            <content>
-                              <TextArea fx:id="txtDataOutput" minHeight="476.0" minWidth="655.0" />
+                              <TextArea fx:id="txtDataOutput" editable="false" minHeight="516.0" minWidth="655.0" />
                            </content>
                            <VBox.margin>
                               <Insets top="2.0" />

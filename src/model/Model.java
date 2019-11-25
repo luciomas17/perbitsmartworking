@@ -23,6 +23,7 @@ public class Model {
 	private final LatLng perbitLatLng;
 	private Map<String, String> divisionsResponsibleMap;
 	private List<String> fuelTypes, roles, emailDomains;
+	private boolean overwrite;
 	
 	public Model() {
 		this.userDao = new UserDao();
@@ -37,6 +38,7 @@ public class Model {
 		addItemsToRoles();
 		this.emailDomains = new ArrayList<>();
 		addItemsToEmailDomains();
+		this.overwrite = false;
 	}
 
 	private void addItemsToEmailDomains() {
@@ -254,5 +256,23 @@ public class Model {
 		List<String> result = new ArrayList<>();
 		result.add(this.divisionsResponsibleMap.get(division));
 		return result;
+	}
+
+	public LatLng getLatLngFromCity(String city) {
+		List<Double> temp = this.townDao.getLatLngFromCity(city);
+		return new LatLng(temp.get(0), temp.get(1));
+	}
+
+	public boolean isUserPresent(String username) {
+		User user = new User(username, null, null, null, null, null, null, null, 0, null, 0, false);
+		return this.userDao.isPresent(user);
+	}
+
+	public boolean isOverwrite() {
+		return overwrite;
+	}
+
+	public void setOverwrite(boolean overwrite) {
+		this.overwrite = overwrite;
 	}
 }

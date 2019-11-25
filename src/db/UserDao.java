@@ -75,8 +75,21 @@ public class UserDao {
 	}
 
 	public boolean editExistingUser(User user) {
-		String sql = "UPDATE users SET user = ?, name = ?, surname = ?, email, division = ?, responsible = ?, role = ?, "
-				+ "fuelType = ?, gramsOfCO2 = ?, province = ?, city = ?, lat = ?, lng = ?, smartDays = ?, consent = ?";
+		String sqlDelete = "DELETE FROM users WHERE user = ?";
+		try {
+			Connection conn = DBConnect.getConnection();
+			PreparedStatement st = conn.prepareStatement(sqlDelete);
+			st.setString(1, user.getUser());
+			st.execute();
+			conn.close();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+			return false;
+		}
+		
+		String sql = "INSERT INTO users (user, name, surname, email, division, responsible, role, "
+				+ "fuelType, gramsOfCO2, province, city, lat, lng, smartDays, consent) "
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		
 		try {
 			Connection conn = DBConnect.getConnection();
