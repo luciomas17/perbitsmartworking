@@ -5,8 +5,10 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -19,7 +21,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainController">
+<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
    <top>
       <Text fill="#86b225" strokeType="OUTSIDE" strokeWidth="0.0" text="Perbit Smart Working ~ CO2 emissions saved" BorderPane.alignment="CENTER">
          <font>
@@ -62,7 +64,7 @@
    <center>
       <TabPane style="-fx-border-color: #86b225; -fx-border-radius: 2;" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
-          <Tab closable="false" style="-fx-background-color: #86b225;" text="Users">
+          <Tab closable="false" style="-fx-background-color: #86b225;" text="Add new user">
                <content>
                   <VBox>
                      <children>
@@ -95,19 +97,19 @@
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Division:" GridPane.rowIndex="4" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Responsible:" GridPane.rowIndex="5" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Role:" GridPane.rowIndex="6" />
-                              <TextField fx:id="txtUser" maxWidth="100.0" style="-fx-border-color: #86b225; -fx-border-radius: 3;" GridPane.columnIndex="1" />
-                              <TextField fx:id="txtName" maxWidth="200.0" style="-fx-border-color: #86b225; -fx-border-radius: 3;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <TextField fx:id="txtSurname" maxWidth="200.0" style="-fx-border-color: #86b225; -fx-border-radius: 3;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <TextField fx:id="txtANUUser" maxWidth="100.0" style="-fx-border-color: #86b225; -fx-border-radius: 3;" GridPane.columnIndex="1" />
+                              <TextField fx:id="txtANUName" maxWidth="200.0" style="-fx-border-color: #86b225; -fx-border-radius: 3;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <TextField fx:id="txtANUSurname" maxWidth="200.0" style="-fx-border-color: #86b225; -fx-border-radius: 3;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                               <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                  <children>
-                                    <TextField fx:id="txtEmail" minWidth="200.0" style="-fx-border-color: #86b225; -fx-border-radius: 3;" />
+                                    <TextField fx:id="txtANUEmail" minWidth="200.0" style="-fx-border-color: #86b225; -fx-border-radius: 3;" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="\@" />
-                                    <ComboBox fx:id="boxEmail" style="-fx-background-color: #86b225;" />
+                                    <ComboBox fx:id="boxANUEmail" style="-fx-background-color: #86b225;" />
                                  </children>
                               </HBox>
-                              <ComboBox fx:id="boxDivision" onAction="#addItemsToBoxResponsible" style="-fx-background-color: #86b225;" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                              <ComboBox fx:id="boxResponsible" style="-fx-background-color: #86b225;" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                              <ComboBox fx:id="boxRole" style="-fx-background-color: #86b225;" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                              <ComboBox fx:id="boxANUDivision" onAction="#addItemsToANUBoxResponsible" style="-fx-background-color: #86b225;" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <ComboBox fx:id="boxANUResponsible" style="-fx-background-color: #86b225;" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                              <ComboBox fx:id="boxANURole" style="-fx-background-color: #86b225;" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                               <Text fill="#86b225" strokeType="OUTSIDE" strokeWidth="0.0" text="←  Type your username" GridPane.columnIndex="2">
                                  <font>
                                     <Font name="System Italic" size="11.0" />
@@ -167,8 +169,8 @@
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Domicile:" GridPane.rowIndex="7" />
                               <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
                                  <children>
-                                    <ComboBox fx:id="boxProvince" onAction="#addItemsToBoxCity" style="-fx-background-color: #86b225;" />
-                                    <ComboBox fx:id="boxCity" style="-fx-background-color: #86b225;" />
+                                    <ComboBox fx:id="boxANUProvince" onAction="#addItemsToANUBoxCity" style="-fx-background-color: #86b225;" />
+                                    <ComboBox fx:id="boxANUCity" style="-fx-background-color: #86b225;" />
                                  </children>
                               </HBox>
                               <Text fill="#86b225" strokeType="OUTSIDE" strokeWidth="0.0" text="←  Select the town where you live" GridPane.columnIndex="2" GridPane.rowIndex="7">
@@ -184,7 +186,7 @@
                               <Insets left="10.0" top="10.0" />
                            </VBox.margin>
                         </GridPane>
-                        <Text fill="#86b225" strokeType="OUTSIDE" strokeWidth="0.0" text="Identify your car" underline="true">
+                        <Text fill="#86b225" strokeType="OUTSIDE" strokeWidth="0.0" text="Characterize your car" underline="true">
                            <VBox.margin>
                               <Insets top="20.0" />
                            </VBox.margin>
@@ -206,7 +208,7 @@
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Fuel type:" />
                               <HBox alignment="CENTER_LEFT" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                  <children>
-                                    <TextField fx:id="txtCO2emissions" maxWidth="100.0" style="-fx-border-color: #86b225; -fx-border-radius: 3;" />
+                                    <TextField fx:id="txtANUCO2emissions" maxWidth="100.0" style="-fx-border-color: #86b225; -fx-border-radius: 3;" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="grams/km" />
                                     <Text fill="#86b225" strokeType="OUTSIDE" strokeWidth="0.0" text="(*)">
                                        <font>
@@ -223,7 +225,7 @@
                                     <Insets left="20.0" />
                                  </GridPane.margin>
                               </Text>
-                              <ComboBox fx:id="boxFuelType" style="-fx-background-color: #86b225;" GridPane.columnIndex="1" />
+                              <ComboBox fx:id="boxANUFuelType" style="-fx-background-color: #86b225;" GridPane.columnIndex="1" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CO₂ emissions:" GridPane.rowIndex="1" />
                               <VBox GridPane.columnIndex="2" GridPane.rowIndex="1">
                                  <children>
@@ -287,7 +289,7 @@
                               <Insets top="5.0" />
                            </VBox.margin>
                            <children>
-                              <CheckBox fx:id="boxConsent" mnemonicParsing="false" style="-fx-background-color: #86b225;" textFill="#86b225">
+                              <CheckBox fx:id="boxANUConsent" mnemonicParsing="false" textAlignment="CENTER" textFill="#86b225">
                                  <HBox.margin>
                                     <Insets left="105.0" />
                                  </HBox.margin>
@@ -305,12 +307,12 @@
                               <Insets top="30.0" />
                            </VBox.margin>
                            <children>
-                              <Button mnemonicParsing="false" onAction="#doUsersSubmit" style="-fx-background-color: #86b225;" text="Submit">
+                              <Button mnemonicParsing="false" onAction="#doANUSubmit" style="-fx-background-color: #86b225;" text="Submit">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Button>
-                              <Button mnemonicParsing="false" onAction="#doUsersReset" style="-fx-border-color: #86b225; -fx-border-radius: 3;" text="Reset">
+                              <Button mnemonicParsing="false" onAction="#doANUReset" style="-fx-border-color: #86b225; -fx-border-radius: 3;" text="Reset">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
@@ -324,15 +326,266 @@
                   </VBox>
                </content>
             </Tab>
+            <Tab style="-fx-background-color: #86b225;" text="Users">
+               <content>
+                  <VBox>
+                     <padding>
+                        <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
+                     </padding>
+                     <children>
+                        <GridPane alignment="CENTER" hgap="15.0" vgap="5.0">
+                          <columnConstraints>
+                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="300.0" minWidth="10.0" />
+                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="300.0" minWidth="10.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Text fill="#86b225" strokeType="OUTSIDE" strokeWidth="0.0" text="Find user by username" underline="true">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Text>
+                              <HBox alignment="CENTER" spacing="5.0" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                                 <children>
+                                    <TextField fx:id="txtUsersUser" maxWidth="100.0" style="-fx-border-color: #86b225; -fx-border-radius: 3;" />
+                                    <Button mnemonicParsing="false" onAction="#doUsersFindUserByUsername" style="-fx-background-color: #86b225;" text="Find">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                              <Text fill="#86b225" strokeType="OUTSIDE" strokeWidth="0.0" text="Filter by division" underline="true" GridPane.columnIndex="1">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Text>
+                              <HBox alignment="CENTER" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <children>
+                                    <ComboBox fx:id="boxUsersDivisions" style="-fx-background-color: #86b225;" />
+                                    <Button mnemonicParsing="false" onAction="#doUsersFilterByDivision" style="-fx-background-color: #86b225;" text="Filter">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </GridPane>
+                        <GridPane alignment="BOTTOM_CENTER" maxWidth="655.0">
+                          <columnConstraints>
+                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <VBox.margin>
+                              <Insets top="36.0" />
+                           </VBox.margin>
+                           <children>
+                              <Text fill="#86b225" strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
+                                 <font>
+                                    <Font name="System Bold Italic" size="12.0" />
+                                 </font>
+                              </Text>
+                              <Text fill="#86b225" strokeType="OUTSIDE" strokeWidth="0.0" text="Division" GridPane.columnIndex="1">
+                                 <font>
+                                    <Font name="System Bold Italic" size="12.0" />
+                                 </font>
+                              </Text>
+                              <Text fill="#86b225" strokeType="OUTSIDE" strokeWidth="0.0" text="Responsible" GridPane.columnIndex="2">
+                                 <font>
+                                    <Font name="System Bold Italic" size="12.0" />
+                                 </font>
+                              </Text>
+                              <Text fill="#86b225" strokeType="OUTSIDE" strokeWidth="0.0" text="Role" GridPane.columnIndex="3">
+                                 <font>
+                                    <Font name="System Bold Italic" size="12.0" />
+                                 </font>
+                              </Text>
+                              <Text fill="#86b225" strokeType="OUTSIDE" strokeWidth="0.0" text="Domicile" GridPane.columnIndex="4">
+                                 <font>
+                                    <Font name="System Bold Italic" size="12.0" />
+                                 </font>
+                              </Text>
+                              <Text fill="#86b225" strokeType="OUTSIDE" strokeWidth="0.0" text="Fuel Type" GridPane.columnIndex="5">
+                                 <font>
+                                    <Font name="System Bold Italic" size="12.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </GridPane>
+                        <ScrollPane hbarPolicy="NEVER" maxHeight="480.0" maxWidth="670.0" minHeight="480.0" style="-fx-border-color: #86b225;" vbarPolicy="ALWAYS">
+                           <content>
+                              <TextArea fx:id="txtUsersOutput" minHeight="476.0" minWidth="655.0" />
+                           </content>
+                           <VBox.margin>
+                              <Insets top="2.0" />
+                           </VBox.margin>
+                        </ScrollPane>
+                     </children>
+                  </VBox>
+               </content>
+            </Tab>
           <Tab closable="false" style="-fx-background-color: #86b225;" text="Data">
                <content>
                   <VBox>
                      <padding>
                         <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
-                     </padding></VBox>
+                     </padding>
+                     <children>
+                        <GridPane alignment="CENTER" hgap="5.0" vgap="5.0">
+                           <columnConstraints>
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="250.0" minWidth="10.0" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="250.0" minWidth="10.0" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="250.0" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="250.0" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="250.0" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+                              <Text fill="#86b225" strokeType="OUTSIDE" strokeWidth="0.0" text="Find user by username" underline="true">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Text>
+                              <HBox alignment="CENTER" spacing="5.0" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                                 <children>
+                                    <TextField fx:id="txtDataUser" maxWidth="100.0" style="-fx-border-color: #86b225; -fx-border-radius: 3;" />
+                                    <Button mnemonicParsing="false" onAction="#doDataFindUserByUsername" style="-fx-background-color: #86b225;" text="Find">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                              <Text fill="#86b225" strokeType="OUTSIDE" strokeWidth="0.0" text="Order by" underline="true" GridPane.columnIndex="1" GridPane.columnSpan="2147483647">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Text>
+                              <Button mnemonicParsing="false" onAction="#doDataFilterByKmsSavedADay" style="-fx-border-color: #86b225; -fx-border-radius: 3;" text="Kms saved a day" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Button>
+                              <Button mnemonicParsing="false" onAction="#doDataFilterByCO2SavedADay" style="-fx-border-color: #86b225; -fx-border-radius: 3;" text="CO₂ saved a day" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Button>
+                              <Button mnemonicParsing="false" onAction="#doDataFilterByKmsSavedAYear" style="-fx-border-color: #86b225; -fx-border-radius: 3;" text="Kms saved a year" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Button>
+                              <Button mnemonicParsing="false" onAction="#doDataFilterByCO2SavedAYear" style="-fx-border-color: #86b225; -fx-border-radius: 3;" text="CO₂ saved a year" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </GridPane>
+                        <GridPane alignment="BOTTOM_CENTER" maxWidth="655.0">
+                           <columnConstraints>
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints valignment="BOTTOM" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin>
+                           <children>
+                              <Text fill="#86b225" strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
+                                 <font>
+                                    <Font name="System Bold Italic" size="12.0" />
+                                 </font>
+                              </Text>
+                              <Text fill="#86b225" strokeType="OUTSIDE" strokeWidth="0.0" text="Smart days" GridPane.columnIndex="1">
+                                 <font>
+                                    <Font name="System Bold Italic" size="12.0" />
+                                 </font>
+                              </Text>
+                              <Text fill="#86b225" strokeType="OUTSIDE" strokeWidth="0.0" text="Kms saved a day" GridPane.columnIndex="2">
+                                 <font>
+                                    <Font name="System Bold Italic" size="12.0" />
+                                 </font>
+                              </Text>
+                              <VBox alignment="CENTER" GridPane.columnIndex="3">
+                                 <children>
+                                    <Text fill="#86b225" strokeType="OUTSIDE" strokeWidth="0.0" text="Grams of CO₂">
+                                       <font>
+                                          <Font name="System Bold Italic" size="12.0" />
+                                       </font>
+                                    </Text>
+                                    <Text fill="#86b225" strokeType="OUTSIDE" strokeWidth="0.0" text="saved a day">
+                                       <font>
+                                          <Font name="System Bold Italic" size="12.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                              </VBox>
+                              <Text fill="#86b225" strokeType="OUTSIDE" strokeWidth="0.0" text="Kms saved a year" GridPane.columnIndex="4">
+                                 <font>
+                                    <Font name="System Bold Italic" size="12.0" />
+                                 </font>
+                              </Text>
+                              <VBox alignment="CENTER" GridPane.columnIndex="5">
+                                 <children>
+                                    <Text fill="#86b225" strokeType="OUTSIDE" strokeWidth="0.0" text="Grams of CO₂">
+                                       <font>
+                                          <Font name="System Bold Italic" size="12.0" />
+                                       </font>
+                                    </Text>
+                                    <Text fill="#86b225" strokeType="OUTSIDE" strokeWidth="0.0" text="saved a year">
+                                       <font>
+                                          <Font name="System Bold Italic" size="12.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </GridPane>
+                        <ScrollPane hbarPolicy="NEVER" maxHeight="480.0" maxWidth="670.0" minHeight="480.0" style="-fx-border-color: #86b225;" vbarPolicy="ALWAYS">
+                           <content>
+                              <TextArea fx:id="txtDataOutput" minHeight="476.0" minWidth="655.0" />
+                           </content>
+                           <VBox.margin>
+                              <Insets top="2.0" />
+                           </VBox.margin>
+                        </ScrollPane>
+                     </children>
+                  </VBox>
                </content>
             </Tab>
-            <Tab style="-fx-background-color: #86b225;" text="Analysis" />
+            <Tab style="-fx-background-color: #86b225;" text="Analysis">
+               <content>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Work in progress..." />
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
+                     </padding>
+                  </VBox>
+               </content></Tab>
         </tabs>
       </TabPane>
    </center>

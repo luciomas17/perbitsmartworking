@@ -21,18 +21,34 @@ public class Model {
 	private DataDao dataDao;
 	private TownDao townDao;
 	private final LatLng perbitLatLng;
-	private List<String> fuelTypes;
 	private Map<String, String> divisionsResponsibleMap;
+	private List<String> fuelTypes, roles, emailDomains;
 	
 	public Model() {
 		this.userDao = new UserDao();
 		this.dataDao = new DataDao();
 		this.townDao = new TownDao();
 		this.perbitLatLng = new LatLng(45.013503,7.620564);
-		this.fuelTypes = new ArrayList<>();
-		addItemsToFuelTypes();
 		this.divisionsResponsibleMap = new HashMap<>();
 		addItemsToDivisionsResponsibleMap();
+		this.fuelTypes = new ArrayList<>();
+		addItemsToFuelTypes();
+		this.roles = new ArrayList<>();
+		addItemsToRoles();
+		this.emailDomains = new ArrayList<>();
+		addItemsToEmailDomains();
+	}
+
+	private void addItemsToEmailDomains() {
+		this.emailDomains.add("bosch.com");
+		this.emailDomains.add("it.bosch.com");
+	}
+
+	private void addItemsToRoles() {
+		this.roles.add("External");
+		this.roles.add("Sales");
+		this.roles.add("Logistics");
+		this.roles.add("IT partner");
 	}
 
 	private void addItemsToDivisionsResponsibleMap() {
@@ -208,5 +224,35 @@ public class Model {
 		public int compare(Data d1, Data d2) {
 			return (int) (d1.getGramsOfCO2SavedAYear()-d2.getGramsOfCO2SavedAYear());
 		}
+	}
+
+	public List<String> getDivisions() {
+		return new ArrayList<>(this.divisionsResponsibleMap.keySet());
+	}
+
+	public List<String> getFuelTypes() {
+		return this.fuelTypes;
+	}
+
+	public List<String> getProvinces() {
+		return this.townDao.getProvincesList();
+	}
+
+	public List<String> getRoles() {
+		return this.roles;
+	}
+
+	public List<String> getEmailDomains() {
+		return this.emailDomains;
+	}
+
+	public List<String> getCitiesFromProvince(String province) {
+		return this.townDao.getCitiesFromProvince(province);
+	}
+
+	public List<String> getResponsibleFromDivision(String division) {
+		List<String> result = new ArrayList<>();
+		result.add(this.divisionsResponsibleMap.get(division));
+		return result;
 	}
 }
