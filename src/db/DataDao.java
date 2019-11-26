@@ -120,4 +120,63 @@ public class DataDao {
 		}
 	}
 
+	public Data getDataFromUsername(String username) {
+		String sql = "SELECT * FROM data d, users u WHERE d.user = u.user AND u.user = ?";
+		Data result = null;
+		
+		try {
+			Connection conn = DBConnect.getConnection();
+			PreparedStatement st = conn.prepareStatement(sql);	
+			st.setString(1, username);
+			ResultSet res = st.executeQuery();
+			
+			if(res.next()) {
+				try {
+					String userString = res.getString("d.user");
+					double kmsSavedADay = res.getDouble("d.kmsSavedADay");
+					double gramsOfCO2SavedADay = res.getDouble("d.gramsOfCO2SavedADay");
+					double kmsSavedAYear = res.getDouble("d.kmsSavedAYear");
+					double gramsOfCO2SavedAYear = res.getDouble("d.gramsOfCO2SavedAYear");
+					
+					String name = res.getString("u.name");
+					String surname = res.getString("u.surname");
+					String email = res.getString("u.email");
+					String division = res.getString("u.division");
+					String responsible = res.getString("u.responsible");
+					String role = res.getString("u.role");
+					String fuelType = res.getString("u.fuelType");
+					double gramsOfCO2 = res.getDouble("u.gramsOfCO2");
+					
+					String province = res.getString("u.province");
+					String city = res.getString("u.city");
+					double lat = res.getDouble("u.lat");
+					double lng = res.getDouble("u.lng");
+					LatLng latLng = new LatLng(lat, lng);
+					Town domicile = new Town(province, city, latLng);
+					
+					int smartDays = res.getInt("u.smartDays");
+					
+					int consentInt = res.getInt("u.consent");
+					boolean consent = false;
+					if(consentInt == 1)
+						consent = true;
+					
+					User user = new User(userString, name, surname, email, division, responsible, role, 
+							fuelType, gramsOfCO2, domicile, smartDays, consent);
+						
+					result = new Data(user, kmsSavedADay, gramsOfCO2SavedADay, kmsSavedAYear, gramsOfCO2SavedAYear);
+				} catch (Throwable t) {
+					t.printStackTrace();
+				}
+			}
+			
+			conn.close();
+			return result;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 }

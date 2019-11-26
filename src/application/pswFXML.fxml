@@ -349,37 +349,41 @@
                         <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
                      </padding>
                      <children>
-                        <GridPane alignment="CENTER" hgap="15.0" vgap="5.0">
+                        <GridPane alignment="CENTER" hgap="15.0" prefWidth="616.0" vgap="5.0">
                           <columnConstraints>
-                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="300.0" minWidth="10.0" />
-                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="300.0" minWidth="10.0" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="300.0" minWidth="10.0" prefWidth="79.0" />
+                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="300.0" minWidth="10.0" prefWidth="238.0" />
+                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="326.0" minWidth="10.0" prefWidth="326.0" />
                           </columnConstraints>
                           <rowConstraints>
                             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Text fill="#86b225" strokeType="OUTSIDE" strokeWidth="0.0" text="Find user by username" underline="true">
+                              <Text fill="#86b225" strokeType="OUTSIDE" strokeWidth="0.0" text="Find user by username" underline="true" GridPane.columnIndex="1">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Text>
-                              <HBox alignment="CENTER" spacing="5.0" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                              <HBox alignment="BOTTOM_CENTER" prefHeight="36.0" prefWidth="246.0" spacing="5.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                                  <children>
                                     <TextField fx:id="txtUsersUser" maxWidth="100.0" style="-fx-border-color: #86b225; -fx-border-radius: 3;" />
-                                    <Button mnemonicParsing="false" onAction="#doUsersFindUserByUsername" style="-fx-background-color: #86b225;" text="Find">
+                                    <Button minHeight="26.0" mnemonicParsing="false" onAction="#doUsersFindUserByUsername" style="-fx-background-color: #86b225;" text="Find">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
+                                       <HBox.margin>
+                                          <Insets bottom="1.0" />
+                                       </HBox.margin>
                                     </Button>
                                  </children>
                               </HBox>
-                              <Text fill="#86b225" strokeType="OUTSIDE" strokeWidth="0.0" text="Filter by division" underline="true" GridPane.columnIndex="1">
+                              <Text fill="#86b225" strokeType="OUTSIDE" strokeWidth="0.0" text="Filter by division" underline="true" GridPane.columnIndex="2">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Text>
-                              <HBox alignment="CENTER" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                              <HBox alignment="BOTTOM_CENTER" prefHeight="36.0" prefWidth="314.0" spacing="5.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                  <children>
                                     <ComboBox fx:id="boxUsersDivisions" style="-fx-background-color: #86b225;" />
                                     <Button mnemonicParsing="false" onAction="#doUsersFilterByDivision" style="-fx-background-color: #86b225;" text="Filter">
@@ -389,22 +393,37 @@
                                     </Button>
                                  </children>
                               </HBox>
+                              <Button mnemonicParsing="false" onAction="#doUsersReload" style="-fx-border-color: #86b225; -fx-border-radius: 3;" GridPane.rowIndex="1">
+                                 <graphic>
+                                    <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../img/reload.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <padding>
+                                    <Insets bottom="7.0" left="10.0" right="10.0" top="7.0" />
+                                 </padding>
+                                 <GridPane.margin>
+                                    <Insets left="2.0" />
+                                 </GridPane.margin>
+                              </Button>
                            </children>
                         </GridPane>
-                        <GridPane alignment="BOTTOM_CENTER" maxWidth="655.0">
+                        <GridPane alignment="BOTTOM_LEFT" maxWidth="655.0">
                           <columnConstraints>
-                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="93.0" />
+                            <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="102.0" minWidth="10.0" prefWidth="97.0" />
+                              <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="127.0" minWidth="10.0" prefWidth="124.0" />
+                              <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="104.0" minWidth="10.0" prefWidth="82.0" />
+                              <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="164.0" minWidth="10.0" prefWidth="159.0" />
+                              <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="102.0" minWidth="10.0" prefWidth="97.0" />
                           </columnConstraints>
                           <rowConstraints>
                             <RowConstraints vgrow="SOMETIMES" />
                           </rowConstraints>
                            <VBox.margin>
-                              <Insets top="36.0" />
+                              <Insets left="7.0" top="36.0" />
                            </VBox.margin>
                            <children>
                               <Text fill="#86b225" strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
@@ -460,73 +479,95 @@
                      <children>
                         <GridPane alignment="CENTER" hgap="5.0" vgap="5.0">
                            <columnConstraints>
-                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="250.0" minWidth="10.0" />
-                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="250.0" minWidth="10.0" />
-                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="250.0" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="250.0" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="250.0" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="250.0" minWidth="10.0" prefWidth="79.0" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="284.0" minWidth="10.0" prefWidth="261.0" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="250.0" minWidth="10.0" prefWidth="78.0" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="250.0" minWidth="10.0" prefWidth="74.0" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="250.0" minWidth="10.0" prefWidth="80.0" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="250.0" minWidth="10.0" prefWidth="78.0" />
                            </columnConstraints>
                            <rowConstraints>
                               <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" valignment="BOTTOM" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <Text fill="#86b225" strokeType="OUTSIDE" strokeWidth="0.0" text="Find user by username" underline="true">
+                              <Text fill="#86b225" strokeType="OUTSIDE" strokeWidth="0.0" text="Find data by username" underline="true" GridPane.columnIndex="1">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
+                                 <GridPane.margin>
+                                    <Insets left="1.0" />
+                                 </GridPane.margin>
                               </Text>
-                              <HBox alignment="CENTER" spacing="5.0" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                              <HBox alignment="BOTTOM_CENTER" prefHeight="36.0" prefWidth="138.0" spacing="5.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                                  <children>
                                     <TextField fx:id="txtDataUser" maxWidth="100.0" style="-fx-border-color: #86b225; -fx-border-radius: 3;" />
-                                    <Button mnemonicParsing="false" onAction="#doDataFindUserByUsername" style="-fx-background-color: #86b225;" text="Find">
+                                    <Button minHeight="26.0" mnemonicParsing="false" onAction="#doDataFindUserByUsername" prefWidth="41.0" style="-fx-background-color: #86b225;" text="Find">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
+                                       <HBox.margin>
+                                          <Insets bottom="1.0" />
+                                       </HBox.margin>
                                     </Button>
                                  </children>
                               </HBox>
-                              <Text fill="#86b225" strokeType="OUTSIDE" strokeWidth="0.0" text="Order by" underline="true" GridPane.columnIndex="1" GridPane.columnSpan="2147483647">
+                              <Text fill="#86b225" strokeType="OUTSIDE" strokeWidth="0.0" text="Order by" underline="true" GridPane.columnIndex="2" GridPane.columnSpan="2147483647">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Text>
-                              <Button mnemonicParsing="false" onAction="#doDataFilterByKmsSavedADay" style="-fx-border-color: #86b225; -fx-border-radius: 3;" text="Kms saved a day" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                              <Button minHeight="27.0" mnemonicParsing="false" onAction="#doDataFilterByKmsSavedADay" prefWidth="76.0" style="-fx-border-color: #86b225; -fx-border-radius: 3;" text="Kms a day" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Button>
-                              <Button mnemonicParsing="false" onAction="#doDataFilterByCO2SavedADay" style="-fx-border-color: #86b225; -fx-border-radius: 3;" text="CO₂ saved a day" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                              <Button minHeight="27.0" mnemonicParsing="false" onAction="#doDataFilterByCO2SavedADay" prefWidth="73.0" style="-fx-border-color: #86b225; -fx-border-radius: 3;" text="CO₂ a day" GridPane.columnIndex="3" GridPane.rowIndex="1">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Button>
-                              <Button mnemonicParsing="false" onAction="#doDataFilterByKmsSavedAYear" style="-fx-border-color: #86b225; -fx-border-radius: 3;" text="Kms saved a year" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                              <Button minHeight="27.0" mnemonicParsing="false" onAction="#doDataFilterByKmsSavedAYear" prefWidth="80.0" style="-fx-border-color: #86b225; -fx-border-radius: 3;" text="Kms a year" GridPane.columnIndex="4" GridPane.rowIndex="1">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Button>
-                              <Button mnemonicParsing="false" onAction="#doDataFilterByCO2SavedAYear" style="-fx-border-color: #86b225; -fx-border-radius: 3;" text="CO₂ saved a year" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                              <Button minHeight="27.0" mnemonicParsing="false" onAction="#doDataFilterByCO2SavedAYear" prefWidth="77.0" style="-fx-border-color: #86b225; -fx-border-radius: 3;" text="CO₂ a year" GridPane.columnIndex="5" GridPane.rowIndex="1">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
+                              </Button>
+                              <Button mnemonicParsing="false" onAction="#doDataReload" style="-fx-border-color: #86b225; -fx-border-radius: 3;" GridPane.rowIndex="1">
+                                 <graphic>
+                                    <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../img/reload.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <padding>
+                                    <Insets bottom="7.0" left="10.0" right="10.0" top="7.0" />
+                                 </padding>
+                                 <GridPane.margin>
+                                    <Insets left="2.0" />
+                                 </GridPane.margin>
                               </Button>
                            </children>
                         </GridPane>
                         <GridPane alignment="BOTTOM_CENTER" maxWidth="655.0">
                            <columnConstraints>
-                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="93.0" />
+                              <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="126.0" minWidth="10.0" prefWidth="79.0" />
+                              <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" prefWidth="120.0" />
+                              <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" prefWidth="120.0" />
+                              <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" prefWidth="120.0" />
+                              <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" prefWidth="120.0" />
                            </columnConstraints>
                            <rowConstraints>
                               <RowConstraints valignment="BOTTOM" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <VBox.margin>
-                              <Insets top="20.0" />
+                              <Insets left="7.0" top="20.0" />
                            </VBox.margin>
                            <children>
                               <Text fill="#86b225" strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
@@ -544,7 +585,7 @@
                                     <Font name="System Bold Italic" size="12.0" />
                                  </font>
                               </Text>
-                              <VBox alignment="CENTER" GridPane.columnIndex="3">
+                              <VBox alignment="BOTTOM_LEFT" GridPane.columnIndex="3" GridPane.halignment="LEFT">
                                  <children>
                                     <Text fill="#86b225" strokeType="OUTSIDE" strokeWidth="0.0" text="Grams of CO₂">
                                        <font>
@@ -563,7 +604,7 @@
                                     <Font name="System Bold Italic" size="12.0" />
                                  </font>
                               </Text>
-                              <VBox alignment="CENTER" GridPane.columnIndex="5">
+                              <VBox alignment="BOTTOM_LEFT" GridPane.columnIndex="5">
                                  <children>
                                     <Text fill="#86b225" strokeType="OUTSIDE" strokeWidth="0.0" text="Grams of CO₂">
                                        <font>

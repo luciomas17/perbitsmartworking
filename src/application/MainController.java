@@ -2,6 +2,7 @@ package application;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -17,7 +18,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import model.Data;
 import model.Model;
+import model.User;
 
 public class MainController {
 	
@@ -500,37 +503,195 @@ public class MainController {
 
     @FXML
     void doDataFilterByCO2SavedADay(ActionEvent event) {
-
+    	this.txtDataOutput.clear();
+    	List<Data> result = model.getDataListOrderedByGramsOfCO2SavedADay();
+    	StringBuilder sb = this.reformatData(result);
+    	this.txtDataOutput.appendText(sb.toString());
     }
 
     @FXML
     void doDataFilterByCO2SavedAYear(ActionEvent event) {
-
+    	this.txtDataOutput.clear();
+    	List<Data> result = model.getDataListOrderedByGramsOfCO2SavedAYear();
+    	StringBuilder sb = this.reformatData(result);
+    	this.txtDataOutput.appendText(sb.toString());
     }
 
     @FXML
     void doDataFilterByKmsSavedADay(ActionEvent event) {
-
+    	this.txtDataOutput.clear();
+    	List<Data> result = model.getDataListOrderedByKmsSavedADay();
+    	StringBuilder sb = this.reformatData(result);
+    	this.txtDataOutput.appendText(sb.toString());
     }
 
     @FXML
     void doDataFilterByKmsSavedAYear(ActionEvent event) {
-
+    	this.txtDataOutput.clear();
+    	List<Data> result = model.getDataListOrderedByKmsSavedAYear();
+    	StringBuilder sb = this.reformatData(result);
+    	this.txtDataOutput.appendText(sb.toString());
     }
 
     @FXML
     void doDataFindUserByUsername(ActionEvent event) {
-
+    	String user = this.txtDataUser.getText().toUpperCase();
+    	
+    	if(user.equals("")) {
+    		try {
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("dialogFXML.fxml"));
+				BorderPane root = loader.load();
+				DialogController controller = loader.getController();
+				controller.setTxtDialog("Type an username please.");
+				Parent content = root;
+				Scene scene = new Scene(content);
+				Stage window = new Stage();
+				window.setScene(scene);
+				window.show();
+				return;
+	
+			} catch (IOException e) {
+				e.printStackTrace();
+			} 
+    	}
+    	
+    	Data result = model.getDataFromUsername(user);
+    	if(result == null) {
+    		try {
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("dialogFXML.fxml"));
+				BorderPane root = loader.load();
+				DialogController controller = loader.getController();
+				controller.setTxtDialog(user + " not found.");
+				Parent content = root;
+				Scene scene = new Scene(content);
+				Stage window = new Stage();
+				window.setScene(scene);
+				window.show();
+				return;
+	
+			} catch (IOException e) {
+				e.printStackTrace();
+			} 
+    	}
+    	else {
+    		this.txtDataOutput.clear();
+	    	List<Data> temp = new ArrayList<>();
+	    	temp.add(result);
+	    	StringBuilder sb = this.reformatData(temp);
+	    	this.txtDataOutput.appendText(sb.toString());
+    	}
+    }
+    
+    @FXML
+    void doDataReload(ActionEvent event) {
+    	this.txtDataOutput.clear();
+    	this.addItemsToTxtDataOutput();
+    	
+    	this.txtDataUser.clear();
+    }
+    
+    @FXML
+    void doUsersReload(ActionEvent event) {
+    	this.txtUsersOutput.clear();
+    	this.addItemsToTxtUsersOutput();
+    	
+    	this.txtUsersUser.clear();
+    	this.boxUsersDivisions.getSelectionModel().clearSelection();
     }
 
     @FXML
     void doUsersFilterByDivision(ActionEvent event) {
-
+    	if(this.boxUsersDivisions.getSelectionModel().isEmpty()) {
+    		try {
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("dialogFXML.fxml"));
+				BorderPane root = loader.load();
+				DialogController controller = loader.getController();
+				controller.setTxtDialog("Select a division please.");
+				Parent content = root;
+				Scene scene = new Scene(content);
+				Stage window = new Stage();
+				window.setScene(scene);
+				window.show();
+				return;
+	
+			} catch (IOException e) {
+				e.printStackTrace();
+			} 
+    	}
+    	
+    	String division = this.boxUsersDivisions.getSelectionModel().getSelectedItem();
+    	List<User> result = model.getUsersListFilteredByDivision(division);
+    	if(result.isEmpty()) {
+    		try {
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("dialogFXML.fxml"));
+				BorderPane root = loader.load();
+				DialogController controller = loader.getController();
+				controller.setTxtDialog("No user found for " + division + " division.");
+				Parent content = root;
+				Scene scene = new Scene(content);
+				Stage window = new Stage();
+				window.setScene(scene);
+				window.show();
+				return;
+	
+			} catch (IOException e) {
+				e.printStackTrace();
+			} 
+    	}
+    	else {
+    		this.txtUsersOutput.clear();
+	    	StringBuilder sb = this.reformatUsers(result);
+	    	this.txtUsersOutput.appendText(sb.toString());
+    	}
     }
 
     @FXML
     void doUsersFindUserByUsername(ActionEvent event) {
-
+    	String user = this.txtUsersUser.getText().toUpperCase();
+    	
+    	if(user.equals("")) {
+    		try {
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("dialogFXML.fxml"));
+				BorderPane root = loader.load();
+				DialogController controller = loader.getController();
+				controller.setTxtDialog("Type an username please.");
+				Parent content = root;
+				Scene scene = new Scene(content);
+				Stage window = new Stage();
+				window.setScene(scene);
+				window.show();
+				return;
+	
+			} catch (IOException e) {
+				e.printStackTrace();
+			} 
+    	}
+    	
+    	User result = model.getUserFromUsername(user);
+    	if(result == null) {
+    		try {
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("dialogFXML.fxml"));
+				BorderPane root = loader.load();
+				DialogController controller = loader.getController();
+				controller.setTxtDialog(user + " not found.");
+				Parent content = root;
+				Scene scene = new Scene(content);
+				Stage window = new Stage();
+				window.setScene(scene);
+				window.show();
+				return;
+	
+			} catch (IOException e) {
+				e.printStackTrace();
+			} 
+    	}
+    	else {
+    		this.txtUsersOutput.clear();
+	    	List<User> temp = new ArrayList<>();
+	    	temp.add(result);
+	    	StringBuilder sb = this.reformatUsers(temp);
+	    	this.txtUsersOutput.appendText(sb.toString());
+    	}
     }
     
     public void setModel(Model model) {
@@ -541,9 +702,65 @@ public class MainController {
     	addItemsToBoxANUProvince();
     	addItemsToBoxANUFuelType();
     	addItemsToBoxUsersDivisions();
+    	addItemsToTxtUsersOutput();
+    	addItemsToTxtDataOutput();
+    }
+    
+    private StringBuilder reformatUsers(List<User> users) {
+    	StringBuilder result = new StringBuilder();
+    	for(User u : users) {
+    		result.append(String.format("%-19s ", u.getUser()));
+    		result.append(String.format("%-24s ", u.getDivision()));
+    		result.append(String.format("%-34s ", u.getResponsible()));
+    		result.append(String.format("%-19s ", u.getRole()));
+    		result.append(String.format("%-40s ", u.getDomicile()));
+    		result.append(String.format("%-10s ", u.getFuelType()));
+    		result.append("\n");
+    	}
+    	
+    	return result;
+    }
+    
+    private StringBuilder reformatData(List<Data> data) {
+    	StringBuilder result = new StringBuilder();
+    	for(Data d : data) {
+    		result.append(String.format("%-19s ", d.getUser().getUser()));
+    		result.append(String.format("%-22d ", d.getUser().getSmartDays()));
+    		result.append(String.format("%-32.2f ", d.getKmsSavedADay()));
+    		result.append(String.format("%-30.2f ", d.getGramsOfCO2SavedADay()));
+    		result.append(String.format("%-31.2f ", d.getKmsSavedAYear()));
+    		result.append(String.format("%-20.2f ", d.getGramsOfCO2SavedAYear()));
+    		result.append("\n");
+    	}
+    	
+    	return result;
     }
 
-    private void addItemsToBoxUsersDivisions() {
+    private void addItemsToTxtDataOutput() {
+    	StringBuilder sb = new StringBuilder();
+		List<Data> data = model.getDataList();
+		
+		if(data.isEmpty())
+			sb.append("No data found.");
+		else 
+			sb = reformatData(data);
+		
+		this.txtDataOutput.appendText(sb.toString());
+	}
+
+	private void addItemsToTxtUsersOutput() {
+		StringBuilder sb = new StringBuilder();
+		List<User> users = model.getUsersList();
+		
+		if(users.isEmpty())
+			sb.append("No user found.");
+		else
+			sb = reformatUsers(users);
+		
+		this.txtUsersOutput.appendText(sb.toString());
+	}
+
+	private void addItemsToBoxUsersDivisions() {
 		List<String> temp = model.getDivisions();
 		Collections.sort(temp);
 		temp.add("Other");

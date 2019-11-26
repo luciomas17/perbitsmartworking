@@ -195,38 +195,19 @@ public class Model {
 		return temp;
 	}
 	
-	
-	
-	
-	// COMPARATORS
-	
-	public class UserComparatorByUser implements Comparator<User> {
-		@Override
-		public int compare(User u1, User u2) {
-			return u1.getUser().compareTo(u2.getUser());
-		}
+	public List<Data> getDataListOrderedByKmsSavedADay() {
+		List<Data> temp = dataDao.getDataList();
+		Collections.sort(temp, new DataComparatorByKmsSavedADay());
+		return temp;
 	}
 	
-	public class DataComparatorByUser implements Comparator<Data> {
-		@Override
-		public int compare(Data d1, Data d2) {
-			return d1.getUser().getUser().compareTo(d2.getUser().getUser());
-		}
+	public List<Data> getDataListOrderedByKmsSavedAYear() {
+		List<Data> temp = dataDao.getDataList();
+		Collections.sort(temp, new DataComparatorByKmsSavedAYear());
+		return temp;
 	}
 	
-	public class DataComparatorByGramsOfCO2SavedADay implements Comparator<Data> {
-		@Override
-		public int compare(Data d1, Data d2) {
-			return (int) (d1.getGramsOfCO2SavedADay()-d2.getGramsOfCO2SavedADay());
-		}
-	}
-	
-	public class DataComparatorByGramsOfCO2SavedAYear implements Comparator<Data> {
-		@Override
-		public int compare(Data d1, Data d2) {
-			return (int) (d1.getGramsOfCO2SavedAYear()-d2.getGramsOfCO2SavedAYear());
-		}
-	}
+
 
 	public List<String> getDivisions() {
 		return new ArrayList<>(this.divisionsResponsibleMap.keySet());
@@ -275,4 +256,59 @@ public class Model {
 	public void setOverwrite(boolean overwrite) {
 		this.overwrite = overwrite;
 	}
+
+	public User getUserFromUsername(String user) {
+		return this.userDao.getUserFromUsername(user);
+	}
+
+	public Data getDataFromUsername(String user) {
+		return this.dataDao.getDataFromUsername(user);
+	}
+
+	
+	
+	// COMPARATORS
+	
+	public class UserComparatorByUser implements Comparator<User> {
+		@Override
+		public int compare(User u1, User u2) {
+			return u1.getUser().compareTo(u2.getUser());
+		}
+	}
+	
+	public class DataComparatorByUser implements Comparator<Data> {
+		@Override
+		public int compare(Data d1, Data d2) {
+			return d1.getUser().getUser().compareTo(d2.getUser().getUser());
+		}
+	}
+	
+	public class DataComparatorByGramsOfCO2SavedADay implements Comparator<Data> {
+		@Override
+		public int compare(Data d1, Data d2) {
+			return (int) (d1.getGramsOfCO2SavedADay()-d2.getGramsOfCO2SavedADay());
+		}
+	}
+	
+	public class DataComparatorByGramsOfCO2SavedAYear implements Comparator<Data> {
+		@Override
+		public int compare(Data d1, Data d2) {
+			return (int) (d1.getGramsOfCO2SavedAYear()-d2.getGramsOfCO2SavedAYear());
+		}
+	}
+	
+	public class DataComparatorByKmsSavedADay implements Comparator<Data> {
+		@Override
+		public int compare(Data d1, Data d2) {
+			return (int) (d1.getKmsSavedADay()-d2.getKmsSavedADay());
+		}
+	}
+	
+	public class DataComparatorByKmsSavedAYear implements Comparator<Data> {
+		@Override
+		public int compare(Data d1, Data d2) {
+			return (int) (d1.getKmsSavedAYear()-d2.getKmsSavedAYear());
+		}
+	}
+	
 }

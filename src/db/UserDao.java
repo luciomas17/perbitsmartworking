@@ -175,4 +175,56 @@ public class UserDao {
 		}
 	}
 
+	public User getUserFromUsername(String username) {
+		String sql = "SELECT * FROM users WHERE user = ?";
+		User result = null;
+		
+		try {
+			Connection conn = DBConnect.getConnection();
+			PreparedStatement st = conn.prepareStatement(sql);	
+			st.setString(1, username);
+			ResultSet res = st.executeQuery();
+			
+			if(res.next()) {
+				try {
+					String user = res.getString("user");
+					String name = res.getString("name");
+					String surname = res.getString("surname");
+					String email = res.getString("email");
+					String division = res.getString("division");
+					String responsible = res.getString("responsible");
+					String role = res.getString("role");
+					String fuelType = res.getString("fuelType");
+					double gramsOfCO2 = res.getDouble("gramsOfCO2");
+					
+					String province = res.getString("province");
+					String city = res.getString("city");
+					double lat = res.getDouble("lat");
+					double lng = res.getDouble("lng");
+					LatLng latLng = new LatLng(lat, lng);
+					Town domicile = new Town(province, city, latLng);
+					
+					int smartDays = res.getInt("smartDays");
+					
+					int consentInt = res.getInt("consent");
+					boolean consent = false;
+					if(consentInt == 1)
+						consent = true;
+						
+					result = new User(user, name, surname, email, division, responsible, role, 
+							fuelType, gramsOfCO2, domicile, smartDays, consent);
+				} catch (Throwable t) {
+					t.printStackTrace();
+				}
+			}
+			
+			conn.close();
+			return result;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 }
