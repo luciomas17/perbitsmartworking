@@ -2,16 +2,33 @@ package model;
 
 import com.javadocmd.simplelatlng.LatLng;
 
-public class Town {
+public class Domicile {
 	
-	private String province, name;
+	private String province, town, address;
 	private LatLng latlng;
 	
-	public Town(String province, String name, LatLng latlng) {
+	public Domicile(String province, String town, String address, LatLng latlng) {
 		super();
 		this.province = province;
-		this.name = name;
+		this.town = town;
+		this.address = address;
 		this.latlng = latlng;
+	}
+
+	public String getTown() {
+		return town;
+	}
+
+	public void setTown(String town) {
+		this.town = town;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 	public String getProvince() {
@@ -20,14 +37,6 @@ public class Town {
 
 	public void setProvince(String province) {
 		this.province = province;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public LatLng getLatlng() {
@@ -42,7 +51,7 @@ public class Town {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((town == null) ? 0 : town.hashCode());
 		result = prime * result + ((province == null) ? 0 : province.hashCode());
 		return result;
 	}
@@ -55,11 +64,11 @@ public class Town {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Town other = (Town) obj;
-		if (name == null) {
-			if (other.name != null)
+		Domicile other = (Domicile) obj;
+		if (town == null) {
+			if (other.town != null)
 				return false;
-		} else if (!name.equals(other.name))
+		} else if (!town.equals(other.town))
 			return false;
 		if (province == null) {
 			if (other.province != null)
@@ -71,7 +80,7 @@ public class Town {
 
 	@Override
 	public String toString() {
-		return String.format("%s (%s)", name, province);
+		return String.format("%s (%s)", town, province);
 	}
 
 }

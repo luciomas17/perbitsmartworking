@@ -5,12 +5,12 @@ public class User {
 	private String user, name, surname, email, division, responsible, role;
 	private String fuelType;
 	private double gramsOfCO2;
-	private Town domicile;
+	private Domicile domicile;
 	private int smartDays;
 	private boolean consent;
 	
 	public User(String user, String name, String surname, String email, String division, String responsible, String role, 
-			String fuelType, double gramsOfCO2, Town domicile, int smartDays, boolean consent) {
+			String fuelType, double gramsOfCO2, Domicile domicile, int smartDays, boolean consent) {
 		super();
 		this.user = user;
 		this.name = name;
@@ -98,11 +98,11 @@ public class User {
 		this.gramsOfCO2 = gramsOfCO2;
 	}
 
-	public Town getDomicile() {
+	public Domicile getDomicile() {
 		return domicile;
 	}
 
-	public void setDomicile(Town domicile) {
+	public void setDomicile(Domicile domicile) {
 		this.domicile = domicile;
 	}
 
@@ -149,7 +149,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		return String.format("%s, %s, %s, %s, %s %s, %d days", user, division, role, fuelType, domicile.getName(), domicile.getProvince(), smartDays);
+		return String.format("%s, %s, %s, %s, %s %s, %d days", user, division, role, fuelType, domicile.getTown(), domicile.getProvince(), smartDays);
 	}
 	
 }

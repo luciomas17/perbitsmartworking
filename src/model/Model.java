@@ -51,6 +51,9 @@ public class Model {
 		this.roles.add("Sales");
 		this.roles.add("Logistics");
 		this.roles.add("IT partner");
+		/*
+		 * To update!!!
+		 */
 	}
 
 	private void addItemsToDivisionsResponsibleMap() {
@@ -124,39 +127,58 @@ public class Model {
 	}
 	
 	public void addNewUser(String user, String name, String surname, String email, String division, String responsible, String role, 
-			String fuelType, double gramsOfCO2, String province, String city, int smartDays, boolean consent) {
+			String fuelType, double gramsOfCO2, String province, String city, String address, int smartDays, boolean consent) {
 		
-		List<Double> latLnglist = townDao.getLatLngFromCity(city);
-		LatLng latLng = new LatLng(latLnglist.get(0), latLnglist.get(1));
-		Town domicile = new Town(province, city, latLng);
+		// List<Double> latLnglist = townDao.getLatLngFromCity(city);
+		// LatLng latLng = new LatLng(latLnglist.get(0), latLnglist.get(1));
+		
+		// double[] latLngVector = getLatLngFromAddress(province, city, address);
+		// LatLng latLng = new LatLng(latLngVector[0], latLngVector[1]);
+		
+		LatLng latLng = new LatLng(0,0);
+		
+		Domicile domicile = new Domicile(province, city, address, latLng);
 		
 		User temp = new User(user, name, surname, email, division, responsible, role, fuelType, gramsOfCO2, domicile, smartDays, consent);
-		if(userDao.isPresent(temp)) {
-			// utente già inserito
+		if(userDao.isPresent(temp))
 			return;
-		}
-		if(!temp.isConsent()) {
-			// consenso necessario
+		if(!temp.isConsent()) 
 			return;
-		}
+			
 		userDao.addNewUser(temp);
 		dataDao.addNewData(temp, this.calculateKmsSavedADay(temp), this.calculateGramsOfCO2SavedADay(temp), this.calculateKmsSavedAYear(temp), this.calculateGramsOfCO2SavedAYear(temp));
 	}
 	
 	public void editExistingUser(String user, String name, String surname, String email, String division, String responsible, String role, 
-			String fuelType, double gramsOfCO2, String province, String city, int smartDays, boolean consent) {
+			String fuelType, double gramsOfCO2, String province, String city, String address, int smartDays, boolean consent) {
 		
-		List<Double> latLnglist = townDao.getLatLngFromCity(city);
-		LatLng latLng = new LatLng(latLnglist.get(0), latLnglist.get(1));
-		Town domicile = new Town(province, city, latLng);
+		// List<Double> latLnglist = townDao.getLatLngFromCity(city);
+		// LatLng latLng = new LatLng(latLnglist.get(0), latLnglist.get(1));
+		
+		// double[] latLngVector = getLatLngFromAddress(province, city, address);
+		// LatLng latLng = new LatLng(latLngVector[0], latLngVector[1]);
+		
+		LatLng latLng = new LatLng(0,0);
+		
+		Domicile domicile = new Domicile(province, city, address, latLng);
 		
 		User temp = new User(user, name, surname, email, division, responsible, role, fuelType, gramsOfCO2, domicile, smartDays, consent);
-		if(!temp.isConsent()) {
-			// consenso necessario
+		if(!temp.isConsent())
 			return;
-		}
+		
 		userDao.editExistingUser(temp);
 		dataDao.editExistingData(temp, this.calculateKmsSavedADay(temp), this.calculateGramsOfCO2SavedADay(temp), this.calculateKmsSavedAYear(temp), this.calculateGramsOfCO2SavedAYear(temp));
+	}
+	
+	private double[] getLatLngFromAddress(String province, String city, String address) {
+		double[] result = null;
+		String fullAddress = address + " " + city + " " + province;
+		
+		/* 
+		 * algoritmo da implementare (Prova Api)
+		 */
+		
+		return result;
 	}
 
 	public List<User> getUsersList() {

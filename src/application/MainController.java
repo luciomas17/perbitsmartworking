@@ -88,6 +88,15 @@ public class MainController {
     
     @FXML
     private TextField txtSmartDays;
+    
+    @FXML
+    private TextField txtANUZip;
+
+    @FXML
+    private TextField txtANUStreet;
+
+    @FXML
+    private TextField txtANUNumber;
 
     @FXML
     void addItemsToANUBoxCity(ActionEvent event) {
@@ -324,7 +333,85 @@ public class MainController {
 				e.printStackTrace();
 			} 
     	} else
-			city = this.boxANUCity.getSelectionModel().getSelectedItem();
+			city = this.boxANUCity.getSelectionModel().getSelectedItem().toUpperCase();
+    	int zip = 0;
+    	if(this.txtANUZip.getText().equals("")) {
+    		try {
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("dialogFXML.fxml"));
+				BorderPane root = loader.load();
+				DialogController controller = loader.getController();
+				controller.setTxtDialog("Type your domicile zip code please.");
+				Parent content = root;
+				Scene scene = new Scene(content);
+				Stage window = new Stage();
+				window.setScene(scene);
+				window.show();
+				return;
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			} 
+    	} else {
+			try {
+				zip = Integer.parseInt(this.txtANUZip.getText());
+			} catch (NumberFormatException e1) {
+				try {
+					FXMLLoader loader = new FXMLLoader(getClass().getResource("dialogFXML.fxml"));
+					BorderPane root = loader.load();
+					DialogController controller = loader.getController();
+					controller.setTxtDialog("Error: incorrect zip code number format.");
+					Parent content = root;
+					Scene scene = new Scene(content);
+					Stage window = new Stage();
+					window.setScene(scene);
+					window.show();
+					return;
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+				} 
+				e1.printStackTrace();
+			}
+    	}
+    	String street = "";
+    	if(this.txtANUStreet.getText().equals("")) {
+    		try {
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("dialogFXML.fxml"));
+				BorderPane root = loader.load();
+				DialogController controller = loader.getController();
+				controller.setTxtDialog("Type your domicile street please.");
+				Parent content = root;
+				Scene scene = new Scene(content);
+				Stage window = new Stage();
+				window.setScene(scene);
+				window.show();
+				return;
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			} 
+    	} else
+    		street = this.txtANUStreet.getText().toUpperCase();
+    	String number = "";
+    	if(this.txtANUNumber.getText().equals("")) {
+    		try {
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("dialogFXML.fxml"));
+				BorderPane root = loader.load();
+				DialogController controller = loader.getController();
+				controller.setTxtDialog("Type your domicile number please.");
+				Parent content = root;
+				Scene scene = new Scene(content);
+				Stage window = new Stage();
+				window.setScene(scene);
+				window.show();
+				return;
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			} 
+    	} else
+    		number = this.txtANUNumber.getText().toUpperCase();
+    	String address = zip + " " + street + " " + number;
     	
     	int smartDays = 0;
     	if(this.txtSmartDays.getText().equals("")) {
@@ -466,7 +553,7 @@ public class MainController {
 			} 
     		
     		if(model.isOverwrite()) {
-				model.editExistingUser(user, name, surname, email, division, responsible, role, fuelType, gramsOfCO2, province, city, smartDays, consent);
+				model.editExistingUser(user, name, surname, email, division, responsible, role, fuelType, gramsOfCO2, province, city, address, smartDays, consent);
 				try {
 					FXMLLoader loader = new FXMLLoader(getClass().getResource("dialogFXML.fxml"));
 					BorderPane root = loader.load();
@@ -483,7 +570,7 @@ public class MainController {
 				} 
 			}
     	} else {
-    		model.addNewUser(user, name, surname, email, division, responsible, role, fuelType, gramsOfCO2, province, city, smartDays, consent);
+    		model.addNewUser(user, name, surname, email, division, responsible, role, fuelType, gramsOfCO2, province, city, address, smartDays, consent);
     		try {
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("dialogFXML.fxml"));
 				BorderPane root = loader.load();
@@ -820,6 +907,9 @@ public class MainController {
         assert txtDataUser != null : "fx:id=\"txtDataUser\" was not injected: check your FXML file 'pswFXML.fxml'.";
         assert txtDataOutput != null : "fx:id=\"txtDataOutput\" was not injected: check your FXML file 'pswFXML.fxml'.";
         assert txtSmartDays != null : "fx:id=\"txtSmartDays\" was not injected: check your FXML file 'pswFXML.fxml'.";
+        assert txtANUZip != null : "fx:id=\"txtANUZip\" was not injected: check your FXML file 'pswFXML.fxml'.";
+        assert txtANUStreet != null : "fx:id=\"txtANUStreet\" was not injected: check your FXML file 'pswFXML.fxml'.";
+        assert txtANUNumber != null : "fx:id=\"txtANUNumber\" was not injected: check your FXML file 'pswFXML.fxml'.";
         
     }
 }

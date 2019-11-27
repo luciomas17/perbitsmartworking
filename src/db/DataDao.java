@@ -10,7 +10,7 @@ import java.util.List;
 import com.javadocmd.simplelatlng.LatLng;
 
 import model.Data;
-import model.Town;
+import model.Domicile;
 import model.User;
 
 public class DataDao {
@@ -90,10 +90,11 @@ public class DataDao {
 					
 					String province = res.getString("u.province");
 					String city = res.getString("u.city");
+					String address = res.getString("u.address");
 					double lat = res.getDouble("u.lat");
 					double lng = res.getDouble("u.lng");
 					LatLng latLng = new LatLng(lat, lng);
-					Town domicile = new Town(province, city, latLng);
+					Domicile domicile = new Domicile(province, city, address, latLng);
 					
 					int smartDays = res.getInt("u.smartDays");
 					
@@ -149,10 +150,11 @@ public class DataDao {
 					
 					String province = res.getString("u.province");
 					String city = res.getString("u.city");
+					String address = res.getString("u.address");
 					double lat = res.getDouble("u.lat");
 					double lng = res.getDouble("u.lng");
 					LatLng latLng = new LatLng(lat, lng);
-					Town domicile = new Town(province, city, latLng);
+					Domicile domicile = new Domicile(province, city, address, latLng);
 					
 					int smartDays = res.getInt("u.smartDays");
 					

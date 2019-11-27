@@ -9,7 +9,7 @@ import java.util.List;
 
 import com.javadocmd.simplelatlng.LatLng;
 
-import model.Town;
+import model.Domicile;
 import model.User;
 
 public class UserDao {
@@ -38,8 +38,8 @@ public class UserDao {
 
 	public boolean addNewUser(User user) {
 		String sql = "INSERT INTO users (user, name, surname, email, division, responsible, role, "
-				+ "fuelType, gramsOfCO2, province, city, lat, lng, smartDays, consent) "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				+ "fuelType, gramsOfCO2, province, city, address, lat, lng, smartDays, consent) "
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		
 		try {
 			Connection conn = DBConnect.getConnection();
@@ -54,14 +54,15 @@ public class UserDao {
 			st.setString(8, user.getFuelType());
 			st.setDouble(9, user.getGramsOfCO2());
 			st.setString(10, user.getDomicile().getProvince());
-			st.setString(11, user.getDomicile().getName());
-			st.setDouble(12, user.getDomicile().getLatlng().getLatitude());
-			st.setDouble(13, user.getDomicile().getLatlng().getLongitude());
-			st.setInt(14, user.getSmartDays());
+			st.setString(11, user.getDomicile().getTown());
+			st.setString(12, user.getDomicile().getAddress());
+			st.setDouble(13, user.getDomicile().getLatlng().getLatitude());
+			st.setDouble(14, user.getDomicile().getLatlng().getLongitude());
+			st.setInt(15, user.getSmartDays());
 			int consentInt = 0;
 			if(user.isConsent())
 				consentInt = 1;
-			st.setInt(15, consentInt);
+			st.setInt(16, consentInt);
 			
 			st.execute();
 			
@@ -88,8 +89,8 @@ public class UserDao {
 		}
 		
 		String sql = "INSERT INTO users (user, name, surname, email, division, responsible, role, "
-				+ "fuelType, gramsOfCO2, province, city, lat, lng, smartDays, consent) "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				+ "fuelType, gramsOfCO2, province, city, address, lat, lng, smartDays, consent) "
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		
 		try {
 			Connection conn = DBConnect.getConnection();
@@ -104,14 +105,15 @@ public class UserDao {
 			st.setString(8, user.getFuelType());
 			st.setDouble(9, user.getGramsOfCO2());
 			st.setString(10, user.getDomicile().getProvince());
-			st.setString(11, user.getDomicile().getName());
-			st.setDouble(12, user.getDomicile().getLatlng().getLatitude());
-			st.setDouble(13, user.getDomicile().getLatlng().getLongitude());
-			st.setInt(14, user.getSmartDays());
+			st.setString(11, user.getDomicile().getTown());
+			st.setString(12, user.getDomicile().getAddress());
+			st.setDouble(13, user.getDomicile().getLatlng().getLatitude());
+			st.setDouble(14, user.getDomicile().getLatlng().getLongitude());
+			st.setInt(15, user.getSmartDays());
 			int consentInt = 0;
 			if(user.isConsent())
 				consentInt = 1;
-			st.setInt(15, consentInt);
+			st.setInt(16, consentInt);
 			
 			st.execute();
 			
@@ -147,10 +149,11 @@ public class UserDao {
 					
 					String province = res.getString("province");
 					String city = res.getString("city");
+					String address = res.getString("address");
 					double lat = res.getDouble("lat");
 					double lng = res.getDouble("lng");
 					LatLng latLng = new LatLng(lat, lng);
-					Town domicile = new Town(province, city, latLng);
+					Domicile domicile = new Domicile(province, city, address, latLng);
 					
 					int smartDays = res.getInt("smartDays");
 					
@@ -199,10 +202,11 @@ public class UserDao {
 					
 					String province = res.getString("province");
 					String city = res.getString("city");
+					String address = res.getString("address");
 					double lat = res.getDouble("lat");
 					double lng = res.getDouble("lng");
 					LatLng latLng = new LatLng(lat, lng);
-					Town domicile = new Town(province, city, latLng);
+					Domicile domicile = new Domicile(province, city, address, latLng);
 					
 					int smartDays = res.getInt("smartDays");
 					

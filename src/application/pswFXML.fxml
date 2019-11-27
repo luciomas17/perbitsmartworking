@@ -73,7 +73,7 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Text>
-                        <GridPane hgap="15.0" vgap="5.0">
+                        <GridPane hgap="15.0" prefWidth="665.0" vgap="10.0">
                           <columnConstraints>
                             <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="80.0" />
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="350.0" />
@@ -87,7 +87,7 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
@@ -168,12 +168,57 @@
                                  </GridPane.margin>
                               </Text>
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Domicile:" GridPane.rowIndex="7" />
-                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                              <VBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
                                  <children>
-                                    <ComboBox fx:id="boxANUProvince" onAction="#addItemsToANUBoxCity" style="-fx-background-color: #86b225;" />
-                                    <ComboBox fx:id="boxANUCity" style="-fx-background-color: #86b225;" />
+                                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Province">
+                                             <font>
+                                                <Font name="System Italic" size="12.0" />
+                                             </font>
+                                          </Text>
+                                          <ComboBox fx:id="boxANUProvince" onAction="#addItemsToANUBoxCity" style="-fx-background-color: #86b225;" />
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Town">
+                                             <font>
+                                                <Font name="System Italic" size="12.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets left="5.0" />
+                                             </HBox.margin>
+                                          </Text>
+                                          <ComboBox fx:id="boxANUCity" style="-fx-background-color: #86b225;" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Zip">
+                                             <font>
+                                                <Font name="System Italic" size="12.0" />
+                                             </font>
+                                          </Text>
+                                          <TextField fx:id="txtANUZip" maxWidth="60.0" style="-fx-border-color: #86b225; -fx-border-radius: 3;" />
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Street">
+                                             <font>
+                                                <Font name="System Italic" size="12.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets left="5.0" />
+                                             </HBox.margin>
+                                          </Text>
+                                          <TextField fx:id="txtANUStreet" maxWidth="180.0" style="-fx-border-color: #86b225; -fx-border-radius: 3;" />
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="N°">
+                                             <font>
+                                                <Font name="System Italic" size="12.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets left="5.0" />
+                                             </HBox.margin>
+                                          </Text>
+                                          <TextField fx:id="txtANUNumber" maxWidth="50.0" style="-fx-border-color: #86b225; -fx-border-radius: 3;" />
+                                       </children>
+                                    </HBox>
                                  </children>
-                              </HBox>
+                              </VBox>
                               <Text fill="#86b225" strokeType="OUTSIDE" strokeWidth="0.0" text="←  Select the town where you live" GridPane.columnIndex="2" GridPane.rowIndex="7">
                                  <font>
                                     <Font name="System Italic" size="11.0" />
@@ -458,9 +503,9 @@
                               </Text>
                            </children>
                         </GridPane>
-                        <ScrollPane hbarPolicy="NEVER" maxHeight="520.0" maxWidth="670.0" minHeight="520.0" style="-fx-border-color: #86b225;" vbarPolicy="ALWAYS">
+                        <ScrollPane hbarPolicy="NEVER" maxHeight="520.0" maxWidth="670.0" minHeight="580.0" style="-fx-border-color: #86b225;" vbarPolicy="ALWAYS">
                            <content>
-                              <TextArea fx:id="txtUsersOutput" editable="false" minHeight="516.0" minWidth="655.0" />
+                              <TextArea fx:id="txtUsersOutput" editable="false" minHeight="576.0" minWidth="655.0" />
                            </content>
                            <VBox.margin>
                               <Insets top="2.0" />
@@ -620,9 +665,9 @@
                               </VBox>
                            </children>
                         </GridPane>
-                        <ScrollPane hbarPolicy="NEVER" maxHeight="520.0" maxWidth="670.0" minHeight="520.0" style="-fx-border-color: #86b225;" vbarPolicy="ALWAYS">
+                        <ScrollPane hbarPolicy="NEVER" maxHeight="520.0" maxWidth="670.0" minHeight="580.0" style="-fx-border-color: #86b225;" vbarPolicy="ALWAYS">
                            <content>
-                              <TextArea fx:id="txtDataOutput" editable="false" minHeight="516.0" minWidth="655.0" />
+                              <TextArea fx:id="txtDataOutput" editable="false" minHeight="576.0" minWidth="655.0" />
                            </content>
                            <VBox.margin>
                               <Insets top="2.0" />
