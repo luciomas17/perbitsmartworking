@@ -2,27 +2,28 @@ package model;
 
 public class User {
 	
-	private String user, name, surname, email, division, responsible, role;
+	private String user, name, surname, email, divisionOrFunction, location;
 	private String fuelType;
 	private double gramsOfCO2;
-	private Domicile domicile;
 	private int smartDays;
+	private double kmsSaved;
+	private int timeSaved;
 	private boolean consent;
 	
-	public User(String user, String name, String surname, String email, String division, String responsible, String role, 
-			String fuelType, double gramsOfCO2, Domicile domicile, int smartDays, boolean consent) {
+	public User(String user, String name, String surname, String email, String divisionOrFunction, String location,
+			String fuelType, double gramsOfCO2, int smartDays, double kmsSaved, int timeSaved, boolean consent) {
 		super();
 		this.user = user;
 		this.name = name;
 		this.surname = surname;
 		this.email = email;
-		this.division = division;
-		this.responsible = responsible;
-		this.role = role;
+		this.divisionOrFunction = divisionOrFunction;
+		this.location = location;
 		this.fuelType = fuelType;
 		this.gramsOfCO2 = gramsOfCO2;
-		this.domicile = domicile;
 		this.smartDays = smartDays;
+		this.kmsSaved = kmsSaved;
+		this.timeSaved = timeSaved;
 		this.consent = consent;
 	}
 
@@ -58,28 +59,20 @@ public class User {
 		this.email = email;
 	}
 
-	public String getDivision() {
-		return division;
-	}
-	
-	public void setResponsible(String responsible) {
-		this.responsible = responsible;
-	}
-	
-	public String getResponsible() {
-		return responsible;
+	public String getDivisionOrFunction() {
+		return divisionOrFunction;
 	}
 
-	public void setDivision(String division) {
-		this.division = division;
+	public void setDivisionOrFunction(String divisionOrFunction) {
+		this.divisionOrFunction = divisionOrFunction;
 	}
 
-	public String getRole() {
-		return role;
+	public String getLocation() {
+		return location;
 	}
 
-	public void setRole(String role) {
-		this.role = role;
+	public void setLocation(String location) {
+		this.location = location;
 	}
 
 	public String getFuelType() {
@@ -89,7 +82,7 @@ public class User {
 	public void setFuelType(String fuelType) {
 		this.fuelType = fuelType;
 	}
-	
+
 	public double getGramsOfCO2() {
 		return gramsOfCO2;
 	}
@@ -98,20 +91,28 @@ public class User {
 		this.gramsOfCO2 = gramsOfCO2;
 	}
 
-	public Domicile getDomicile() {
-		return domicile;
-	}
-
-	public void setDomicile(Domicile domicile) {
-		this.domicile = domicile;
-	}
-
 	public int getSmartDays() {
 		return smartDays;
 	}
 
 	public void setSmartDays(int smartDays) {
 		this.smartDays = smartDays;
+	}
+
+	public double getKmsSaved() {
+		return kmsSaved;
+	}
+
+	public void setKmsSaved(double kmsSaved) {
+		this.kmsSaved = kmsSaved;
+	}
+
+	public int getTimeSaved() {
+		return timeSaved;
+	}
+
+	public void setTimeSaved(int timeSaved) {
+		this.timeSaved = timeSaved;
 	}
 
 	public boolean isConsent() {
@@ -147,9 +148,4 @@ public class User {
 		return true;
 	}
 
-	@Override
-	public String toString() {
-		return String.format("%s, %s, %s, %s, %s %s, %d days", user, division, role, fuelType, domicile.getTown(), domicile.getProvince(), smartDays);
-	}
-	
 }

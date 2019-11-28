@@ -7,10 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.javadocmd.simplelatlng.LatLng;
-
 import model.Data;
-import model.Domicile;
 import model.User;
 
 public class DataDao {
@@ -73,7 +70,7 @@ public class DataDao {
 			
 			while(res.next()) {
 				try {
-					String userString = res.getString("d.user");
+					String username = res.getString("d.user");
 					double kmsSavedADay = res.getDouble("d.kmsSavedADay");
 					double gramsOfCO2SavedADay = res.getDouble("d.gramsOfCO2SavedADay");
 					double kmsSavedAYear = res.getDouble("d.kmsSavedAYear");
@@ -82,29 +79,19 @@ public class DataDao {
 					String name = res.getString("u.name");
 					String surname = res.getString("u.surname");
 					String email = res.getString("u.email");
-					String division = res.getString("u.division");
-					String responsible = res.getString("u.responsible");
-					String role = res.getString("u.role");
+					String divisionOrFunction = res.getString("u.divisionOrFunction");
+					String location = res.getString("u.location");
 					String fuelType = res.getString("u.fuelType");
 					double gramsOfCO2 = res.getDouble("u.gramsOfCO2");
-					
-					String province = res.getString("u.province");
-					String city = res.getString("u.city");
-					String address = res.getString("u.address");
-					double lat = res.getDouble("u.lat");
-					double lng = res.getDouble("u.lng");
-					LatLng latLng = new LatLng(lat, lng);
-					Domicile domicile = new Domicile(province, city, address, latLng);
-					
-					int smartDays = res.getInt("u.smartDays");
-					
+					int smartDays = res.getInt("u.smartDays");			
+					double kmsSaved = res.getDouble("u.kmsSaved");
+					int timeSaved = res.getInt("u.timeSaved");	
 					int consentInt = res.getInt("u.consent");
 					boolean consent = false;
 					if(consentInt == 1)
 						consent = true;
 					
-					User user = new User(userString, name, surname, email, division, responsible, role, 
-							fuelType, gramsOfCO2, domicile, smartDays, consent);
+					User user = new User(username, name, surname, email, divisionOrFunction, location, fuelType, gramsOfCO2, smartDays, kmsSaved, timeSaved, consent);
 						
 					result.add(new Data(user, kmsSavedADay, gramsOfCO2SavedADay, kmsSavedAYear, gramsOfCO2SavedAYear));
 				} catch (Throwable t) {
@@ -121,19 +108,19 @@ public class DataDao {
 		}
 	}
 
-	public Data getDataFromUsername(String username) {
+	public Data getDataFromUsername(String toFind) {
 		String sql = "SELECT * FROM data d, users u WHERE d.user = u.user AND u.user = ?";
 		Data result = null;
 		
 		try {
 			Connection conn = DBConnect.getConnection();
 			PreparedStatement st = conn.prepareStatement(sql);	
-			st.setString(1, username);
+			st.setString(1, toFind);
 			ResultSet res = st.executeQuery();
 			
 			if(res.next()) {
 				try {
-					String userString = res.getString("d.user");
+					String username = res.getString("d.user");
 					double kmsSavedADay = res.getDouble("d.kmsSavedADay");
 					double gramsOfCO2SavedADay = res.getDouble("d.gramsOfCO2SavedADay");
 					double kmsSavedAYear = res.getDouble("d.kmsSavedAYear");
@@ -142,29 +129,19 @@ public class DataDao {
 					String name = res.getString("u.name");
 					String surname = res.getString("u.surname");
 					String email = res.getString("u.email");
-					String division = res.getString("u.division");
-					String responsible = res.getString("u.responsible");
-					String role = res.getString("u.role");
+					String divisionOrFunction = res.getString("u.divisionOrFunction");
+					String location = res.getString("u.location");
 					String fuelType = res.getString("u.fuelType");
 					double gramsOfCO2 = res.getDouble("u.gramsOfCO2");
-					
-					String province = res.getString("u.province");
-					String city = res.getString("u.city");
-					String address = res.getString("u.address");
-					double lat = res.getDouble("u.lat");
-					double lng = res.getDouble("u.lng");
-					LatLng latLng = new LatLng(lat, lng);
-					Domicile domicile = new Domicile(province, city, address, latLng);
-					
-					int smartDays = res.getInt("u.smartDays");
-					
+					int smartDays = res.getInt("u.smartDays");			
+					double kmsSaved = res.getDouble("u.kmsSaved");
+					int timeSaved = res.getInt("u.timeSaved");	
 					int consentInt = res.getInt("u.consent");
 					boolean consent = false;
 					if(consentInt == 1)
 						consent = true;
 					
-					User user = new User(userString, name, surname, email, division, responsible, role, 
-							fuelType, gramsOfCO2, domicile, smartDays, consent);
+					User user = new User(username, name, surname, email, divisionOrFunction, location, fuelType, gramsOfCO2, smartDays, kmsSaved, timeSaved, consent);
 						
 					result = new Data(user, kmsSavedADay, gramsOfCO2SavedADay, kmsSavedAYear, gramsOfCO2SavedAYear);
 				} catch (Throwable t) {

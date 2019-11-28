@@ -1,19 +1,23 @@
 package application;
 
+import java.awt.Desktop;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
-
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -23,8 +27,6 @@ import model.Model;
 import model.User;
 
 public class MainController {
-	
-	private Model model;
 
     @FXML
     private ResourceBundle resources;
@@ -51,16 +53,19 @@ public class MainController {
     private ComboBox<String> boxANUDivision;
 
     @FXML
-    private ComboBox<String> boxANUResponsible;
+    private ComboBox<String> boxANULocation;
 
     @FXML
-    private ComboBox<String> boxANURole;
+    private ComboBox<String> boxANUFunction;
 
     @FXML
-    private ComboBox<String> boxANUProvince;
+    private TextField txtANUSmartDays;
 
     @FXML
-    private ComboBox<String> boxANUCity;
+    private TextField txtANUTimeSaved;
+
+    @FXML
+    private TextField txtANUKmsSaved;
 
     @FXML
     private TextField txtANUCO2emissions;
@@ -87,39 +92,9 @@ public class MainController {
     private TextArea txtDataOutput;
     
     @FXML
-    private TextField txtSmartDays;
-    
-    @FXML
-    private TextField txtANUZip;
-
-    @FXML
-    private TextField txtANUStreet;
-
-    @FXML
-    private TextField txtANUNumber;
-
-    @FXML
-    void addItemsToANUBoxCity(ActionEvent event) {
-    	this.boxANUCity.getItems().clear();
-    	String province = this.boxANUProvince.getSelectionModel().getSelectedItem();
-    	if(!province.equals("")) {
-	    	List<String> temp = model.getCitiesFromProvince(province);
-	    	Collections.sort(temp);
-	    	this.boxANUCity.getItems().addAll(temp);
-    	}
-    }
-
-    @FXML
-    void addItemsToANUBoxResponsible(ActionEvent event) {
-    	this.boxANUResponsible.getItems().clear();
-    	String division = this.boxANUDivision.getSelectionModel().getSelectedItem();
-    	if(!division.equals("")) {
-	    	List<String> temp = model.getResponsibleFromDivision(division);
-	    	Collections.sort(temp);
-	    	temp.add("Other");
-	    	this.boxANUResponsible.getItems().addAll(temp);
-    	}
-    }
+    private Hyperlink linkAutoData;
+	
+	private Model model;
 
     @FXML
     void doANUReset(ActionEvent event) {
@@ -129,11 +104,11 @@ public class MainController {
     	this.txtANUEmail.clear();
     	this.boxANUEmail.getSelectionModel().clearSelection();
     	this.boxANUDivision.getSelectionModel().clearSelection();
-    	this.boxANUResponsible.getSelectionModel().clearSelection();
-    	this.boxANURole.getSelectionModel().clearSelection();
-    	this.boxANUProvince.getSelectionModel().clearSelection();
-    	this.boxANUCity.getSelectionModel().clearSelection();
-    	this.txtSmartDays.clear();
+    	this.boxANUFunction.getSelectionModel().clearSelection();
+    	this.boxANULocation.getSelectionModel().clearSelection();
+    	this.txtANUSmartDays.clear();
+    	this.txtANUKmsSaved.clear();
+    	this.txtANUTimeSaved.clear();
     	this.boxANUFuelType.getSelectionModel().clearSelection();
     	this.txtANUCO2emissions.clear();
     	this.boxANUConsent.setSelected(false);
@@ -236,13 +211,34 @@ public class MainController {
     	} else
     		email += this.boxANUEmail.getSelectionModel().getSelectedItem();
     	
-    	String division = "";
-    	if(this.boxANUDivision.getSelectionModel().isEmpty()) {
+    	String divisionOrFunction = "";
+    	if(!this.boxANUDivision.getSelectionModel().isEmpty() && this.boxANUDivision.getSelectionModel().getSelectedItem().equals(""))
+    		this.boxANUDivision.getSelectionModel().clearSelection();
+    	if(!this.boxANUFunction.getSelectionModel().isEmpty() && this.boxANUFunction.getSelectionModel().getSelectedItem().equals(""))
+    		this.boxANUFunction.getSelectionModel().clearSelection();
+    	if(!this.boxANUDivision.getSelectionModel().isEmpty() && !this.boxANUFunction.getSelectionModel().isEmpty()) {
     		try {
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("dialogFXML.fxml"));
 				BorderPane root = loader.load();
 				DialogController controller = loader.getController();
-				controller.setTxtDialog("Select your division please.");
+				controller.setTxtDialog("Select only one between division and function options please.");
+				Parent content = root;
+				Scene scene = new Scene(content);
+				Stage window = new Stage();
+				window.setScene(scene);
+				window.show();
+				return;
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+    	}
+    	if(this.boxANUDivision.getSelectionModel().isEmpty() && this.boxANUFunction.getSelectionModel().isEmpty()) {
+    		try {
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("dialogFXML.fxml"));
+				BorderPane root = loader.load();
+				DialogController controller = loader.getController();
+				controller.setTxtDialog("Select your division or your function please.");
 				Parent content = root;
 				Scene scene = new Scene(content);
 				Stage window = new Stage();
@@ -253,16 +249,19 @@ public class MainController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			} 
-    	} else
-			division = this.boxANUDivision.getSelectionModel().getSelectedItem();
+    	}
+    	if(!this.boxANUDivision.getSelectionModel().isEmpty())
+    		divisionOrFunction = this.boxANUDivision.getSelectionModel().getSelectedItem();
+    	else
+    		divisionOrFunction = this.boxANUFunction.getSelectionModel().getSelectedItem();
     	
-    	String responsible = "";
-    	if(this.boxANUResponsible.getSelectionModel().isEmpty()) {
+    	String location = "";
+    	if(this.boxANULocation.getSelectionModel().isEmpty()) {
     		try {
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("dialogFXML.fxml"));
 				BorderPane root = loader.load();
 				DialogController controller = loader.getController();
-				controller.setTxtDialog("Select your responsible please.");
+				controller.setTxtDialog("Select your location please.");
 				Parent content = root;
 				Scene scene = new Scene(content);
 				Stage window = new Stage();
@@ -274,73 +273,15 @@ public class MainController {
 				e.printStackTrace();
 			} 
     	} else
-			responsible = this.boxANUResponsible.getSelectionModel().getSelectedItem();
+    		location = this.boxANULocation.getSelectionModel().getSelectedItem();
     	
-    	String role = "";
-    	if(this.boxANURole.getSelectionModel().isEmpty()) {
+    	int smartDays = 0;
+    	if(this.txtANUSmartDays.getText().equals("")) {
     		try {
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("dialogFXML.fxml"));
 				BorderPane root = loader.load();
 				DialogController controller = loader.getController();
-				controller.setTxtDialog("Select your role please.");
-				Parent content = root;
-				Scene scene = new Scene(content);
-				Stage window = new Stage();
-				window.setScene(scene);
-				window.show();
-				return;
-				
-			} catch (IOException e) {
-				e.printStackTrace();
-			} 
-    	} else
-			role = this.boxANURole.getSelectionModel().getSelectedItem();
-    	
-    	String province = "";
-    	if(this.boxANUProvince.getSelectionModel().isEmpty()) {
-    		try {
-				FXMLLoader loader = new FXMLLoader(getClass().getResource("dialogFXML.fxml"));
-				BorderPane root = loader.load();
-				DialogController controller = loader.getController();
-				controller.setTxtDialog("Select your domicile province please.");
-				Parent content = root;
-				Scene scene = new Scene(content);
-				Stage window = new Stage();
-				window.setScene(scene);
-				window.show();
-				return;
-				
-			} catch (IOException e) {
-				e.printStackTrace();
-			} 
-    	} else
-			province = this.boxANUProvince.getSelectionModel().getSelectedItem();
-    	String city = "";
-    	if(this.boxANUCity.getSelectionModel().isEmpty()) {
-    		try {
-				FXMLLoader loader = new FXMLLoader(getClass().getResource("dialogFXML.fxml"));
-				BorderPane root = loader.load();
-				DialogController controller = loader.getController();
-				controller.setTxtDialog("Select your domicile city please.");
-				Parent content = root;
-				Scene scene = new Scene(content);
-				Stage window = new Stage();
-				window.setScene(scene);
-				window.show();
-				return;
-				
-			} catch (IOException e) {
-				e.printStackTrace();
-			} 
-    	} else
-			city = this.boxANUCity.getSelectionModel().getSelectedItem().toUpperCase();
-    	int zip = 0;
-    	if(this.txtANUZip.getText().equals("")) {
-    		try {
-				FXMLLoader loader = new FXMLLoader(getClass().getResource("dialogFXML.fxml"));
-				BorderPane root = loader.load();
-				DialogController controller = loader.getController();
-				controller.setTxtDialog("Type your domicile zip code please.");
+				controller.setTxtDialog("Type your days of smart count in 2019 please.");
 				Parent content = root;
 				Scene scene = new Scene(content);
 				Stage window = new Stage();
@@ -353,13 +294,13 @@ public class MainController {
 			} 
     	} else {
 			try {
-				zip = Integer.parseInt(this.txtANUZip.getText());
+				smartDays = Integer.parseInt(this.txtANUSmartDays.getText());
 			} catch (NumberFormatException e1) {
 				try {
 					FXMLLoader loader = new FXMLLoader(getClass().getResource("dialogFXML.fxml"));
 					BorderPane root = loader.load();
 					DialogController controller = loader.getController();
-					controller.setTxtDialog("Error: incorrect zip code number format.");
+					controller.setTxtDialog("Error: incorrect days of smart number format.");
 					Parent content = root;
 					Scene scene = new Scene(content);
 					Stage window = new Stage();
@@ -373,53 +314,14 @@ public class MainController {
 				e1.printStackTrace();
 			}
     	}
-    	String street = "";
-    	if(this.txtANUStreet.getText().equals("")) {
-    		try {
-				FXMLLoader loader = new FXMLLoader(getClass().getResource("dialogFXML.fxml"));
-				BorderPane root = loader.load();
-				DialogController controller = loader.getController();
-				controller.setTxtDialog("Type your domicile street please.");
-				Parent content = root;
-				Scene scene = new Scene(content);
-				Stage window = new Stage();
-				window.setScene(scene);
-				window.show();
-				return;
-				
-			} catch (IOException e) {
-				e.printStackTrace();
-			} 
-    	} else
-    		street = this.txtANUStreet.getText().toUpperCase();
-    	String number = "";
-    	if(this.txtANUNumber.getText().equals("")) {
-    		try {
-				FXMLLoader loader = new FXMLLoader(getClass().getResource("dialogFXML.fxml"));
-				BorderPane root = loader.load();
-				DialogController controller = loader.getController();
-				controller.setTxtDialog("Type your domicile number please.");
-				Parent content = root;
-				Scene scene = new Scene(content);
-				Stage window = new Stage();
-				window.setScene(scene);
-				window.show();
-				return;
-				
-			} catch (IOException e) {
-				e.printStackTrace();
-			} 
-    	} else
-    		number = this.txtANUNumber.getText().toUpperCase();
-    	String address = zip + " " + street + " " + number;
     	
-    	int smartDays = 0;
-    	if(this.txtSmartDays.getText().equals("")) {
+    	double kmsSaved = 0;
+    	if(this.txtANUKmsSaved.getText().equals("")) {
     		try {
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("dialogFXML.fxml"));
 				BorderPane root = loader.load();
 				DialogController controller = loader.getController();
-				controller.setTxtDialog("Type your smart days count in 2019 please.");
+				controller.setTxtDialog("Type average kms saved a day please.");
 				Parent content = root;
 				Scene scene = new Scene(content);
 				Stage window = new Stage();
@@ -432,13 +334,53 @@ public class MainController {
 			} 
     	} else {
 			try {
-				smartDays = Integer.parseInt(this.txtSmartDays.getText());
+				kmsSaved = Double.parseDouble(this.txtANUKmsSaved.getText());
 			} catch (NumberFormatException e1) {
 				try {
 					FXMLLoader loader = new FXMLLoader(getClass().getResource("dialogFXML.fxml"));
 					BorderPane root = loader.load();
 					DialogController controller = loader.getController();
-					controller.setTxtDialog("Error: incorrect smart days number format.");
+					controller.setTxtDialog("Error: incorrect kms number format.");
+					Parent content = root;
+					Scene scene = new Scene(content);
+					Stage window = new Stage();
+					window.setScene(scene);
+					window.show();
+					return;
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+				} 
+				e1.printStackTrace();
+			}
+    	}
+    	
+    	int timeSaved = 0;
+    	if(this.txtANUTimeSaved.getText().equals("")) {
+    		try {
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("dialogFXML.fxml"));
+				BorderPane root = loader.load();
+				DialogController controller = loader.getController();
+				controller.setTxtDialog("Type average minutes saved a day please.");
+				Parent content = root;
+				Scene scene = new Scene(content);
+				Stage window = new Stage();
+				window.setScene(scene);
+				window.show();
+				return;
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			} 
+    	} else {
+			try {
+				timeSaved = Integer.parseInt(this.txtANUTimeSaved.getText());
+			} catch (NumberFormatException e1) {
+				try {
+					FXMLLoader loader = new FXMLLoader(getClass().getResource("dialogFXML.fxml"));
+					BorderPane root = loader.load();
+					DialogController controller = loader.getController();
+					controller.setTxtDialog("Error: incorrect time number format.");
 					Parent content = root;
 					Scene scene = new Scene(content);
 					Stage window = new Stage();
@@ -553,7 +495,7 @@ public class MainController {
 			} 
     		
     		if(model.isOverwrite()) {
-				model.editExistingUser(user, name, surname, email, division, responsible, role, fuelType, gramsOfCO2, province, city, address, smartDays, consent);
+				model.editExistingUser(user, name, surname, email, divisionOrFunction, location, fuelType, gramsOfCO2, smartDays, kmsSaved, timeSaved, consent);
 				try {
 					FXMLLoader loader = new FXMLLoader(getClass().getResource("dialogFXML.fxml"));
 					BorderPane root = loader.load();
@@ -570,7 +512,7 @@ public class MainController {
 				} 
 			}
     	} else {
-    		model.addNewUser(user, name, surname, email, division, responsible, role, fuelType, gramsOfCO2, province, city, address, smartDays, consent);
+    		model.addNewUser(user, name, surname, email, divisionOrFunction, location, fuelType, gramsOfCO2, smartDays, kmsSaved, timeSaved, consent);
     		try {
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("dialogFXML.fxml"));
 				BorderPane root = loader.load();
@@ -785,22 +727,34 @@ public class MainController {
     	this.model = model;
     	addItemsToBoxANUEmail();
     	addItemsToBoxANUDivision();
-    	addItemsToBoxANURole();
-    	addItemsToBoxANUProvince();
+    	addItemsToBoxANUFunction();
+    	addItemsToBoxANULocation();
     	addItemsToBoxANUFuelType();
     	addItemsToBoxUsersDivisions();
     	addItemsToTxtUsersOutput();
     	addItemsToTxtDataOutput();
+    	setOnActionToLinkAutoData();
     }
-    
-    private StringBuilder reformatUsers(List<User> users) {
+
+	private void setOnActionToLinkAutoData() {
+		this.linkAutoData.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent t) {
+            	try {
+					Desktop.getDesktop().browse(new URI("https://www.auto-data.net/en/"));
+				} catch (IOException | URISyntaxException e) {
+					e.printStackTrace();
+				}
+            }
+        });
+	}
+
+	private StringBuilder reformatUsers(List<User> users) {
     	StringBuilder result = new StringBuilder();
     	for(User u : users) {
     		result.append(String.format("%-19s ", u.getUser()));
-    		result.append(String.format("%-24s ", u.getDivision()));
-    		result.append(String.format("%-34s ", u.getResponsible()));
-    		result.append(String.format("%-19s ", u.getRole()));
-    		result.append(String.format("%-40s ", u.getDomicile()));
+    		result.append(String.format("%-24s ", u.getDivisionOrFunction()));
+    		result.append(String.format("%-34s ", u.getLocation()));
     		result.append(String.format("%-10s ", u.getFuelType()));
     		result.append("\n");
     	}
@@ -814,9 +768,9 @@ public class MainController {
     		result.append(String.format("%-19s ", d.getUser().getUser()));
     		result.append(String.format("%-22d ", d.getUser().getSmartDays()));
     		result.append(String.format("%-32.2f ", d.getKmsSavedADay()));
-    		result.append(String.format("%-30.2f ", d.getGramsOfCO2SavedADay()));
+    		result.append(String.format("%-30.2f ", d.getGramsOfCO2SavedADay()/1000));
     		result.append(String.format("%-31.2f ", d.getKmsSavedAYear()));
-    		result.append(String.format("%-20.2f ", d.getGramsOfCO2SavedAYear()));
+    		result.append(String.format("%-20.2f ", d.getGramsOfCO2SavedAYear()/1000));
     		result.append("\n");
     	}
     	
@@ -849,9 +803,15 @@ public class MainController {
 
 	private void addItemsToBoxUsersDivisions() {
 		List<String> temp = model.getDivisions();
+		temp.remove(0);
 		Collections.sort(temp);
-		temp.add("Other");
+		List<String> temp2 = model.getFunctions();
+		temp2.remove(0);
+		Collections.sort(temp2);
+		temp2.remove("Other");
+		temp2.add("Other");
 		this.boxUsersDivisions.getItems().addAll(temp);
+		this.boxUsersDivisions.getItems().addAll(temp2);
 	}
 
 	private void addItemsToBoxANUFuelType() {
@@ -860,23 +820,10 @@ public class MainController {
 		this.boxANUFuelType.getItems().addAll(temp);
 	}
 
-	private void addItemsToBoxANUProvince() {
-		List<String> temp = model.getProvinces();
-		Collections.sort(temp);
-		this.boxANUProvince.getItems().addAll(temp);
-	}
-
-	private void addItemsToBoxANURole() {
-		List<String> temp = model.getRoles();
-		Collections.sort(temp);
-		temp.add("Other");
-		this.boxANURole.getItems().addAll(temp);
-	}
-
 	private void addItemsToBoxANUDivision() {
 		List<String> temp = model.getDivisions();
 		Collections.sort(temp);
-		temp.add("Other");
+		temp.add(0, "");
 		this.boxANUDivision.getItems().addAll(temp);
 	}
 
@@ -885,19 +832,34 @@ public class MainController {
 		Collections.sort(temp);
 		this.boxANUEmail.getItems().addAll(temp);
 	}
+	
+    private void addItemsToBoxANULocation() {
+    	List<String> temp = model.getLocations();
+		Collections.sort(temp);
+		this.boxANULocation.getItems().addAll(temp);
+	}
+
+	private void addItemsToBoxANUFunction() {
+		List<String> temp = model.getFunctions();
+		Collections.sort(temp);
+		temp.add(0, "");
+		temp.add("Other");
+		this.boxANUFunction.getItems().addAll(temp);
+	}
 
 	@FXML
     void initialize() {
-        assert txtANUUser != null : "fx:id=\"txtANUUser\" was not injected: check your FXML file 'pswFXML.fxml'.";
+		assert txtANUUser != null : "fx:id=\"txtANUUser\" was not injected: check your FXML file 'pswFXML.fxml'.";
         assert txtANUName != null : "fx:id=\"txtANUName\" was not injected: check your FXML file 'pswFXML.fxml'.";
         assert txtANUSurname != null : "fx:id=\"txtANUSurname\" was not injected: check your FXML file 'pswFXML.fxml'.";
         assert txtANUEmail != null : "fx:id=\"txtANUEmail\" was not injected: check your FXML file 'pswFXML.fxml'.";
         assert boxANUEmail != null : "fx:id=\"boxANUEmail\" was not injected: check your FXML file 'pswFXML.fxml'.";
         assert boxANUDivision != null : "fx:id=\"boxANUDivision\" was not injected: check your FXML file 'pswFXML.fxml'.";
-        assert boxANUResponsible != null : "fx:id=\"boxANUResponsible\" was not injected: check your FXML file 'pswFXML.fxml'.";
-        assert boxANURole != null : "fx:id=\"boxANURole\" was not injected: check your FXML file 'pswFXML.fxml'.";
-        assert boxANUProvince != null : "fx:id=\"boxANUProvince\" was not injected: check your FXML file 'pswFXML.fxml'.";
-        assert boxANUCity != null : "fx:id=\"boxANUCity\" was not injected: check your FXML file 'pswFXML.fxml'.";
+        assert boxANULocation != null : "fx:id=\"boxANULocation\" was not injected: check your FXML file 'pswFXML.fxml'.";
+        assert boxANUFunction != null : "fx:id=\"boxANUFunction\" was not injected: check your FXML file 'pswFXML.fxml'.";
+        assert txtANUSmartDays != null : "fx:id=\"txtANUSmartDays\" was not injected: check your FXML file 'pswFXML.fxml'.";
+        assert txtANUTimeSaved != null : "fx:id=\"txtANUTimeSaved\" was not injected: check your FXML file 'pswFXML.fxml'.";
+        assert txtANUKmsSaved != null : "fx:id=\"txtANUKmsSaved\" was not injected: check your FXML file 'pswFXML.fxml'.";
         assert txtANUCO2emissions != null : "fx:id=\"txtANUCO2emissions\" was not injected: check your FXML file 'pswFXML.fxml'.";
         assert boxANUFuelType != null : "fx:id=\"boxANUFuelType\" was not injected: check your FXML file 'pswFXML.fxml'.";
         assert boxANUConsent != null : "fx:id=\"boxANUConsent\" was not injected: check your FXML file 'pswFXML.fxml'.";
@@ -906,10 +868,7 @@ public class MainController {
         assert txtUsersOutput != null : "fx:id=\"txtUsersOutput\" was not injected: check your FXML file 'pswFXML.fxml'.";
         assert txtDataUser != null : "fx:id=\"txtDataUser\" was not injected: check your FXML file 'pswFXML.fxml'.";
         assert txtDataOutput != null : "fx:id=\"txtDataOutput\" was not injected: check your FXML file 'pswFXML.fxml'.";
-        assert txtSmartDays != null : "fx:id=\"txtSmartDays\" was not injected: check your FXML file 'pswFXML.fxml'.";
-        assert txtANUZip != null : "fx:id=\"txtANUZip\" was not injected: check your FXML file 'pswFXML.fxml'.";
-        assert txtANUStreet != null : "fx:id=\"txtANUStreet\" was not injected: check your FXML file 'pswFXML.fxml'.";
-        assert txtANUNumber != null : "fx:id=\"txtANUNumber\" was not injected: check your FXML file 'pswFXML.fxml'.";
+        assert linkAutoData != null : "fx:id=\"linkAutoData\" was not injected: check your FXML file 'pswFXML.fxml'.";
         
     }
 }
