@@ -5,10 +5,21 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Properties;
 import java.util.ResourceBundle;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -21,6 +32,9 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import model.Data;
 import model.Model;
@@ -93,6 +107,12 @@ public class MainController {
     
     @FXML
     private Hyperlink linkAutoData;
+    
+    @FXML
+    private StackPane paneUsersWV;
+    
+    @FXML
+    private StackPane paneDataWV;
 	
 	private Model model;
 
@@ -127,6 +147,7 @@ public class MainController {
 				Scene scene = new Scene(content);
 				Stage window = new Stage();
 				window.setScene(scene);
+				window.setResizable(false);
 				window.show();
 				return;
 				
@@ -146,6 +167,7 @@ public class MainController {
 				Scene scene = new Scene(content);
 				Stage window = new Stage();
 				window.setScene(scene);
+				window.setResizable(false);
 				window.show();
 				return;
 				
@@ -165,6 +187,7 @@ public class MainController {
 				Scene scene = new Scene(content);
 				Stage window = new Stage();
 				window.setScene(scene);
+				window.setResizable(false);
 				window.show();
 				return;
 				
@@ -184,6 +207,7 @@ public class MainController {
 				Scene scene = new Scene(content);
 				Stage window = new Stage();
 				window.setScene(scene);
+				window.setResizable(false);
 				window.show();
 				return;
 				
@@ -202,6 +226,7 @@ public class MainController {
 				Scene scene = new Scene(content);
 				Stage window = new Stage();
 				window.setScene(scene);
+				window.setResizable(false);
 				window.show();
 				return;
 				
@@ -226,6 +251,7 @@ public class MainController {
 				Scene scene = new Scene(content);
 				Stage window = new Stage();
 				window.setScene(scene);
+				window.setResizable(false);
 				window.show();
 				return;
 				
@@ -243,6 +269,7 @@ public class MainController {
 				Scene scene = new Scene(content);
 				Stage window = new Stage();
 				window.setScene(scene);
+				window.setResizable(false);
 				window.show();
 				return;
 				
@@ -266,6 +293,7 @@ public class MainController {
 				Scene scene = new Scene(content);
 				Stage window = new Stage();
 				window.setScene(scene);
+				window.setResizable(false);
 				window.show();
 				return;
 				
@@ -286,6 +314,7 @@ public class MainController {
 				Scene scene = new Scene(content);
 				Stage window = new Stage();
 				window.setScene(scene);
+				window.setResizable(false);
 				window.show();
 				return;
 				
@@ -305,6 +334,7 @@ public class MainController {
 					Scene scene = new Scene(content);
 					Stage window = new Stage();
 					window.setScene(scene);
+					window.setResizable(false);
 					window.show();
 					return;
 					
@@ -326,6 +356,7 @@ public class MainController {
 				Scene scene = new Scene(content);
 				Stage window = new Stage();
 				window.setScene(scene);
+				window.setResizable(false);
 				window.show();
 				return;
 				
@@ -345,6 +376,7 @@ public class MainController {
 					Scene scene = new Scene(content);
 					Stage window = new Stage();
 					window.setScene(scene);
+					window.setResizable(false);
 					window.show();
 					return;
 					
@@ -366,6 +398,7 @@ public class MainController {
 				Scene scene = new Scene(content);
 				Stage window = new Stage();
 				window.setScene(scene);
+				window.setResizable(false);
 				window.show();
 				return;
 				
@@ -385,6 +418,7 @@ public class MainController {
 					Scene scene = new Scene(content);
 					Stage window = new Stage();
 					window.setScene(scene);
+					window.setResizable(false);
 					window.show();
 					return;
 					
@@ -406,6 +440,7 @@ public class MainController {
 				Scene scene = new Scene(content);
 				Stage window = new Stage();
 				window.setScene(scene);
+				window.setResizable(false);
 				window.show();
 				return;
 				
@@ -426,6 +461,7 @@ public class MainController {
 				Scene scene = new Scene(content);
 				Stage window = new Stage();
 				window.setScene(scene);
+				window.setResizable(false);
 				window.show();
 				return;
 				
@@ -445,6 +481,7 @@ public class MainController {
 					Scene scene = new Scene(content);
 					Stage window = new Stage();
 					window.setScene(scene);
+					window.setResizable(false);
 					window.show();
 					return;
 					
@@ -467,6 +504,7 @@ public class MainController {
 				Scene scene = new Scene(content);
 				Stage window = new Stage();
 				window.setScene(scene);
+				window.setResizable(false);
 				window.show();
 				return;
 				
@@ -488,6 +526,7 @@ public class MainController {
 				Scene scene = new Scene(content);
 				Stage window = new Stage();
 				window.setScene(scene);
+				window.setResizable(false);
 				window.showAndWait();
 	
 			} catch (IOException e) {
@@ -505,6 +544,7 @@ public class MainController {
 					Scene scene = new Scene(content);
 					Stage window = new Stage();
 					window.setScene(scene);
+					window.setResizable(false);
 					window.show();
 		
 				} catch (IOException e) {
@@ -522,44 +562,88 @@ public class MainController {
 				Scene scene = new Scene(content);
 				Stage window = new Stage();
 				window.setScene(scene);
+				window.setResizable(false);
 				window.show();
 	
 			} catch (IOException e) {
 				e.printStackTrace();
 			} 
     	}
+    	
+    	LocalDate date = LocalDate.now();
+    	LocalTime time = LocalTime.now();
+    	final String from = "Perbit.CO2smartworking@it.bosch.com"; 
+	    final String host = "rb-smtp-int.bosch.com";
+    	String to = "fixed-term.omar.panebianco@it.bosch.com"; //HR office in the future
+		String cc = email;
+	    String subject = "Perbit CO2 Smart Working - Consent of processing sensisive data for user [" + user + "]";
+	    String body = "[THIS IS AN AUTOMATED MESSAGE - PLEASE DO NOT REPLY DIRECTLY TO THIS EMAIL]\n\n"
+	    		+ "To the attention of PERBIT's HR office,\n\n"
+	    		+ "The user " + user + " has knowingly given his/her consent to process his/her sensitive data to Perbit CO2 Smart Working application by checking the corresponding checkbox.\n\n"
+	    		+ "This happened\non: " + date + "\nat: " + time + "\n\n"
+	    		+ "Thanks.\n\n"
+	    		+ "[THIS IS AN AUTOMATED MESSAGE - PLEASE DO NOT REPLY DIRECTLY TO THIS EMAIL]";
+	  
+	    Properties properties = System.getProperties();  
+	    properties.setProperty("mail.smtp.host", host);  
+	    Session session = Session.getDefaultInstance(properties);  
+	  
+	    try {  
+	    	MimeMessage message = new MimeMessage(session);  
+	        message.setFrom(new InternetAddress(from));
+	        message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+	        message.addRecipient(Message.RecipientType.CC, new InternetAddress(cc)); 
+	        message.setSubject(subject);  
+	        message.setText(body);
+	        Transport.send(message);
+	  
+	    } catch (MessagingException mex) {
+	    	mex.printStackTrace();
+	    }
     }
 
     @FXML
     void doDataFilterByCO2SavedADay(ActionEvent event) {
-    	this.txtDataOutput.clear();
-    	List<Data> result = model.getDataListOrderedByGramsOfCO2SavedADay();
-    	StringBuilder sb = this.reformatData(result);
-    	this.txtDataOutput.appendText(sb.toString());
+    	this.paneDataWV.getChildren().clear();
+    	List<Data> temp = model.getDataListOrderedByGramsOfCO2SavedADay();
+    	WebView wv = new WebView();
+		WebEngine we = wv.getEngine();
+		String content = generateHTMLForData(temp);
+		we.loadContent(content, "text/html");
+		this.paneDataWV.getChildren().add(wv);
     }
 
     @FXML
     void doDataFilterByCO2SavedAYear(ActionEvent event) {
-    	this.txtDataOutput.clear();
-    	List<Data> result = model.getDataListOrderedByGramsOfCO2SavedAYear();
-    	StringBuilder sb = this.reformatData(result);
-    	this.txtDataOutput.appendText(sb.toString());
+    	this.paneDataWV.getChildren().clear();
+    	List<Data> temp = model.getDataListOrderedByGramsOfCO2SavedAYear();
+    	WebView wv = new WebView();
+		WebEngine we = wv.getEngine();
+		String content = generateHTMLForData(temp);
+		we.loadContent(content, "text/html");
+		this.paneDataWV.getChildren().add(wv);
     }
 
     @FXML
     void doDataFilterByKmsSavedADay(ActionEvent event) {
-    	this.txtDataOutput.clear();
-    	List<Data> result = model.getDataListOrderedByKmsSavedADay();
-    	StringBuilder sb = this.reformatData(result);
-    	this.txtDataOutput.appendText(sb.toString());
+    	this.paneDataWV.getChildren().clear();
+    	List<Data> temp = model.getDataListOrderedByKmsSavedADay();
+    	WebView wv = new WebView();
+		WebEngine we = wv.getEngine();
+		String content = generateHTMLForData(temp);
+		we.loadContent(content, "text/html");
+		this.paneDataWV.getChildren().add(wv);
     }
 
     @FXML
     void doDataFilterByKmsSavedAYear(ActionEvent event) {
-    	this.txtDataOutput.clear();
-    	List<Data> result = model.getDataListOrderedByKmsSavedAYear();
-    	StringBuilder sb = this.reformatData(result);
-    	this.txtDataOutput.appendText(sb.toString());
+    	this.paneDataWV.getChildren().clear();
+    	List<Data> temp = model.getDataListOrderedByKmsSavedAYear();
+    	WebView wv = new WebView();
+		WebEngine we = wv.getEngine();
+		String content = generateHTMLForData(temp);
+		we.loadContent(content, "text/html");
+		this.paneDataWV.getChildren().add(wv);
     }
 
     @FXML
@@ -576,6 +660,7 @@ public class MainController {
 				Scene scene = new Scene(content);
 				Stage window = new Stage();
 				window.setScene(scene);
+				window.setResizable(false);
 				window.show();
 				return;
 	
@@ -595,6 +680,7 @@ public class MainController {
 				Scene scene = new Scene(content);
 				Stage window = new Stage();
 				window.setScene(scene);
+				window.setResizable(false);
 				window.show();
 				return;
 	
@@ -603,26 +689,29 @@ public class MainController {
 			} 
     	}
     	else {
-    		this.txtDataOutput.clear();
+    		this.paneDataWV.getChildren().clear();
 	    	List<Data> temp = new ArrayList<>();
 	    	temp.add(result);
-	    	StringBuilder sb = this.reformatData(temp);
-	    	this.txtDataOutput.appendText(sb.toString());
+	    	WebView wv = new WebView();
+			WebEngine we = wv.getEngine();
+			String content = generateHTMLForData(temp);
+			we.loadContent(content, "text/html");
+			this.paneDataWV.getChildren().add(wv);
     	}
     }
     
     @FXML
     void doDataReload(ActionEvent event) {
-    	this.txtDataOutput.clear();
-    	this.addItemsToTxtDataOutput();
+    	this.paneDataWV.getChildren().clear();
+    	this.addItemsToWVDataOutput();
     	
     	this.txtDataUser.clear();
     }
     
     @FXML
     void doUsersReload(ActionEvent event) {
-    	this.txtUsersOutput.clear();
-    	this.addItemsToTxtUsersOutput();
+    	this.paneUsersWV.getChildren().clear();
+    	this.addItemsToWVUsersOutput();
     	
     	this.txtUsersUser.clear();
     	this.boxUsersDivisions.getSelectionModel().clearSelection();
@@ -640,6 +729,7 @@ public class MainController {
 				Scene scene = new Scene(content);
 				Stage window = new Stage();
 				window.setScene(scene);
+				window.setResizable(false);
 				window.show();
 				return;
 	
@@ -660,6 +750,7 @@ public class MainController {
 				Scene scene = new Scene(content);
 				Stage window = new Stage();
 				window.setScene(scene);
+				window.setResizable(false);
 				window.show();
 				return;
 	
@@ -668,9 +759,12 @@ public class MainController {
 			} 
     	}
     	else {
-    		this.txtUsersOutput.clear();
-	    	StringBuilder sb = this.reformatUsers(result);
-	    	this.txtUsersOutput.appendText(sb.toString());
+    		this.paneUsersWV.getChildren().clear();
+	    	WebView wv = new WebView();
+			WebEngine we = wv.getEngine();
+			String content = generateHTMLForUsers(result);
+			we.loadContent(content, "text/html");
+			this.paneUsersWV.getChildren().add(wv);
     	}
     }
 
@@ -688,6 +782,7 @@ public class MainController {
 				Scene scene = new Scene(content);
 				Stage window = new Stage();
 				window.setScene(scene);
+				window.setResizable(false);
 				window.show();
 				return;
 	
@@ -707,6 +802,7 @@ public class MainController {
 				Scene scene = new Scene(content);
 				Stage window = new Stage();
 				window.setScene(scene);
+				window.setResizable(false);
 				window.show();
 				return;
 	
@@ -715,11 +811,14 @@ public class MainController {
 			} 
     	}
     	else {
-    		this.txtUsersOutput.clear();
+    		this.paneUsersWV.getChildren().clear();
 	    	List<User> temp = new ArrayList<>();
 	    	temp.add(result);
-	    	StringBuilder sb = this.reformatUsers(temp);
-	    	this.txtUsersOutput.appendText(sb.toString());
+	    	WebView wv = new WebView();
+			WebEngine we = wv.getEngine();
+			String content = generateHTMLForUsers(temp);
+			we.loadContent(content, "text/html");
+			this.paneUsersWV.getChildren().add(wv);
     	}
     }
     
@@ -731,10 +830,92 @@ public class MainController {
     	addItemsToBoxANULocation();
     	addItemsToBoxANUFuelType();
     	addItemsToBoxUsersDivisions();
-    	addItemsToTxtUsersOutput();
-    	addItemsToTxtDataOutput();
     	setOnActionToLinkAutoData();
+    	addItemsToWVUsersOutput();
+    	addItemsToWVDataOutput();
     }
+
+	private void addItemsToWVDataOutput() {
+		WebView wv = new WebView();
+		wv.prefHeightProperty().bind(this.paneDataWV.heightProperty());
+		wv.prefWidthProperty().bind(this.paneDataWV.widthProperty());
+		WebEngine we = wv.getEngine();
+		String content = generateHTMLForData(model.getDataList());
+		we.loadContent(content, "text/html");
+		this.paneDataWV.getChildren().add(wv);
+	}
+
+	private String generateHTMLForData(List<Data> dataList) {
+		String result = "";
+		
+		result += "<table width=95% style='font-family:Segoe UI; font-size:12px; text-align:center'>";
+			result += "<tr style='color:#86b225; font-style:italic; font-weight:bold'>";
+				result += "<td width=20% style='padding-bottom:10px' valign='bottom'>Username</td>";
+				result += "<td width=12% style='padding-bottom:10px' valign='bottom'>Days of smart</td>";
+				result += "<td width=17% style='padding-bottom:10px' valign='bottom'>Kms saved a day</td>";
+				result += "<td width=17% style='padding-bottom:10px' valign='bottom'>Kilograms of C0₂ saved a day</td>";
+				result += "<td width=17% style='padding-bottom:10px' valign='bottom'>Kms saved a year</td>";
+				result += "<td width=17% style='padding-bottom:10px' valign='bottom'>Kilograms of C0₂ saved a year</td>";
+			result += "</tr>";
+			if(dataList.isEmpty()) {
+				result += "<tr style='font-style:italic'>";
+					result += "<td colspan=6>No data found.</td>";
+				result += "</tr>";
+			} else {
+				for(Data d : dataList) {
+					result += "<tr>";
+						result += "<td>" + d.getUser().getUser() + "</td>";
+						result += "<td>" + d.getUser().getSmartDays() + "</td>";
+						result += "<td>" + d.getKmsSavedADay() + "</td>";
+						result += "<td>" + d.getGramsOfCO2SavedADay() + "</td>";
+						result += "<td>" + d.getKmsSavedAYear() + "</td>";
+						result += "<td>" + d.getGramsOfCO2SavedAYear() + "</td>";
+					result += "</tr>";
+				}
+			}
+		result += "</table>";
+		
+		return result;
+	}
+
+	private void addItemsToWVUsersOutput() {
+		WebView wv = new WebView();
+		wv.prefHeightProperty().bind(this.paneUsersWV.heightProperty());
+		wv.prefWidthProperty().bind(this.paneUsersWV.widthProperty());
+		WebEngine we = wv.getEngine();
+		String content = generateHTMLForUsers(model.getUsersList());
+		we.loadContent(content, "text/html");
+		this.paneUsersWV.getChildren().add(wv);
+	}
+
+	private String generateHTMLForUsers(List<User> usersList) {
+		String result = "";
+		
+		result += "<table width=95% style='font-family:Segoe UI; font-size:12px; text-align:center'>";
+			result += "<tr style='color:#86b225; font-style:italic; font-weight:bold'>";
+				result += "<td width=20% style='padding-bottom:10px' valign='bottom'>Username</td>";
+				result += "<td width=35% style='padding-bottom:10px' valign='bottom'>Division / Function</td>";
+				result += "<td width=20% style='padding-bottom:10px' valign='bottom'>Location</td>";
+				result += "<td width=25% style='padding-bottom:10px' valign='bottom'>Fuel Type</td>";
+			result += "</tr>";
+			if(usersList.isEmpty()) {
+				result += "<tr style='font-style:italic'>";
+					result += "<td colspan=4>No user found.</td>";
+				result += "</tr>";
+			} else {
+				for(User u : usersList) {
+					result += "<tr>";
+						result += "<td>" + u.getUser() + "</td>";
+						result += "<td>" + u.getDivisionOrFunction() + "</td>";
+						result += "<td>" + u.getLocation() + "</td>";
+						result += "<td>" + u.getFuelType() + "</td>";
+					result += "</tr>";
+				}
+			}
+		result += "</table>";
+		
+		return result;
+	}
 
 	private void setOnActionToLinkAutoData() {
 		this.linkAutoData.setOnAction(new EventHandler<ActionEvent>() {
@@ -747,58 +928,6 @@ public class MainController {
 				}
             }
         });
-	}
-
-	private StringBuilder reformatUsers(List<User> users) {
-    	StringBuilder result = new StringBuilder();
-    	for(User u : users) {
-    		result.append(String.format("%-19s ", u.getUser()));
-    		result.append(String.format("%-24s ", u.getDivisionOrFunction()));
-    		result.append(String.format("%-34s ", u.getLocation()));
-    		result.append(String.format("%-10s ", u.getFuelType()));
-    		result.append("\n");
-    	}
-    	
-    	return result;
-    }
-    
-    private StringBuilder reformatData(List<Data> data) {
-    	StringBuilder result = new StringBuilder();
-    	for(Data d : data) {
-    		result.append(String.format("%-19s ", d.getUser().getUser()));
-    		result.append(String.format("%-22d ", d.getUser().getSmartDays()));
-    		result.append(String.format("%-32.2f ", d.getKmsSavedADay()));
-    		result.append(String.format("%-30.2f ", d.getGramsOfCO2SavedADay()/1000));
-    		result.append(String.format("%-31.2f ", d.getKmsSavedAYear()));
-    		result.append(String.format("%-20.2f ", d.getGramsOfCO2SavedAYear()/1000));
-    		result.append("\n");
-    	}
-    	
-    	return result;
-    }
-
-    private void addItemsToTxtDataOutput() {
-    	StringBuilder sb = new StringBuilder();
-		List<Data> data = model.getDataList();
-		
-		if(data.isEmpty())
-			sb.append("No data found.");
-		else 
-			sb = reformatData(data);
-		
-		this.txtDataOutput.appendText(sb.toString());
-	}
-
-	private void addItemsToTxtUsersOutput() {
-		StringBuilder sb = new StringBuilder();
-		List<User> users = model.getUsersList();
-		
-		if(users.isEmpty())
-			sb.append("No user found.");
-		else
-			sb = reformatUsers(users);
-		
-		this.txtUsersOutput.appendText(sb.toString());
 	}
 
 	private void addItemsToBoxUsersDivisions() {
@@ -869,6 +998,8 @@ public class MainController {
         assert txtDataUser != null : "fx:id=\"txtDataUser\" was not injected: check your FXML file 'pswFXML.fxml'.";
         assert txtDataOutput != null : "fx:id=\"txtDataOutput\" was not injected: check your FXML file 'pswFXML.fxml'.";
         assert linkAutoData != null : "fx:id=\"linkAutoData\" was not injected: check your FXML file 'pswFXML.fxml'.";
-        
+        assert paneUsersWV != null : "fx:id=\"paneUsersWV\" was not injected: check your FXML file 'pswFXML.fxml'.";
+        assert paneDataWV != null : "fx:id=\"paneDataWV\" was not injected: check your FXML file 'pswFXML.fxml'.";
+
     }
 }
