@@ -16,7 +16,7 @@ public class UserDao {
 		boolean flag = false;
 		
 		try {
-			Connection conn = DBConnect.getConnection();
+			Connection conn = HSQLConnect.connection();
 			PreparedStatement st = conn.prepareStatement(sql);
 			st.setString(1, user.getUser());
 			ResultSet res = st.executeQuery();
@@ -39,7 +39,7 @@ public class UserDao {
 				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		
 		try {
-			Connection conn = DBConnect.getConnection();
+			Connection conn = HSQLConnect.connection();
 			PreparedStatement st = conn.prepareStatement(sql);
 			st.setString(1, user.getUser());
 			st.setString(2, user.getName());
@@ -71,7 +71,7 @@ public class UserDao {
 	public boolean editExistingUser(User user) {
 		String sqlDelete = "DELETE FROM users WHERE user = ?";
 		try {
-			Connection conn = DBConnect.getConnection();
+			Connection conn = HSQLConnect.connection();
 			PreparedStatement st = conn.prepareStatement(sqlDelete);
 			st.setString(1, user.getUser());
 			st.execute();
@@ -86,7 +86,7 @@ public class UserDao {
 				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		
 		try {
-			Connection conn = DBConnect.getConnection();
+			Connection conn = HSQLConnect.connection();
 			PreparedStatement st = conn.prepareStatement(sql);
 			st.setString(1, user.getUser());
 			st.setString(2, user.getName());
@@ -120,7 +120,7 @@ public class UserDao {
 		List<User> result = new ArrayList<>();
 		
 		try {
-			Connection conn = DBConnect.getConnection();
+			Connection conn = HSQLConnect.connection();
 			PreparedStatement st = conn.prepareStatement(sql);	
 			ResultSet res = st.executeQuery();
 			
@@ -162,7 +162,7 @@ public class UserDao {
 		User result = null;
 		
 		try {
-			Connection conn = DBConnect.getConnection();
+			Connection conn = HSQLConnect.connection();
 			PreparedStatement st = conn.prepareStatement(sql);	
 			st.setString(1, username);
 			ResultSet res = st.executeQuery();

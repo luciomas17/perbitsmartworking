@@ -17,7 +17,7 @@ public class DataDao {
 				+ "VALUES (?, ?, ?, ?, ?)";
 		
 		try {
-			Connection conn = DBConnect.getConnection();
+			Connection conn = HSQLConnect.connection();
 			PreparedStatement st = conn.prepareStatement(sql);
 			st.setString(1, user.getUser());
 			st.setDouble(2, kmsSavedADay);
@@ -40,7 +40,7 @@ public class DataDao {
 		String sql = "UPDATE data SET user = ?, kmsSavedADay = ?, gramsOfCO2SavedADay = ?, kmsSavedAYear = ?, gramsOfCO2SavedAYear = ?";
 		
 		try {
-			Connection conn = DBConnect.getConnection();
+			Connection conn = HSQLConnect.connection();
 			PreparedStatement st = conn.prepareStatement(sql);
 			st.setString(1, user.getUser());
 			st.setDouble(2, kmsSavedADay);
@@ -64,29 +64,29 @@ public class DataDao {
 		List<Data> result = new ArrayList<>();
 		
 		try {
-			Connection conn = DBConnect.getConnection();
+			Connection conn = HSQLConnect.connection();
 			PreparedStatement st = conn.prepareStatement(sql);	
 			ResultSet res = st.executeQuery();
 			
 			while(res.next()) {
 				try {
-					String username = res.getString("d.user");
-					double kmsSavedADay = res.getDouble("d.kmsSavedADay");
-					double gramsOfCO2SavedADay = res.getDouble("d.gramsOfCO2SavedADay");
-					double kmsSavedAYear = res.getDouble("d.kmsSavedAYear");
-					double gramsOfCO2SavedAYear = res.getDouble("d.gramsOfCO2SavedAYear");
+					String username = res.getString("user");
+					double kmsSavedADay = res.getDouble("kmsSavedADay");
+					double gramsOfCO2SavedADay = res.getDouble("gramsOfCO2SavedADay");
+					double kmsSavedAYear = res.getDouble("kmsSavedAYear");
+					double gramsOfCO2SavedAYear = res.getDouble("gramsOfCO2SavedAYear");
 					
-					String name = res.getString("u.name");
-					String surname = res.getString("u.surname");
-					String email = res.getString("u.email");
-					String divisionOrFunction = res.getString("u.divisionOrFunction");
-					String location = res.getString("u.location");
-					String fuelType = res.getString("u.fuelType");
-					double gramsOfCO2 = res.getDouble("u.gramsOfCO2");
-					int smartDays = res.getInt("u.smartDays");			
-					double kmsSaved = res.getDouble("u.kmsSaved");
-					int timeSaved = res.getInt("u.timeSaved");	
-					int consentInt = res.getInt("u.consent");
+					String name = res.getString("name");
+					String surname = res.getString("surname");
+					String email = res.getString("email");
+					String divisionOrFunction = res.getString("divisionOrFunction");
+					String location = res.getString("location");
+					String fuelType = res.getString("fuelType");
+					double gramsOfCO2 = res.getDouble("gramsOfCO2");
+					int smartDays = res.getInt("smartDays");			
+					double kmsSaved = res.getDouble("kmsSaved");
+					int timeSaved = res.getInt("timeSaved");	
+					int consentInt = res.getInt("consent");
 					boolean consent = false;
 					if(consentInt == 1)
 						consent = true;
@@ -113,30 +113,30 @@ public class DataDao {
 		Data result = null;
 		
 		try {
-			Connection conn = DBConnect.getConnection();
+			Connection conn = HSQLConnect.connection();
 			PreparedStatement st = conn.prepareStatement(sql);	
 			st.setString(1, toFind);
 			ResultSet res = st.executeQuery();
 			
 			if(res.next()) {
 				try {
-					String username = res.getString("d.user");
-					double kmsSavedADay = res.getDouble("d.kmsSavedADay");
-					double gramsOfCO2SavedADay = res.getDouble("d.gramsOfCO2SavedADay");
-					double kmsSavedAYear = res.getDouble("d.kmsSavedAYear");
-					double gramsOfCO2SavedAYear = res.getDouble("d.gramsOfCO2SavedAYear");
+					String username = res.getString("user");
+					double kmsSavedADay = res.getDouble("kmsSavedADay");
+					double gramsOfCO2SavedADay = res.getDouble("gramsOfCO2SavedADay");
+					double kmsSavedAYear = res.getDouble("kmsSavedAYear");
+					double gramsOfCO2SavedAYear = res.getDouble("gramsOfCO2SavedAYear");
 					
-					String name = res.getString("u.name");
-					String surname = res.getString("u.surname");
-					String email = res.getString("u.email");
-					String divisionOrFunction = res.getString("u.divisionOrFunction");
-					String location = res.getString("u.location");
-					String fuelType = res.getString("u.fuelType");
-					double gramsOfCO2 = res.getDouble("u.gramsOfCO2");
-					int smartDays = res.getInt("u.smartDays");			
-					double kmsSaved = res.getDouble("u.kmsSaved");
-					int timeSaved = res.getInt("u.timeSaved");	
-					int consentInt = res.getInt("u.consent");
+					String name = res.getString("name");
+					String surname = res.getString("surname");
+					String email = res.getString("email");
+					String divisionOrFunction = res.getString("divisionOrFunction");
+					String location = res.getString("location");
+					String fuelType = res.getString("fuelType");
+					double gramsOfCO2 = res.getDouble("gramsOfCO2");
+					int smartDays = res.getInt("smartDays");			
+					double kmsSaved = res.getDouble("kmsSaved");
+					int timeSaved = res.getInt("timeSaved");	
+					int consentInt = res.getInt("consent");
 					boolean consent = false;
 					if(consentInt == 1)
 						consent = true;
