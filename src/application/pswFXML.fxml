@@ -462,6 +462,9 @@
                                        </HBox.margin>
                                     </Button>
                                  </children>
+                                 <padding>
+                                    <Insets top="1.0" />
+                                 </padding>
                               </HBox>
                               <Text fill="#86b225" strokeType="OUTSIDE" strokeWidth="0.0" text="Filter by division / function" underline="true" GridPane.columnIndex="2">
                                  <font>
@@ -495,7 +498,7 @@
                               </Button>
                            </children>
                            <VBox.margin>
-                              <Insets top="1.0" />
+                              <Insets top="2.0" />
                            </VBox.margin>
                         </GridPane>
                         <ScrollPane hbarPolicy="NEVER" maxHeight="640.0" maxWidth="675.0" minHeight="640.0" style="-fx-border-color: #86b225;">
@@ -611,13 +614,19 @@
             </Tab>
             <Tab style="-fx-background-color: #86b225;" text="Analysis">
                <content>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Work in progress..." />
-                     </children>
+                  <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0">
                      <padding>
                         <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
                      </padding>
+                     <children>
+                        <Text fill="#86b225" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose analysis:" underline="true">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Text>
+                        <ComboBox fx:id="boxAnalysis" onAction="#doViewAnalysis" prefWidth="150.0" style="-fx-background-color: #86b225;" />
+                        <StackPane fx:id="paneAnalysis" maxHeight="636.0" minHeight="636.0" minWidth="675.0" style="-fx-border-color: #86b225;" />
+                     </children>
                   </VBox>
                </content></Tab>
         </tabs>

@@ -20,19 +20,35 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Side;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
@@ -113,6 +129,12 @@ public class MainController {
     
     @FXML
     private StackPane paneDataWV;
+    
+    @FXML
+    private ComboBox<String> boxAnalysis;
+
+    @FXML
+    private StackPane paneAnalysis;
 	
 	private Model model;
 
@@ -822,6 +844,46 @@ public class MainController {
     	}
     }
     
+	@FXML
+	void doViewAnalysis(ActionEvent event) {
+		String analysis = this.boxAnalysis.getSelectionModel().getSelectedItem();
+		double boxAnalysisWidth = this.boxAnalysis.getWidth();
+		double boxAnalysisHeight = this.boxAnalysis.getHeight();
+		HBox hb = new HBox();
+		hb.setPadding(new Insets(10, 10, 10, 10));
+		hb.prefHeightProperty().bind(this.paneAnalysis.heightProperty());
+		hb.prefWidthProperty().bind(this.paneAnalysis.widthProperty());
+		hb.setSpacing(10);
+		
+		BorderStroke borderStroke = new BorderStroke(Paint.valueOf("#86b225"), BorderStrokeStyle.SOLID, new CornerRadii(3), BorderWidths.DEFAULT);
+		Border border = new Border(borderStroke);
+		
+		if(analysis.equals("Partecipation")) {	
+			int perbitEmployees = model.getPerbitEmployees();
+			int users = model.getUsersList().size();
+			
+			double partecipation = ((double) users / (double) perbitEmployees);
+			if(partecipation > 1)
+				partecipation = 1;
+			
+			ObservableList<PieChart.Data> pieChartData1 = FXCollections.observableArrayList(
+				new PieChart.Data("Partecipants", partecipation),
+				new PieChart.Data("Not partecipants", 1 - partecipation));
+			
+			PieChart chart1 = new PieChart(pieChartData1);
+			chart1.setTitle("Partecipation overview");
+			chart1.setLegendVisible(false);
+			chart1.setBorder(border);
+			chart1.setStartAngle(90);
+			
+			chart1.getData().get(0).getNode().setStyle("-fx-pie-color: #86b225;");
+			chart1.getData().get(1).getNode().setStyle("-fx-pie-color: #525F6B;");
+			
+			hb.getChildren().add(chart1);			
+			this.paneAnalysis.getChildren().add(hb);
+		}
+	}
+    
     public void setModel(Model model) {
     	this.model = model;
     	addItemsToBoxANUEmail();
@@ -833,7 +895,12 @@ public class MainController {
     	setOnActionToLinkAutoData();
     	addItemsToWVUsersOutput();
     	addItemsToWVDataOutput();
+    	addItemsToBoxAnalysis();
     }
+
+	private void addItemsToBoxAnalysis() {
+		this.boxAnalysis.getItems().addAll(model.getAnalysis());
+	}
 
 	private void addItemsToWVDataOutput() {
 		WebView wv = new WebView();
@@ -975,7 +1042,7 @@ public class MainController {
 		temp.add("Other");
 		this.boxANUFunction.getItems().addAll(temp);
 	}
-
+	
 	@FXML
     void initialize() {
 		assert txtANUUser != null : "fx:id=\"txtANUUser\" was not injected: check your FXML file 'pswFXML.fxml'.";
@@ -1000,6 +1067,8 @@ public class MainController {
         assert linkAutoData != null : "fx:id=\"linkAutoData\" was not injected: check your FXML file 'pswFXML.fxml'.";
         assert paneUsersWV != null : "fx:id=\"paneUsersWV\" was not injected: check your FXML file 'pswFXML.fxml'.";
         assert paneDataWV != null : "fx:id=\"paneDataWV\" was not injected: check your FXML file 'pswFXML.fxml'.";
+        assert boxAnalysis != null : "fx:id=\"boxAnalysis\" was not injected: check your FXML file 'pswFXML.fxml'.";
+        assert paneAnalysis != null : "fx:id=\"paneAnalysis\" was not injected: check your FXML file 'pswFXML.fxml'.";
 
     }
 }

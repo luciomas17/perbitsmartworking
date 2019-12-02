@@ -11,8 +11,9 @@ public class Model {
 	
 	private UserDao userDao;
 	private DataDao dataDao;
-	private List<String> divisions, functions, locations, fuelTypes, emailDomains;
+	private List<String> divisions, functions, locations, fuelTypes, emailDomains, analysis;
 	private boolean overwrite;
+	private int perbitEmployees;
 	
 	public Model() {
 		this.userDao = new UserDao();
@@ -27,8 +28,20 @@ public class Model {
 		addItemsToFuelTypes();
 		this.emailDomains = new ArrayList<>();
 		addItemsToEmailDomains();
-		
+		this.analysis = new ArrayList<>();
+		addItemsToAnalysis();
 		this.overwrite = false;
+		this.perbitEmployees = 150;
+	}
+
+	public int getPerbitEmployees() {
+		return this.perbitEmployees;
+	}
+	
+	private void addItemsToAnalysis() {
+		this.analysis.add("Partecipation");
+		this.analysis.add("CO₂ saved");
+		this.analysis.add("Time saved");
 	}
 
 	private void addItemsToLocations() {
@@ -237,6 +250,10 @@ public class Model {
 		public int compare(Data d1, Data d2) {
 			return (int) (d2.getKmsSavedAYear()-d1.getKmsSavedAYear());
 		}
+	}
+
+	public List<String> getAnalysis() {
+		return this.analysis;
 	}
 
 }
