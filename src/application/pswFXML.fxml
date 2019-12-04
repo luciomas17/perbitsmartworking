@@ -506,7 +506,7 @@
                               <Insets top="20.0" />
                            </VBox.margin>
                            <content>
-                              <StackPane fx:id="paneUsersWV" maxWidth="671.0" minHeight="636.0" minWidth="671.0" />
+                              <StackPane fx:id="paneUsersWV" minHeight="636.0" minWidth="671.0" />
                            </content>
                         </ScrollPane>
                      </children>
@@ -597,7 +597,7 @@
                               </Button>
                            </children>
                            <VBox.margin>
-                              <Insets top="1.0" />
+                              <Insets top="2.0" />
                            </VBox.margin>
                         </GridPane>
                         <ScrollPane hbarPolicy="NEVER" maxHeight="640.0" maxWidth="675.0" minHeight="640.0" style="-fx-border-color: #86b225;">
@@ -605,7 +605,7 @@
                               <Insets top="20.0" />
                            </VBox.margin>
                            <content>
-                              <StackPane fx:id="paneDataWV" maxWidth="671.0" minHeight="636.0" minWidth="671.0" />
+                              <StackPane fx:id="paneDataWV" minHeight="636.0" minWidth="671.0" />
                            </content>
                         </ScrollPane>
                      </children>
@@ -625,7 +625,10 @@
                            </font>
                         </Text>
                         <ComboBox fx:id="boxAnalysis" onAction="#doViewAnalysis" prefWidth="150.0" style="-fx-background-color: #86b225;" />
-                        <StackPane fx:id="paneAnalysis" maxHeight="636.0" minHeight="636.0" minWidth="675.0" style="-fx-border-color: #86b225;" />
+                        <StackPane fx:id="paneAnalysis" minHeight="648.0" minWidth="675.0" style="-fx-border-color: #86b225;">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin></StackPane>
                      </children>
                   </VBox>
                </content></Tab>

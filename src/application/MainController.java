@@ -27,18 +27,20 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.geometry.Side;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Hyperlink;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.BorderStroke;
@@ -47,7 +49,7 @@ import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -849,11 +851,11 @@ public class MainController {
 		String analysis = this.boxAnalysis.getSelectionModel().getSelectedItem();
 		double boxAnalysisWidth = this.boxAnalysis.getWidth();
 		double boxAnalysisHeight = this.boxAnalysis.getHeight();
-		HBox hb = new HBox();
-		hb.setPadding(new Insets(10, 10, 10, 10));
-		hb.prefHeightProperty().bind(this.paneAnalysis.heightProperty());
-		hb.prefWidthProperty().bind(this.paneAnalysis.widthProperty());
-		hb.setSpacing(10);
+		VBox vb = new VBox();
+		vb.setPadding(new Insets(10, 10, 10, 10));
+		vb.prefHeightProperty().bind(this.paneAnalysis.heightProperty());
+		vb.prefWidthProperty().bind(this.paneAnalysis.widthProperty());
+		vb.setSpacing(10);
 		
 		BorderStroke borderStroke = new BorderStroke(Paint.valueOf("#86b225"), BorderStrokeStyle.SOLID, new CornerRadii(3), BorderWidths.DEFAULT);
 		Border border = new Border(borderStroke);
@@ -866,21 +868,52 @@ public class MainController {
 			if(partecipation > 1)
 				partecipation = 1;
 			
-			ObservableList<PieChart.Data> pieChartData1 = FXCollections.observableArrayList(
-				new PieChart.Data("Partecipants", partecipation),
-				new PieChart.Data("Not partecipants", 1 - partecipation));
+			//PieChart
+			ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
+				new PieChart.Data(String.format("Partecipants %.1f", partecipation * 100) + "%", partecipation),
+				new PieChart.Data(String.format("Not partecipants %.1f", (1 - partecipation) * 100) + "%", 1 - partecipation));
 			
-			PieChart chart1 = new PieChart(pieChartData1);
-			chart1.setTitle("Partecipation overview");
-			chart1.setLegendVisible(false);
-			chart1.setBorder(border);
-			chart1.setStartAngle(90);
+			PieChart pieChart = new PieChart(pieChartData);
+			pieChart.setTitle("Partecipation overview");
+			pieChart.setLegendVisible(false);
+			pieChart.setBorder(border);
+			pieChart.setStartAngle(90);
 			
-			chart1.getData().get(0).getNode().setStyle("-fx-pie-color: #86b225;");
-			chart1.getData().get(1).getNode().setStyle("-fx-pie-color: #525F6B;");
+			pieChart.getData().get(0).getNode().setStyle("-fx-pie-color: #86b225;");
+			pieChart.getData().get(1).getNode().setStyle("-fx-pie-color: #525F6B;");
 			
-			hb.getChildren().add(chart1);			
-			this.paneAnalysis.getChildren().add(hb);
+			vb.getChildren().add(pieChart);			
+			
+			//BarChart
+	        CategoryAxis xAxis = new CategoryAxis();
+	        NumberAxis yAxis = new NumberAxis(0, 30, 5);
+	        BarChart<String,Number> barChart = new BarChart<>(xAxis,yAxis);
+	        barChart.setTitle("Partecipants per division / function");
+	        barChart.setLegendVisible(false);
+	        barChart.setBorder(border);
+	        barChart.setBarGap(0);
+	        xAxis.setLabel("Division / Function");
+	        yAxis.setLabel("Partecipant");
+	        
+	        Series<String, Number> series = new XYChart.Series<>();
+	        for(String s : model.getDivisionsAndFunction()) {
+		       	series.setName(s);
+		        if(s.length() < 10)
+		        	series.getData().add(new XYChart.Data<>(s, model.getUsersListFilteredByDivision(s).size()));
+		        else {
+		        	String name = s.substring(0, 11) + "...";
+		        	series.getData().add(new XYChart.Data<>(name, model.getUsersListFilteredByDivision(s).size()));
+		        }
+	        }       
+	        barChart.getData().add(series);
+	        
+	        for(int i = 0; i < model.getDivisionsAndFunction().size(); i ++)
+	        	barChart.getData().get(0).getData().get(i).getNode().setStyle("-fx-bar-fill: #86b225;");
+	        
+	        vb.getChildren().add(barChart);
+
+	        //Pane
+	        this.paneAnalysis.getChildren().add(vb);
 		}
 	}
     
@@ -900,6 +933,8 @@ public class MainController {
 
 	private void addItemsToBoxAnalysis() {
 		this.boxAnalysis.getItems().addAll(model.getAnalysis());
+		this.boxAnalysis.getSelectionModel().select(1);
+		doViewAnalysis(null);
 	}
 
 	private void addItemsToWVDataOutput() {

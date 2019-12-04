@@ -256,4 +256,15 @@ public class Model {
 		return this.analysis;
 	}
 
+	public List<String> getDivisionsAndFunction() {
+		List<String> result = new ArrayList<>();
+		result.addAll(this.divisions);
+		Collections.sort(result);
+		List<String> functions = this.functions;
+		Collections.sort(functions);
+		result.addAll(functions);
+		
+		return result;
+	}
+
 }
