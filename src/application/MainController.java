@@ -27,7 +27,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
@@ -47,7 +46,6 @@ import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
@@ -181,45 +179,9 @@ public class MainController {
     	}
     	
     	String name = this.txtANUName.getText().toUpperCase();
-    	if(name.equals("")) {
-    		try {
-				FXMLLoader loader = new FXMLLoader(getClass().getResource("dialogFXML.fxml"));
-				BorderPane root = loader.load();
-				DialogController controller = loader.getController();
-				controller.setTxtDialog("Type your name please.");
-				Parent content = root;
-				Scene scene = new Scene(content);
-				Stage window = new Stage();
-				window.setScene(scene);
-				window.setResizable(false);
-				window.show();
-				return;
-				
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-    	}
-    	
+    	    	
     	String surname = this.txtANUSurname.getText().toUpperCase();
-    	if(surname.equals("")) {
-    		try {
-				FXMLLoader loader = new FXMLLoader(getClass().getResource("dialogFXML.fxml"));
-				BorderPane root = loader.load();
-				DialogController controller = loader.getController();
-				controller.setTxtDialog("Type your surname please.");
-				Parent content = root;
-				Scene scene = new Scene(content);
-				Stage window = new Stage();
-				window.setScene(scene);
-				window.setResizable(false);
-				window.show();
-				return;
-				
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-    	}
-    	
+    	    	
     	String email = this.txtANUEmail.getText().toLowerCase();
     	if(email.equals("")) {
     		try {
@@ -849,8 +811,6 @@ public class MainController {
 	@FXML
 	void doViewAnalysis(ActionEvent event) {
 		String analysis = this.boxAnalysis.getSelectionModel().getSelectedItem();
-		double boxAnalysisWidth = this.boxAnalysis.getWidth();
-		double boxAnalysisHeight = this.boxAnalysis.getHeight();
 		VBox vb = new VBox();
 		vb.setPadding(new Insets(10, 10, 10, 10));
 		vb.prefHeightProperty().bind(this.paneAnalysis.heightProperty());
