@@ -363,7 +363,7 @@
                                        <children>
                                           <Text strokeType="OUTSIDE" strokeWidth="0.0" text="If you can't find it, look for your car" />
                                           <Hyperlink fx:id="linkAutoData" prefHeight="0.0" prefWidth="32.0" text="here" textFill="#86b225" underline="true" />
-                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="and check the &quot;performance specs&quot; section." />
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="and check the CO₂ emissions section." />
                                        </children>
                                     </HBox>
                                  </children>

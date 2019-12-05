@@ -8,7 +8,7 @@ import com.zaxxer.hikari.HikariDataSource;
 
 public class HSQLConnect {
 	
-	private static final String jdbcURL = "jdbc:hsqldb:file:G:\\5. Gestione Reparto\\CO2\\db\\hsql\\db;ifexists=true;hsqldb.lock_file=false";
+	private static final String jdbcURL = "jdbc:hsqldb:file:G:\\5. Gestione Reparto\\CO2\\db\\hsql\\db;ifexists=true;hsqldb.lock_file=false;shutdown=true";
 	private static HikariDataSource ds;
 	
 	public static Connection connection() {

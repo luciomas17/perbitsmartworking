@@ -1326,7 +1326,7 @@ public class MainController {
             @Override
             public void handle(ActionEvent t) {
             	try {
-					Desktop.getDesktop().browse(new URI("https://www.auto-data.net/en/"));
+					Desktop.getDesktop().browse(new URI("https://www.nextgreencar.com/emissions/make-model/"));
 				} catch (IOException | URISyntaxException e) {
 					e.printStackTrace();
 				}
