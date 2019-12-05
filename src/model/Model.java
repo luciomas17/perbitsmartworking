@@ -12,8 +12,9 @@ public class Model {
 	private UserDao userDao;
 	private DataDao dataDao;
 	private List<String> divisions, functions, locations, fuelTypes, emailDomains, analysis;
-	private boolean overwrite;
+	private boolean overwrite, adminLogged;
 	private int perbitEmployees;
+	private String admin, pwdAdmin;
 	
 	public Model() {
 		this.userDao = new UserDao();
@@ -32,6 +33,17 @@ public class Model {
 		addItemsToAnalysis();
 		this.overwrite = false;
 		this.perbitEmployees = 150;
+		this.admin = "pws";
+		this.pwdAdmin = "pws1234";
+		this.adminLogged = false;
+	}
+	
+	public boolean isAdminLogged() {
+		return adminLogged;
+	}
+
+	public void setAdminLogged(boolean adminLogged) {
+		this.adminLogged = adminLogged;
 	}
 
 	public int getPerbitEmployees() {
@@ -270,6 +282,14 @@ public class Model {
 	public void clearDatabase() {
 		this.userDao.clearDatabase();
 		this.dataDao.clearDatabase();
+	}
+
+	public String getAdmin() {
+		return this.admin;
+	}
+	
+	public String getPwdAdmin() {
+		return this.pwdAdmin;
 	}
 
 }

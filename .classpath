@@ -7,5 +7,6 @@
 	<classpathentry kind="lib" path="libraries/slf4j-api-1.7.26.jar"/>
 	<classpathentry kind="lib" path="libraries/slf4j-simple-1.7.26.jar"/>
 	<classpathentry kind="lib" path="libraries/hsqldb.jar"/>
+	<classpathentry kind="lib" path="libraries/HikariCP-3.3.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

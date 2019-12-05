@@ -40,8 +40,10 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.BorderStroke;
@@ -61,11 +63,14 @@ import model.User;
 
 public class MainController {
 
-    @FXML
+	@FXML
     private ResourceBundle resources;
 
     @FXML
     private URL location;
+
+    @FXML
+    private ImageView imgViewANU;
 
     @FXML
     private TextField txtANUUser;
@@ -107,7 +112,13 @@ public class MainController {
     private ComboBox<String> boxANUFuelType;
 
     @FXML
+    private Hyperlink linkAutoData;
+
+    @FXML
     private CheckBox boxANUConsent;
+
+    @FXML
+    private HBox hboxUsersFinder;
 
     @FXML
     private TextField txtUsersUser;
@@ -116,28 +127,40 @@ public class MainController {
     private ComboBox<String> boxUsersDivisions;
 
     @FXML
-    private TextArea txtUsersOutput;
+    private ImageView imgViewUsers;
+
+    @FXML
+    private StackPane paneUsersWV;
+
+    @FXML
+    private HBox hboxDataFinder;
 
     @FXML
     private TextField txtDataUser;
 
     @FXML
-    private TextArea txtDataOutput;
-    
-    @FXML
-    private Hyperlink linkAutoData;
-    
-    @FXML
-    private StackPane paneUsersWV;
-    
+    private ImageView imgViewData;
+
     @FXML
     private StackPane paneDataWV;
-    
+
     @FXML
     private ComboBox<String> boxAnalysis;
 
     @FXML
+    private ImageView imgViewAnalysis;
+
+    @FXML
     private StackPane paneAnalysis;
+
+    @FXML
+    private TextField txtAdmin;
+
+    @FXML
+    private PasswordField txtPassword;
+    
+    @FXML
+    private VBox vboxAdmin;
 	
 	private Model model;
 
@@ -802,8 +825,7 @@ public class MainController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			} 
-    	}
-    	else {
+    	} else {
     		this.paneUsersWV.getChildren().clear();
 	    	List<User> temp = new ArrayList<>();
 	    	temp.add(result);
@@ -1075,6 +1097,104 @@ public class MainController {
 		doViewAnalysis(null);
 	}
 	
+	@FXML
+    void doEnter(ActionEvent event) {
+		if(this.txtAdmin.getText().equals(model.getAdmin()) && this.txtPassword.getText().equals(model.getPwdAdmin())) {
+			this.vboxAdmin.setDisable(false);
+			this.vboxAdmin.setOpacity(1);
+			
+		} else {
+			try {
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("dialogFXML.fxml"));
+				BorderPane root = loader.load();
+				DialogController controller = loader.getController();
+				controller.setTxtDialog("Wrong admin and/or password.");
+				Parent content = root;
+				Scene scene = new Scene(content);
+				Stage window = new Stage();
+				window.setScene(scene);
+				window.setResizable(false);
+				window.show();
+				return;
+	
+			} catch (IOException e) {
+				e.printStackTrace();
+			} 
+		}
+
+    }
+	
+	@FXML
+    void doExit(ActionEvent event) {
+		this.txtAdmin.clear();
+		this.txtPassword.clear();
+		
+		this.vboxAdmin.setDisable(true);
+		this.vboxAdmin.setOpacity(0);
+		
+		model.setAdminLogged(false);
+		this.hboxUsersFinder.setDisable(true);
+		this.hboxDataFinder.setDisable(true);
+		doUsersReload(null);
+	    doDataReload(null);
+    }
+	
+	@FXML
+    void doShowHideUsernames(ActionEvent event) {
+		if(model.isAdminLogged()) {
+			model.setAdminLogged(false);
+			this.hboxUsersFinder.setDisable(true);
+			this.hboxDataFinder.setDisable(true);
+			
+		} else if(!model.isAdminLogged()) {
+			model.setAdminLogged(true);
+			this.hboxUsersFinder.setDisable(false);
+			this.hboxDataFinder.setDisable(false);
+		}
+		
+		doUsersReload(null);
+	    doDataReload(null);
+	    
+	    try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("dialogFXML.fxml"));
+			BorderPane root = loader.load();
+			DialogController controller = loader.getController();
+			controller.setTxtDialog("Done!");
+			Parent content = root;
+			Scene scene = new Scene(content);
+			Stage window = new Stage();
+			window.setScene(scene);
+			window.setResizable(false);
+			window.show();
+			return;
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} 
+    }
+	
+	@FXML
+    void doClearDatabase(ActionEvent event) {
+		model.clearDatabase();
+
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("dialogFXML.fxml"));
+			BorderPane root = loader.load();
+			DialogController controller = loader.getController();
+			controller.setTxtDialog("Done!");
+			Parent content = root;
+			Scene scene = new Scene(content);
+			Stage window = new Stage();
+			window.setScene(scene);
+			window.setResizable(false);
+			window.show();
+			return;
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} 
+    }
+	
     public void setModel(Model model) {
     	this.model = model;
     	addItemsToBoxANUEmail();
@@ -1087,7 +1207,15 @@ public class MainController {
     	addItemsToWVUsersOutput();
     	addItemsToWVDataOutput();
     	addItemsToBoxAnalysis();
+    	addPathToImgViews();
     }
+
+	private void addPathToImgViews() {
+		this.imgViewANU.setImage(new Image(getClass().getResourceAsStream("eco.png")));
+		this.imgViewUsers.setImage(new Image(getClass().getResourceAsStream("reload.png")));
+		this.imgViewData.setImage(new Image(getClass().getResourceAsStream("reload.png")));
+		this.imgViewAnalysis.setImage(new Image(getClass().getResourceAsStream("reload.png")));
+	}
 
 	private void addItemsToBoxAnalysis() {
 		this.boxAnalysis.getItems().addAll(model.getAnalysis());
@@ -1123,8 +1251,16 @@ public class MainController {
 				result += "</tr>";
 			} else {
 				for(Data d : dataList) {
+					String username = d.getUser().getUser();
+					if(!model.isAdminLogged()) {
+						int usernameLenght = username.length();
+						username = username.substring(0, 1);
+						for(int i = 0; i < usernameLenght - 1; i ++)
+							username += "*";
+					}
+					
 					result += "<tr>";
-						result += "<td>" + d.getUser().getUser() + "</td>";
+						result += "<td>" + username + "</td>";
 						result += "<td>" + d.getUser().getSmartDays() + "</td>";
 						result += "<td>" + d.getKmsSavedADay() + "</td>";
 						result += "<td>" + d.getGramsOfCO2SavedADay() + "</td>";
@@ -1164,8 +1300,16 @@ public class MainController {
 				result += "</tr>";
 			} else {
 				for(User u : usersList) {
+					String username = u.getUser();
+					if(!model.isAdminLogged()) {
+						int usernameLenght = username.length();
+						username = username.substring(0, 1);
+						for(int i = 0; i < usernameLenght - 1; i ++)
+							username += "*";
+					}
+					
 					result += "<tr>";
-						result += "<td>" + u.getUser() + "</td>";
+						result += "<td>" + username + "</td>";
 						result += "<td>" + u.getDivisionOrFunction() + "</td>";
 						result += "<td>" + u.getLocation() + "</td>";
 						result += "<td>" + u.getFuelType() + "</td>";
@@ -1238,7 +1382,8 @@ public class MainController {
 	
 	@FXML
     void initialize() {
-		assert txtANUUser != null : "fx:id=\"txtANUUser\" was not injected: check your FXML file 'pswFXML.fxml'.";
+        assert imgViewANU != null : "fx:id=\"imgViewANU\" was not injected: check your FXML file 'pswFXML.fxml'.";
+        assert txtANUUser != null : "fx:id=\"txtANUUser\" was not injected: check your FXML file 'pswFXML.fxml'.";
         assert txtANUName != null : "fx:id=\"txtANUName\" was not injected: check your FXML file 'pswFXML.fxml'.";
         assert txtANUSurname != null : "fx:id=\"txtANUSurname\" was not injected: check your FXML file 'pswFXML.fxml'.";
         assert txtANUEmail != null : "fx:id=\"txtANUEmail\" was not injected: check your FXML file 'pswFXML.fxml'.";
@@ -1251,17 +1396,23 @@ public class MainController {
         assert txtANUKmsSaved != null : "fx:id=\"txtANUKmsSaved\" was not injected: check your FXML file 'pswFXML.fxml'.";
         assert txtANUCO2emissions != null : "fx:id=\"txtANUCO2emissions\" was not injected: check your FXML file 'pswFXML.fxml'.";
         assert boxANUFuelType != null : "fx:id=\"boxANUFuelType\" was not injected: check your FXML file 'pswFXML.fxml'.";
+        assert linkAutoData != null : "fx:id=\"linkAutoData\" was not injected: check your FXML file 'pswFXML.fxml'.";
         assert boxANUConsent != null : "fx:id=\"boxANUConsent\" was not injected: check your FXML file 'pswFXML.fxml'.";
+        assert hboxUsersFinder != null : "fx:id=\"hboxUsersFinder\" was not injected: check your FXML file 'pswFXML.fxml'.";
         assert txtUsersUser != null : "fx:id=\"txtUsersUser\" was not injected: check your FXML file 'pswFXML.fxml'.";
         assert boxUsersDivisions != null : "fx:id=\"boxUsersDivisions\" was not injected: check your FXML file 'pswFXML.fxml'.";
-        assert txtUsersOutput != null : "fx:id=\"txtUsersOutput\" was not injected: check your FXML file 'pswFXML.fxml'.";
-        assert txtDataUser != null : "fx:id=\"txtDataUser\" was not injected: check your FXML file 'pswFXML.fxml'.";
-        assert txtDataOutput != null : "fx:id=\"txtDataOutput\" was not injected: check your FXML file 'pswFXML.fxml'.";
-        assert linkAutoData != null : "fx:id=\"linkAutoData\" was not injected: check your FXML file 'pswFXML.fxml'.";
+        assert imgViewUsers != null : "fx:id=\"imgViewUsers\" was not injected: check your FXML file 'pswFXML.fxml'.";
         assert paneUsersWV != null : "fx:id=\"paneUsersWV\" was not injected: check your FXML file 'pswFXML.fxml'.";
+        assert hboxDataFinder != null : "fx:id=\"hboxDataFinder\" was not injected: check your FXML file 'pswFXML.fxml'.";
+        assert txtDataUser != null : "fx:id=\"txtDataUser\" was not injected: check your FXML file 'pswFXML.fxml'.";
+        assert imgViewData != null : "fx:id=\"imgViewData\" was not injected: check your FXML file 'pswFXML.fxml'.";
         assert paneDataWV != null : "fx:id=\"paneDataWV\" was not injected: check your FXML file 'pswFXML.fxml'.";
         assert boxAnalysis != null : "fx:id=\"boxAnalysis\" was not injected: check your FXML file 'pswFXML.fxml'.";
+        assert imgViewAnalysis != null : "fx:id=\"imgViewAnalysis\" was not injected: check your FXML file 'pswFXML.fxml'.";
         assert paneAnalysis != null : "fx:id=\"paneAnalysis\" was not injected: check your FXML file 'pswFXML.fxml'.";
+        assert txtAdmin != null : "fx:id=\"txtAdmin\" was not injected: check your FXML file 'pswFXML.fxml'.";
+        assert txtPassword != null : "fx:id=\"txtPassword\" was not injected: check your FXML file 'pswFXML.fxml'.";
+        assert vboxAdmin != null : "fx:id=\"vboxAdmin\" was not injected: check your FXML file 'pswFXML.fxml'.";
 
     }
 }

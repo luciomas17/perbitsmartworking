@@ -158,16 +158,15 @@ public class UserDao {
 	}
 
 	public User getUserFromUsername(String username) {
-		String sql = "SELECT * FROM users WHERE user = ?";
-		User result = null;
+		String sql = "SELECT * FROM users";
+		List<User> result = new ArrayList<>();
 		
 		try {
 			Connection conn = HSQLConnect.connection();
 			PreparedStatement st = conn.prepareStatement(sql);	
-			st.setString(1, username);
 			ResultSet res = st.executeQuery();
 			
-			if(res.next()) {
+			while(res.next()) {
 				try {
 					String user = res.getString("user");
 					String name = res.getString("name");
@@ -185,15 +184,20 @@ public class UserDao {
 					if(consentInt == 1)
 						consent = true;
 						
-					result = new User(user, name, surname, email, divisionOrFunction, location, fuelType, gramsOfCO2, smartDays, kmsSaved, timeSaved, consent);
+					result.add(new User(user, name, surname, email, divisionOrFunction, location, fuelType, gramsOfCO2, smartDays, kmsSaved, timeSaved, consent));
 				} catch (Throwable t) {
 					t.printStackTrace();
 				}
 			}
 			
 			conn.close();
-			return result;
-
+			for(User u : result) {
+				if(u.getUser().equals(username))
+					return u;
+			}
+			
+			return null;
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;

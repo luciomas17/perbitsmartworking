@@ -5,11 +5,11 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -45,11 +45,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../img/eco.png" />
-               </image>
-            </ImageView>
+            <ImageView fx:id="imgViewANU" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
             <Text fill="#00000099" strokeType="OUTSIDE" strokeWidth="0.0" text="Powered by Omar Panebianco" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
                <font>
                   <Font name="System Italic" size="10.0" />
@@ -408,12 +404,12 @@
                               <Insets top="30.0" />
                            </VBox.margin>
                            <children>
-                              <Button mnemonicParsing="false" onAction="#doANUSubmit" style="-fx-background-color: #86b225;" text="Submit">
+                              <Button minHeight="25.0" minWidth="57.0" mnemonicParsing="false" onAction="#doANUSubmit" style="-fx-background-color: #86b225;" text="Submit">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Button>
-                              <Button mnemonicParsing="false" onAction="#doANUReset" style="-fx-border-color: #86b225; -fx-border-radius: 3;" text="Reset">
+                              <Button minHeight="27.0" minWidth="49.0" mnemonicParsing="false" onAction="#doANUReset" style="-fx-border-color: #86b225; -fx-border-radius: 3;" text="Reset">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
@@ -427,7 +423,7 @@
                   </VBox>
                </content>
             </Tab>
-            <Tab style="-fx-background-color: #86b225;" text="Users">
+            <Tab closable="false" style="-fx-background-color: #86b225;" text="Users">
                <content>
                   <VBox alignment="TOP_CENTER">
                      <padding>
@@ -450,7 +446,7 @@
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Text>
-                              <HBox alignment="BOTTOM_CENTER" prefHeight="36.0" prefWidth="246.0" spacing="5.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                              <HBox fx:id="hboxUsersFinder" alignment="BOTTOM_CENTER" disable="true" prefHeight="36.0" prefWidth="246.0" spacing="5.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                                  <children>
                                     <TextField fx:id="txtUsersUser" maxWidth="100.0" style="-fx-border-color: #86b225; -fx-border-radius: 3;" />
                                     <Button minHeight="26.0" mnemonicParsing="false" onAction="#doUsersFindUserByUsername" style="-fx-background-color: #86b225;" text="Find">
@@ -483,11 +479,7 @@
                               </HBox>
                               <Button mnemonicParsing="false" onAction="#doUsersReload" style="-fx-border-color: #86b225; -fx-border-radius: 3;" GridPane.rowIndex="1">
                                  <graphic>
-                                    <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../img/reload.png" />
-                                       </image>
-                                    </ImageView>
+                                    <ImageView fx:id="imgViewUsers" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
                                  </graphic>
                                  <padding>
                                     <Insets bottom="7.0" left="10.0" right="10.0" top="7.0" />
@@ -542,7 +534,7 @@
                                     <Insets left="1.0" />
                                  </GridPane.margin>
                               </Text>
-                              <HBox alignment="BOTTOM_CENTER" prefHeight="36.0" prefWidth="138.0" spacing="5.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                              <HBox fx:id="hboxDataFinder" alignment="BOTTOM_CENTER" disable="true" prefHeight="36.0" prefWidth="138.0" spacing="5.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                                  <children>
                                     <TextField fx:id="txtDataUser" maxWidth="100.0" style="-fx-border-color: #86b225; -fx-border-radius: 3;" />
                                     <Button minHeight="26.0" mnemonicParsing="false" onAction="#doDataFindUserByUsername" prefWidth="41.0" style="-fx-background-color: #86b225;" text="Find">
@@ -582,11 +574,7 @@
                               </Button>
                               <Button mnemonicParsing="false" onAction="#doDataReload" style="-fx-border-color: #86b225; -fx-border-radius: 3;" GridPane.rowIndex="1">
                                  <graphic>
-                                    <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../img/reload.png" />
-                                       </image>
-                                    </ImageView>
+                                    <ImageView fx:id="imgViewData" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
                                  </graphic>
                                  <padding>
                                     <Insets bottom="7.0" left="10.0" right="10.0" top="7.0" />
@@ -612,7 +600,7 @@
                   </VBox>
                </content>
             </Tab>
-            <Tab style="-fx-background-color: #86b225;" text="Analysis">
+            <Tab closable="false" style="-fx-background-color: #86b225;" text="Analysis">
                <content>
                   <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
                      <padding>
@@ -637,11 +625,7 @@
                               <ComboBox fx:id="boxAnalysis" onAction="#doViewAnalysis" prefWidth="150.0" style="-fx-background-color: #86b225;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <Button mnemonicParsing="false" onAction="#doAnalysisReload" style="-fx-border-color: #86b225; -fx-border-radius: 3;" GridPane.rowIndex="1">
                                  <graphic>
-                                    <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../img/reload.png" />
-                                       </image>
-                                    </ImageView>
+                                    <ImageView fx:id="imgViewAnalysis" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
                                  </graphic>
                                  <padding>
                                     <Insets bottom="7.0" left="10.0" right="10.0" top="7.0" />
@@ -662,6 +646,65 @@
                      </children>
                   </VBox>
                </content></Tab>
+            <Tab closable="false" text="Options">
+               <content>
+                  <VBox alignment="TOP_CENTER" spacing="10.0">
+                     <children>
+                        <GridPane hgap="5.0" vgap="5.0">
+                          <columnConstraints>
+                            <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="297.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="373.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Admin:" />
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Password:" GridPane.rowIndex="1" />
+                              <TextField fx:id="txtAdmin" maxWidth="125.0" style="-fx-border-color: #86b225; -fx-border-radius: 3;" GridPane.columnIndex="1" />
+                              <Button minWidth="57.0" mnemonicParsing="false" onAction="#doEnter" style="-fx-background-color: #86b225;" text="Enter" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets top="10.0" />
+                                 </GridPane.margin>
+                              </Button>
+                              <PasswordField fx:id="txtPassword" maxWidth="125.0" style="-fx-border-color: #86b225; -fx-border-radius: 3;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                           </children>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </GridPane>
+                        <VBox fx:id="vboxAdmin" alignment="CENTER" disable="true" opacity="0.0" spacing="10.0" style="-fx-border-color: #86b225; -fx-border-radius: 3;">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                           <children>
+                              <Button minWidth="250.0" mnemonicParsing="false" onAction="#doShowHideUsernames" text="Show / Hide usernames" />
+                              <Button minWidth="250.0" mnemonicParsing="false" onAction="#doClearDatabase" text="Clear Database" />
+                              <Button minWidth="57.0" mnemonicParsing="false" onAction="#doExit" style="-fx-background-color: #86b225;" text="Exit">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </Button>
+                           </children>
+                           <padding>
+                              <Insets bottom="10.0" top="10.0" />
+                           </padding>
+                        </VBox>
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
+                     </padding>
+                  </VBox>
+               </content>
+            </Tab>
         </tabs>
       </TabPane>
    </center>
