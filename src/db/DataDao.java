@@ -158,4 +158,19 @@ public class DataDao {
 		}
 	}
 
+	public void clearDatabase() {
+		String sql = "DELETE FROM data";
+		
+		try {
+			Connection conn = HSQLConnect.connection();
+			PreparedStatement st = conn.prepareStatement(sql);
+			st.execute();
+						
+			conn.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 }

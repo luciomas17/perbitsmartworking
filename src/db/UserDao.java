@@ -200,4 +200,19 @@ public class UserDao {
 		}
 	}
 
+	public void clearDatabase() {
+		String sql = "DELETE FROM users";
+		
+		try {
+			Connection conn = HSQLConnect.connection();
+			PreparedStatement st = conn.prepareStatement(sql);
+			st.execute();
+						
+			conn.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 }

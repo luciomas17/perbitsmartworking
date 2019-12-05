@@ -27,6 +27,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
@@ -38,6 +39,7 @@ import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Border;
@@ -46,6 +48,7 @@ import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
@@ -586,6 +589,10 @@ public class MainController {
 	    } catch (MessagingException mex) {
 	    	mex.printStackTrace();
 	    }
+	    
+	    doUsersReload(null);
+	    doDataReload(null);
+	    doAnalysisReload(null);
     }
 
     @FXML
@@ -810,6 +817,8 @@ public class MainController {
     
 	@FXML
 	void doViewAnalysis(ActionEvent event) {
+		this.paneAnalysis.getChildren().clear();
+		
 		String analysis = this.boxAnalysis.getSelectionModel().getSelectedItem();
 		VBox vb = new VBox();
 		vb.setPadding(new Insets(10, 10, 10, 10));
@@ -870,13 +879,202 @@ public class MainController {
 	        for(int i = 0; i < model.getDivisionsAndFunction().size(); i ++)
 	        	barChart.getData().get(0).getData().get(i).getNode().setStyle("-fx-bar-fill: #86b225;");
 	        
-	        vb.getChildren().add(barChart);
+	        vb.getChildren().add(barChart);	        
+	        
+		} else if(analysis.equals("CO₂ saved")) {
+			//Pane
+			StackPane paneCO2Saved = new StackPane();
+			paneCO2Saved.setBorder(border);
+			paneCO2Saved.setAlignment(Pos.CENTER);
+			VBox vb2 = new VBox();
+			vb2.setAlignment(Pos.CENTER);
+			vb2.setSpacing(20);
+			vb2.setPadding(new Insets(10,0,10,0));
+			
+			Label title = new Label("Total CO₂ saved in 2019");
+			title.setStyle("-fx-font-size: 18;");
+			vb2.getChildren().add(title);
+			
+			double totalCO2Saved = 0;
+			for(Data d : model.getDataList())
+				totalCO2Saved += d.getGramsOfCO2SavedAYear();
+			totalCO2Saved = totalCO2Saved/1000;
+			Label CO2amount = new Label(String.format("%.2f Kgs", totalCO2Saved));
+			CO2amount.setStyle("-fx-font-size: 36; -fx-font-weight: bold;");
+			vb2.getChildren().add(CO2amount);
+			
+			paneCO2Saved.getChildren().add(vb2);
+			vb.getChildren().add(paneCO2Saved);
+			
+			//BarChart
+	        CategoryAxis xAxis = new CategoryAxis();
+	        NumberAxis yAxis = new NumberAxis(0, 1000, 100);
+	        BarChart<String,Number> barChart = new BarChart<>(xAxis,yAxis);
+	        barChart.setTitle("CO₂ saved per division / function");
+	        barChart.setLegendVisible(false);
+	        barChart.setBorder(border);
+	        barChart.setBarGap(0);
+	        xAxis.setLabel("Division / Function");
+	        yAxis.setLabel("Kilograms of CO₂ saved");
+	        
+	        Series<String, Number> series = new XYChart.Series<>();
+	        for(String s : model.getDivisionsAndFunction()) {
+		       	series.setName(s);
+		       	totalCO2Saved = 0;
+		       	for(User u : model.getUsersListFilteredByDivision(s))
+		       		totalCO2Saved += model.calculateGramsOfCO2SavedAYear(u);
+		       	totalCO2Saved = totalCO2Saved/1000;
+		 
+		        if(s.length() < 10)
+		        	series.getData().add(new XYChart.Data<>(s, totalCO2Saved));
+		        else {
+		        	String name = s.substring(0, 11) + "...";
+		        	series.getData().add(new XYChart.Data<>(name, totalCO2Saved));
+		        }
+	        }       
+	        barChart.getData().add(series);
+	        
+	        for(int i = 0; i < model.getDivisionsAndFunction().size(); i ++)
+	        	barChart.getData().get(0).getData().get(i).getNode().setStyle("-fx-bar-fill: #86b225;");
+	        
+	        vb.getChildren().add(barChart);	    
+	        
+	        //Pane2
+			StackPane bestDivision = new StackPane();
+			bestDivision.setBorder(border);
+			bestDivision.setAlignment(Pos.CENTER);
+			HBox hb = new HBox();
+			hb.setAlignment(Pos.CENTER);
+			hb.setSpacing(20);
+			hb.setPadding(new Insets(10,0,10,0));
+			
+			Label title2 = new Label("Division / function which saved the most of CO₂ in 2019  ⇾");
+			title2.setStyle("-fx-font-size: 18;");
+			hb.getChildren().add(title2);
+			
+			double bestCO2Saved = 0;
+			Label bestDivisionOrFunction = new Label("");
+			for(String s : model.getDivisionsAndFunction()) {
+				totalCO2Saved = 0;
+		       	for(User u : model.getUsersListFilteredByDivision(s))
+		       		totalCO2Saved += model.calculateGramsOfCO2SavedAYear(u);
 
-	        //Pane
-	        this.paneAnalysis.getChildren().add(vb);
+		       	if(totalCO2Saved > bestCO2Saved) {
+		       		bestCO2Saved = totalCO2Saved;
+		       		bestDivisionOrFunction.setText(s);
+		       	}
+			}
+			
+			bestDivisionOrFunction.setStyle("-fx-font-size: 36; -fx-font-weight: bold;");
+			hb.getChildren().add(bestDivisionOrFunction);
+			
+			bestDivision.getChildren().add(hb);
+			vb.getChildren().add(bestDivision);
+			
+		} else if(analysis.equals("Time saved")) {
+			//Pane
+			StackPane paneTimeSaved = new StackPane();
+			paneTimeSaved.setBorder(border);
+			paneTimeSaved.setAlignment(Pos.CENTER);
+			VBox vb2 = new VBox();
+			vb2.setAlignment(Pos.CENTER);
+			vb2.setSpacing(20);
+			vb2.setPadding(new Insets(10,0,10,0));
+			
+			Label title = new Label("Total time saved in 2019");
+			title.setStyle("-fx-font-size: 18;");
+			vb2.getChildren().add(title);
+			
+			int totalTimeSaved = 0;
+			for(User u : model.getUsersList())
+				totalTimeSaved += u.getTimeSaved() * u.getSmartDays();
+			
+			int days = (totalTimeSaved / 60) / 24;
+			int hours = (totalTimeSaved - ((days * 24) * 60)) / 60;
+			int minutes = totalTimeSaved - ((days * 24) * 60) - (hours * 60);
+			
+			Label CO2amount = new Label(String.format("%d d  %d h  %d m", days, hours, minutes));
+			CO2amount.setStyle("-fx-font-size: 36; -fx-font-weight: bold;");
+			vb2.getChildren().add(CO2amount);
+			
+			paneTimeSaved.getChildren().add(vb2);
+			vb.getChildren().add(paneTimeSaved);
+			
+			//BarChart
+	        CategoryAxis xAxis = new CategoryAxis();
+	        NumberAxis yAxis = new NumberAxis(0, 200, 20);
+	        BarChart<String,Number> barChart = new BarChart<>(xAxis,yAxis);
+	        barChart.setTitle("Time saved per division / function");
+	        barChart.setLegendVisible(false);
+	        barChart.setBorder(border);
+	        barChart.setBarGap(0);
+	        xAxis.setLabel("Division / Function");
+	        yAxis.setLabel("Hours saved");
+	        
+	        Series<String, Number> series = new XYChart.Series<>();
+	        for(String s : model.getDivisionsAndFunction()) {
+		       	series.setName(s);
+		       	totalTimeSaved = 0;
+		       	for(User u : model.getUsersListFilteredByDivision(s))
+		       		totalTimeSaved += u.getTimeSaved() * u.getSmartDays();
+		       	totalTimeSaved = totalTimeSaved/60;
+		 
+		        if(s.length() < 10)
+		        	series.getData().add(new XYChart.Data<>(s, totalTimeSaved));
+		        else {
+		        	String name = s.substring(0, 11) + "...";
+		        	series.getData().add(new XYChart.Data<>(name, totalTimeSaved));
+		        }
+	        }       
+	        barChart.getData().add(series);
+	        
+	        for(int i = 0; i < model.getDivisionsAndFunction().size(); i ++)
+	        	barChart.getData().get(0).getData().get(i).getNode().setStyle("-fx-bar-fill: #008ECF;");
+	        
+	        vb.getChildren().add(barChart);	    
+	        
+	        //Pane2
+			StackPane bestDivision = new StackPane();
+			bestDivision.setBorder(border);
+			bestDivision.setAlignment(Pos.CENTER);
+			HBox hb = new HBox();
+			hb.setAlignment(Pos.CENTER);
+			hb.setSpacing(20);
+			hb.setPadding(new Insets(10,0,10,0));
+			
+			Label title2 = new Label("Division / function which saved the most of time in 2019  ⇾");
+			title2.setStyle("-fx-font-size: 18;");
+			hb.getChildren().add(title2);
+			
+			double bestTimeSaved = 0;
+			Label bestDivisionOrFunction = new Label("");
+			for(String s : model.getDivisionsAndFunction()) {
+				totalTimeSaved = 0;
+		       	for(User u : model.getUsersListFilteredByDivision(s))
+		       		totalTimeSaved += u.getTimeSaved() * u.getSmartDays();
+
+		       	if(totalTimeSaved > bestTimeSaved) {
+		       		bestTimeSaved = totalTimeSaved;
+		       		bestDivisionOrFunction.setText(s);
+		       	}
+			}
+			
+			bestDivisionOrFunction.setStyle("-fx-font-size: 36; -fx-font-weight: bold;");
+			hb.getChildren().add(bestDivisionOrFunction);
+			
+			bestDivision.getChildren().add(hb);
+			vb.getChildren().add(bestDivision);
+			
 		}
+		
+		this.paneAnalysis.getChildren().add(vb);
 	}
     
+	@FXML
+	void doAnalysisReload(ActionEvent event) {
+		doViewAnalysis(null);
+	}
+	
     public void setModel(Model model) {
     	this.model = model;
     	addItemsToBoxANUEmail();

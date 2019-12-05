@@ -6,6 +6,8 @@ public class TestModel {
 
 		Model model = new Model();
 		
+		model.clearDatabase();
+		
 		System.out.println(model.getUsersList());
 		System.out.println(model.getDataList());
 

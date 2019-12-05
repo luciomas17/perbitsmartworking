@@ -506,7 +506,7 @@
                               <Insets top="20.0" />
                            </VBox.margin>
                            <content>
-                              <StackPane fx:id="paneUsersWV" minHeight="636.0" minWidth="671.0" />
+                              <StackPane fx:id="paneUsersWV" maxWidth="671.0" minHeight="636.0" minWidth="671.0" />
                            </content>
                         </ScrollPane>
                      </children>
@@ -605,7 +605,7 @@
                               <Insets top="20.0" />
                            </VBox.margin>
                            <content>
-                              <StackPane fx:id="paneDataWV" minHeight="636.0" minWidth="671.0" />
+                              <StackPane fx:id="paneDataWV" maxWidth="671.0" minHeight="636.0" minWidth="671.0" />
                            </content>
                         </ScrollPane>
                      </children>
@@ -619,13 +619,43 @@
                         <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
                      </padding>
                      <children>
-                        <Text fill="#86b225" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose analysis:" underline="true">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <ComboBox fx:id="boxAnalysis" onAction="#doViewAnalysis" prefWidth="150.0" style="-fx-background-color: #86b225;" />
-                        <StackPane fx:id="paneAnalysis" maxWidth="675.0" minHeight="648.0" minWidth="675.0" style="-fx-border-color: #86b225;">
+                        <GridPane alignment="CENTER" hgap="5.0" maxWidth="675.0" vgap="5.0">
+                          <columnConstraints>
+                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="79.0" minWidth="10.0" prefWidth="79.0" />
+                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" valignment="BOTTOM" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Text fill="#86b225" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose analysis:" underline="true" GridPane.columnIndex="1">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Text>
+                              <ComboBox fx:id="boxAnalysis" onAction="#doViewAnalysis" prefWidth="150.0" style="-fx-background-color: #86b225;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Button mnemonicParsing="false" onAction="#doAnalysisReload" style="-fx-border-color: #86b225; -fx-border-radius: 3;" GridPane.rowIndex="1">
+                                 <graphic>
+                                    <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../img/reload.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <padding>
+                                    <Insets bottom="7.0" left="10.0" right="10.0" top="7.0" />
+                                 </padding>
+                                 <GridPane.margin>
+                                    <Insets />
+                                 </GridPane.margin>
+                              </Button>
+                           </children>
+                           <VBox.margin>
+                              <Insets left="1.0" top="2.0" />
+                           </VBox.margin>
+                        </GridPane>
+                        <StackPane fx:id="paneAnalysis" maxHeight="640.0" maxWidth="675.0" minHeight="640.0" minWidth="675.0" style="-fx-border-color: #86b225;">
                            <VBox.margin>
                               <Insets top="10.0" />
                            </VBox.margin></StackPane>

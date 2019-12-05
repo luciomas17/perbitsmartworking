@@ -267,4 +267,9 @@ public class Model {
 		return result;
 	}
 
+	public void clearDatabase() {
+		this.userDao.clearDatabase();
+		this.dataDao.clearDatabase();
+	}
+
 }
