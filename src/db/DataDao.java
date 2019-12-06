@@ -17,7 +17,7 @@ public class DataDao {
 				+ "VALUES (?, ?, ?, ?, ?)";
 		
 		try {
-			Connection conn = HSQLConnect.connection();
+			Connection conn = ConnectDB.connection();
 			PreparedStatement st = conn.prepareStatement(sql);
 			st.setString(1, user.getUser());
 			st.setDouble(2, kmsSavedADay);
@@ -40,7 +40,7 @@ public class DataDao {
 		String sql = "UPDATE data SET user = ?, kmsSavedADay = ?, gramsOfCO2SavedADay = ?, kmsSavedAYear = ?, gramsOfCO2SavedAYear = ?";
 		
 		try {
-			Connection conn = HSQLConnect.connection();
+			Connection conn = ConnectDB.connection();
 			PreparedStatement st = conn.prepareStatement(sql);
 			st.setString(1, user.getUser());
 			st.setDouble(2, kmsSavedADay);
@@ -64,7 +64,7 @@ public class DataDao {
 		List<Data> result = new ArrayList<>();
 		
 		try {
-			Connection conn = HSQLConnect.connection();
+			Connection conn = ConnectDB.connection();
 			PreparedStatement st = conn.prepareStatement(sql);	
 			ResultSet res = st.executeQuery();
 			
@@ -113,7 +113,7 @@ public class DataDao {
 		Data result = null;
 		
 		try {
-			Connection conn = HSQLConnect.connection();
+			Connection conn = ConnectDB.connection();
 			PreparedStatement st = conn.prepareStatement(sql);	
 			st.setString(1, toFind);
 			ResultSet res = st.executeQuery();
@@ -162,7 +162,7 @@ public class DataDao {
 		String sql = "DELETE FROM data";
 		
 		try {
-			Connection conn = HSQLConnect.connection();
+			Connection conn = ConnectDB.connection();
 			PreparedStatement st = conn.prepareStatement(sql);
 			st.execute();
 						
