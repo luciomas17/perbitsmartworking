@@ -15,6 +15,7 @@ public class Model {
 	private boolean overwrite, adminLogged;
 	private int perbitEmployees;
 	private String admin, pwdAdmin;
+	private int treesPerKgOfCO2;
 	
 	public Model() {
 		this.userDao = new UserDao();
@@ -36,6 +37,7 @@ public class Model {
 		this.admin = "pws";
 		this.pwdAdmin = "pws1234";
 		this.adminLogged = false;
+		this.treesPerKgOfCO2 = 15;
 	}
 	
 	public boolean isAdminLogged() {
@@ -290,6 +292,10 @@ public class Model {
 	
 	public String getPwdAdmin() {
 		return this.pwdAdmin;
+	}
+
+	public double getTreesPerKgOfCO2() {
+		return this.treesPerKgOfCO2;
 	}
 
 }

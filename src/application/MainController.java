@@ -613,9 +613,7 @@ public class MainController {
 	    	mex.printStackTrace();
 	    }
 	    
-	    doUsersReload(null);
-	    doDataReload(null);
-	    doAnalysisReload(null);
+	    doReload(null);
     }
 
     @FXML
@@ -717,20 +715,17 @@ public class MainController {
     }
     
     @FXML
-    void doDataReload(ActionEvent event) {
+    void doReload(ActionEvent event) {
     	this.paneDataWV.getChildren().clear();
     	this.addItemsToWVDataOutput();
-    	
     	this.txtDataUser.clear();
-    }
-    
-    @FXML
-    void doUsersReload(ActionEvent event) {
+    	
     	this.paneUsersWV.getChildren().clear();
     	this.addItemsToWVUsersOutput();
-    	
     	this.txtUsersUser.clear();
     	this.boxUsersDivisions.getSelectionModel().clearSelection();
+    	
+    	doViewAnalysis(null);
     }
 
     @FXML
@@ -908,10 +903,16 @@ public class MainController {
 			StackPane paneCO2Saved = new StackPane();
 			paneCO2Saved.setBorder(border);
 			paneCO2Saved.setAlignment(Pos.CENTER);
+			HBox hb = new HBox();
+			hb.setAlignment(Pos.CENTER);
+			hb.setSpacing(10);
+			hb.setPadding(new Insets(10,10,10,10));
+			
 			VBox vb2 = new VBox();
 			vb2.setAlignment(Pos.CENTER);
 			vb2.setSpacing(20);
-			vb2.setPadding(new Insets(10,0,10,0));
+			vb2.setPadding(new Insets(10,10,10,10));
+			vb2.setBorder(border);
 			
 			Label title = new Label("Total CO₂ saved in 2019");
 			title.setStyle("-fx-font-size: 18;");
@@ -924,13 +925,31 @@ public class MainController {
 			Label CO2amount = new Label(String.format("%.2f Kgs", totalCO2Saved));
 			CO2amount.setStyle("-fx-font-size: 36; -fx-font-weight: bold;");
 			vb2.getChildren().add(CO2amount);
+			hb.getChildren().add(vb2);
 			
-			paneCO2Saved.getChildren().add(vb2);
+			VBox vb3 = new VBox();
+			vb3.setAlignment(Pos.CENTER);
+			vb3.setSpacing(10);
+			vb3.setPadding(new Insets(10,10,10,10));
+			vb3.setBorder(border);
+			
+			ImageView iv = new ImageView();
+			iv.setImage(new Image(getClass().getResourceAsStream("forest.png")));
+			iv.setFitHeight(100);
+			iv.setFitWidth(100);
+			vb3.getChildren().add(iv);
+			int treeSaved = (int) (totalCO2Saved / model.getTreesPerKgOfCO2());
+			title = new Label("You all contributed to save " + treeSaved + " trees this year!");
+			title.setStyle("-fx-font-size: 18;");
+			vb3.getChildren().add(title);
+			hb.getChildren().add(vb3);
+						
+			paneCO2Saved.getChildren().add(hb);
 			vb.getChildren().add(paneCO2Saved);
 			
 			//BarChart
 	        CategoryAxis xAxis = new CategoryAxis();
-	        NumberAxis yAxis = new NumberAxis(0, 1000, 100);
+	        NumberAxis yAxis = new NumberAxis(0, 5000, 500);
 	        BarChart<String,Number> barChart = new BarChart<>(xAxis,yAxis);
 	        barChart.setTitle("CO₂ saved per division / function");
 	        barChart.setLegendVisible(false);
@@ -965,14 +984,14 @@ public class MainController {
 			StackPane bestDivision = new StackPane();
 			bestDivision.setBorder(border);
 			bestDivision.setAlignment(Pos.CENTER);
-			HBox hb = new HBox();
-			hb.setAlignment(Pos.CENTER);
-			hb.setSpacing(20);
-			hb.setPadding(new Insets(10,0,10,0));
+			HBox hb2 = new HBox();
+			hb2.setAlignment(Pos.CENTER);
+			hb2.setSpacing(20);
+			hb2.setPadding(new Insets(10,0,10,0));
 			
 			Label title2 = new Label("Division / function which saved the most of CO₂ in 2019  ⇾");
 			title2.setStyle("-fx-font-size: 18;");
-			hb.getChildren().add(title2);
+			hb2.getChildren().add(title2);
 			
 			double bestCO2Saved = 0;
 			Label bestDivisionOrFunction = new Label("");
@@ -988,9 +1007,9 @@ public class MainController {
 			}
 			
 			bestDivisionOrFunction.setStyle("-fx-font-size: 36; -fx-font-weight: bold;");
-			hb.getChildren().add(bestDivisionOrFunction);
+			hb2.getChildren().add(bestDivisionOrFunction);
 			
-			bestDivision.getChildren().add(hb);
+			bestDivision.getChildren().add(hb2);
 			vb.getChildren().add(bestDivision);
 			
 		} else if(analysis.equals("Time saved")) {
@@ -1024,7 +1043,7 @@ public class MainController {
 			
 			//BarChart
 	        CategoryAxis xAxis = new CategoryAxis();
-	        NumberAxis yAxis = new NumberAxis(0, 200, 20);
+	        NumberAxis yAxis = new NumberAxis(0, 1000, 100);
 	        BarChart<String,Number> barChart = new BarChart<>(xAxis,yAxis);
 	        barChart.setTitle("Time saved per division / function");
 	        barChart.setLegendVisible(false);
@@ -1092,10 +1111,7 @@ public class MainController {
 		this.paneAnalysis.getChildren().add(vb);
 	}
     
-	@FXML
-	void doAnalysisReload(ActionEvent event) {
-		doViewAnalysis(null);
-	}
+
 	
 	@FXML
     void doEnter(ActionEvent event) {
@@ -1135,8 +1151,7 @@ public class MainController {
 		model.setAdminLogged(false);
 		this.hboxUsersFinder.setDisable(true);
 		this.hboxDataFinder.setDisable(true);
-		doUsersReload(null);
-	    doDataReload(null);
+		doReload(null);
     }
 	
 	@FXML
@@ -1152,8 +1167,7 @@ public class MainController {
 			this.hboxDataFinder.setDisable(false);
 		}
 		
-		doUsersReload(null);
-	    doDataReload(null);
+		doReload(null);
 	    
 	    try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("dialogFXML.fxml"));

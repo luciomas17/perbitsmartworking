@@ -477,7 +477,7 @@
                                     </Button>
                                  </children>
                               </HBox>
-                              <Button mnemonicParsing="false" onAction="#doUsersReload" style="-fx-border-color: #86b225; -fx-border-radius: 3;" GridPane.rowIndex="1">
+                              <Button mnemonicParsing="false" onAction="#doReload" style="-fx-border-color: #86b225; -fx-border-radius: 3;" GridPane.rowIndex="1">
                                  <graphic>
                                     <ImageView fx:id="imgViewUsers" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
                                  </graphic>
@@ -572,7 +572,7 @@
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Button>
-                              <Button mnemonicParsing="false" onAction="#doDataReload" style="-fx-border-color: #86b225; -fx-border-radius: 3;" GridPane.rowIndex="1">
+                              <Button mnemonicParsing="false" onAction="#doReload" style="-fx-border-color: #86b225; -fx-border-radius: 3;" GridPane.rowIndex="1">
                                  <graphic>
                                     <ImageView fx:id="imgViewData" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
                                  </graphic>
@@ -623,7 +623,7 @@
                                  </font>
                               </Text>
                               <ComboBox fx:id="boxAnalysis" onAction="#doViewAnalysis" prefWidth="150.0" style="-fx-background-color: #86b225;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <Button mnemonicParsing="false" onAction="#doAnalysisReload" style="-fx-border-color: #86b225; -fx-border-radius: 3;" GridPane.rowIndex="1">
+                              <Button mnemonicParsing="false" onAction="#doReload" style="-fx-border-color: #86b225; -fx-border-radius: 3;" GridPane.rowIndex="1">
                                  <graphic>
                                     <ImageView fx:id="imgViewAnalysis" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
                                  </graphic>
