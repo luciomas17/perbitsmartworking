@@ -1263,9 +1263,9 @@ public class MainController {
 						result += "<td>" + username + "</td>";
 						result += "<td>" + d.getUser().getSmartDays() + "</td>";
 						result += "<td>" + d.getKmsSavedADay() + "</td>";
-						result += "<td>" + d.getGramsOfCO2SavedADay() + "</td>";
+						result += "<td>" + String.format("%.2f", d.getGramsOfCO2SavedADay()/1000) + "</td>";
 						result += "<td>" + d.getKmsSavedAYear() + "</td>";
-						result += "<td>" + d.getGramsOfCO2SavedAYear() + "</td>";
+						result += "<td>" + String.format("%.2f", d.getGramsOfCO2SavedAYear()/1000) + "</td>";
 					result += "</tr>";
 				}
 			}

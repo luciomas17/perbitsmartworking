@@ -10,12 +10,13 @@ public class CreateTables {
 	public static void main(String[] args) {
 		
 		try {
-			Connection conn = DriverManager.getConnection("jdbc:h2:" + "./src/db/pws_db", "pws", "pws1234");
+			Connection conn = DriverManager.getConnection("jdbc:h2:" + "G:/5. Gestione Reparto/CO2/h2db/pws_db", "pws", "pws1234");
 			Statement st = conn.createStatement();
 			String sql = "CREATE TABLE IF NOT EXISTS users "
 					+ "(user VARCHAR(255), "
 					+ "name VARCHAR(255), "
 					+ "surname VARCHAR(255), "
+					+ "email VARCHAR(255), "
 					+ "divisionOrFunction VARCHAR(255),"
 					+ "location VARCHAR(255), "
 					+ "fuelType VARCHAR(255), "
@@ -33,7 +34,7 @@ public class CreateTables {
 		}
 		
 		try {
-			Connection conn = DriverManager.getConnection("jdbc:h2:" + "./src/db/pws_db", "pws", "pws1234");
+			Connection conn = DriverManager.getConnection("jdbc:h2:" + "G:/5. Gestione Reparto/CO2/h2db/pws_db", "pws", "pws1234");
 			Statement st = conn.createStatement();
 			String sql = "CREATE TABLE IF NOT EXISTS data "
 					+ "(user VARCHAR(255), "

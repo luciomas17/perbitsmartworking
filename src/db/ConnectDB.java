@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class ConnectDB {
 	
-	private static final String jdbcURL = "jdbc:h2:" + "./src/db/pws_db";
+	private static final String jdbcURL = "jdbc:h2:" + "G:/5. Gestione Reparto/CO2/h2db/pws_db";
 
 	public static Connection connection() {
 		Connection conn;
