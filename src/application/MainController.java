@@ -54,6 +54,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
+import javafx.scene.text.Text;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
@@ -161,6 +162,12 @@ public class MainController {
     
     @FXML
     private VBox vboxAdmin;
+    
+    @FXML
+    private Text txtANUYear;
+    
+    @FXML
+    private ComboBox<String> boxYears;
 	
 	private Model model;
 
@@ -321,7 +328,7 @@ public class MainController {
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("dialogFXML.fxml"));
 				BorderPane root = loader.load();
 				DialogController controller = loader.getController();
-				controller.setTxtDialog("Type your days of smart count in 2019 please.");
+				controller.setTxtDialog("Type your days of smart count in " + model.getYearSelected() + " please.");
 				Parent content = root;
 				Scene scene = new Scene(content);
 				Stage window = new Stage();
@@ -914,7 +921,7 @@ public class MainController {
 			vb2.setPadding(new Insets(10,10,10,10));
 			vb2.setBorder(border);
 			
-			Label title = new Label("Total CO₂ saved in 2019");
+			Label title = new Label("Total CO₂ saved in " + model.getYearSelected());
 			title.setStyle("-fx-font-size: 18;");
 			vb2.getChildren().add(title);
 			
@@ -989,7 +996,7 @@ public class MainController {
 			hb2.setSpacing(20);
 			hb2.setPadding(new Insets(10,0,10,0));
 			
-			Label title2 = new Label("Division / function which saved the most of CO₂ in 2019  ⇾");
+			Label title2 = new Label("Division / function which saved the most of CO₂ in " + model.getYearSelected() + "  ⇾");
 			title2.setStyle("-fx-font-size: 18;");
 			hb2.getChildren().add(title2);
 			
@@ -1022,7 +1029,7 @@ public class MainController {
 			vb2.setSpacing(20);
 			vb2.setPadding(new Insets(10,0,10,0));
 			
-			Label title = new Label("Total time saved in 2019");
+			Label title = new Label("Total time saved in " + model.getYearSelected());
 			title.setStyle("-fx-font-size: 18;");
 			vb2.getChildren().add(title);
 			
@@ -1083,7 +1090,7 @@ public class MainController {
 			hb.setSpacing(20);
 			hb.setPadding(new Insets(10,0,10,0));
 			
-			Label title2 = new Label("Division / function which saved the most of time in 2019  ⇾");
+			Label title2 = new Label("Division / function which saved the most of time in " + model.getYearSelected() + "  ⇾");
 			title2.setStyle("-fx-font-size: 18;");
 			hb.getChildren().add(title2);
 			
@@ -1209,6 +1216,31 @@ public class MainController {
 		} 
     }
 	
+	@FXML
+    void doChangeYear(ActionEvent event) {
+		String year = this.boxYears.getSelectionModel().getSelectedItem();
+		model.setYearSelected(year);
+		
+		///////
+		
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("dialogFXML.fxml"));
+			BorderPane root = loader.load();
+			DialogController controller = loader.getController();
+			controller.setTxtDialog("Done! Restart the application to see the modifications.");
+			Parent content = root;
+			Scene scene = new Scene(content);
+			Stage window = new Stage();
+			window.setScene(scene);
+			window.setResizable(false);
+			window.show();
+			return;
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} 
+    }
+	
     public void setModel(Model model) {
     	this.model = model;
     	addItemsToBoxANUEmail();
@@ -1222,7 +1254,18 @@ public class MainController {
     	addItemsToWVDataOutput();
     	addItemsToBoxAnalysis();
     	addPathToImgViews();
+    	addItemsToBoxYears();
+    	setTxtANUYear();
     }
+
+	private void setTxtANUYear() {
+		this.txtANUYear.setText("days (in " + model.getYearSelected() + ")");
+	}
+
+	private void addItemsToBoxYears() {
+		this.boxYears.getItems().addAll(model.getYears());
+		this.boxYears.getSelectionModel().select(model.getYearSelected());
+	}
 
 	private void addPathToImgViews() {
 		this.imgViewANU.setImage(new Image(getClass().getResourceAsStream("eco.png")));
@@ -1427,6 +1470,8 @@ public class MainController {
         assert txtAdmin != null : "fx:id=\"txtAdmin\" was not injected: check your FXML file 'pswFXML.fxml'.";
         assert txtPassword != null : "fx:id=\"txtPassword\" was not injected: check your FXML file 'pswFXML.fxml'.";
         assert vboxAdmin != null : "fx:id=\"vboxAdmin\" was not injected: check your FXML file 'pswFXML.fxml'.";
+        assert txtANUYear != null : "fx:id=\"txtANUyear\" was not injected: check your FXML file 'pswFXML.fxml'.";
+        assert boxYears != null : "fx:id=\"boxYears\" was not injected: check your FXML file 'pswFXML.fxml'.";
 
     }
 }

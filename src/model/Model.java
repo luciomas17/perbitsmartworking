@@ -11,11 +11,12 @@ public class Model {
 	
 	private UserDao userDao;
 	private DataDao dataDao;
-	private List<String> divisions, functions, locations, fuelTypes, emailDomains, analysis;
+	private List<String> divisions, functions, locations, fuelTypes, emailDomains, analysis, years;
 	private boolean overwrite, adminLogged;
 	private int perbitEmployees;
 	private String admin, pwdAdmin;
 	private int treesPerKgOfCO2;
+	private String yearSelected;
 	
 	public Model() {
 		this.userDao = new UserDao();
@@ -38,8 +39,27 @@ public class Model {
 		this.pwdAdmin = "pws1234";
 		this.adminLogged = false;
 		this.treesPerKgOfCO2 = 15;
+		this.years = new ArrayList<>();
+		addItemsToYears();
 	}
-	
+
+	public String getYearSelected() {
+		return yearSelected;
+	}
+
+	public void setYearSelected(String yearSelected) {
+		this.yearSelected = yearSelected;
+	}
+
+	private void addItemsToYears() {
+		this.years.add("2019");
+		this.years.add("2020");
+		this.years.add("2021");
+		this.years.add("2022");
+		this.years.add("2023");
+		this.years.add("2024");
+	}
+
 	public boolean isAdminLogged() {
 		return adminLogged;
 	}
@@ -219,7 +239,43 @@ public class Model {
 	public Data getDataFromUsername(String user) {
 		return this.dataDao.getDataFromUsername(user);
 	}
+	
 
+	public List<String> getAnalysis() {
+		return this.analysis;
+	}
+
+	public List<String> getDivisionsAndFunction() {
+		List<String> result = new ArrayList<>();
+		result.addAll(this.divisions);
+		Collections.sort(result);
+		List<String> functions = this.functions;
+		Collections.sort(functions);
+		result.addAll(functions);
+		
+		return result;
+	}
+
+	public void clearDatabase() {
+		this.userDao.clearDatabase();
+		this.dataDao.clearDatabase();
+	}
+
+	public String getAdmin() {
+		return this.admin;
+	}
+	
+	public String getPwdAdmin() {
+		return this.pwdAdmin;
+	}
+
+	public double getTreesPerKgOfCO2() {
+		return this.treesPerKgOfCO2;
+	}
+
+	public List<String> getYears() {
+		return this.years;
+	}
 	
 	
 	// COMPARATORS
@@ -264,38 +320,6 @@ public class Model {
 		public int compare(Data d1, Data d2) {
 			return (int) (d2.getKmsSavedAYear()-d1.getKmsSavedAYear());
 		}
-	}
-
-	public List<String> getAnalysis() {
-		return this.analysis;
-	}
-
-	public List<String> getDivisionsAndFunction() {
-		List<String> result = new ArrayList<>();
-		result.addAll(this.divisions);
-		Collections.sort(result);
-		List<String> functions = this.functions;
-		Collections.sort(functions);
-		result.addAll(functions);
-		
-		return result;
-	}
-
-	public void clearDatabase() {
-		this.userDao.clearDatabase();
-		this.dataDao.clearDatabase();
-	}
-
-	public String getAdmin() {
-		return this.admin;
-	}
-	
-	public String getPwdAdmin() {
-		return this.pwdAdmin;
-	}
-
-	public double getTreesPerKgOfCO2() {
-		return this.treesPerKgOfCO2;
 	}
 
 }

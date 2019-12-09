@@ -87,8 +87,8 @@
                           </rowConstraints>
                            <children>
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Username:" />
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" GridPane.rowIndex="1" />
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Surname:" GridPane.rowIndex="2" />
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="* Name:" GridPane.rowIndex="1" />
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="* Surname:" GridPane.rowIndex="2" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="E-mail:" GridPane.rowIndex="3" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Division:" GridPane.rowIndex="4" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Location:" GridPane.rowIndex="7" />
@@ -216,7 +216,7 @@
                               <HBox alignment="CENTER_LEFT" spacing="5.0" GridPane.columnIndex="1">
                                  <children>
                                     <TextField fx:id="txtANUSmartDays" maxWidth="100.0" style="-fx-border-color: #86b225; -fx-border-radius: 3;" />
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="days (in 2019)" />
+                                    <Text fx:id="txtANUYear" strokeType="OUTSIDE" strokeWidth="0.0" text="days (in 2019)" />
                                  </children>
                               </HBox>
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Kilometers saved:" GridPane.rowIndex="1" />
@@ -307,11 +307,6 @@
                                  <children>
                                     <TextField fx:id="txtANUCO2emissions" maxWidth="100.0" style="-fx-border-color: #86b225; -fx-border-radius: 3;" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="grams/km" />
-                                    <Text fill="#86b225" strokeType="OUTSIDE" strokeWidth="0.0" text="(*)">
-                                       <font>
-                                          <Font name="System Bold Italic" size="12.0" />
-                                       </font>
-                                    </Text>
                                  </children>
                               </HBox>
                               <Text fill="#86b225" strokeType="OUTSIDE" strokeWidth="0.0" text="←  Select your car's fuel type" GridPane.columnIndex="2">
@@ -323,7 +318,7 @@
                                  </GridPane.margin>
                               </Text>
                               <ComboBox fx:id="boxANUFuelType" style="-fx-background-color: #86b225;" GridPane.columnIndex="1" />
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CO₂ emissions:" GridPane.rowIndex="1" />
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="** CO₂ emissions:" GridPane.rowIndex="1" />
                               <VBox GridPane.columnIndex="2" GridPane.rowIndex="1">
                                  <children>
                                     <Text fill="#86b225" strokeType="OUTSIDE" strokeWidth="0.0" text="←  Type your car's CO₂ emissions">
@@ -349,16 +344,28 @@
                               <Insets left="10.0" top="10.0" />
                            </VBox.margin>
                         </GridPane>
-                        <HBox alignment="CENTER" maxWidth="675.0" spacing="5.0">
+                        <HBox alignment="CENTER_LEFT" maxWidth="675.0" spacing="5.0">
                            <children>
-                              <Text fill="#86b225" strokeType="OUTSIDE" strokeWidth="0.0" text="(*)">
-                                 <font>
-                                    <Font name="System Bold Italic" size="12.0" />
-                                 </font>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="*" />
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Not mandatory field">
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
                               </Text>
+                           </children>
+                           <VBox.margin>
+                              <Insets left="110.0" top="15.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" maxWidth="675.0" spacing="5.0">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="**" />
                               <VBox>
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="You can find this information on your car registration." />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="You can find this information on your car registration.">
+                                       <VBox.margin>
+                                          <Insets top="5.0" />
+                                       </VBox.margin></Text>
                                     <HBox alignment="CENTER_LEFT">
                                        <children>
                                           <Text strokeType="OUTSIDE" strokeWidth="0.0" text="If you can't find it, look for your car" />
@@ -367,10 +374,13 @@
                                        </children>
                                     </HBox>
                                  </children>
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
                               </VBox>
                            </children>
                            <VBox.margin>
-                              <Insets top="10.0" />
+                              <Insets left="110.0" />
                            </VBox.margin>
                         </HBox>
                         <Text fill="#86b225" strokeType="OUTSIDE" strokeWidth="0.0" text="Sensitive data" underline="true">
@@ -683,14 +693,20 @@
                               <Insets top="10.0" />
                            </VBox.margin>
                            <children>
-                              <Button minWidth="250.0" mnemonicParsing="false" onAction="#doShowHideUsernames" text="Show / Hide usernames" />
-                              <Button minWidth="250.0" mnemonicParsing="false" onAction="#doClearDatabase" text="Clear Database" />
+                              <Button minWidth="250.0" mnemonicParsing="false" onAction="#doShowHideUsernames" style="-fx-border-color: #86b225; -fx-border-radius: 3;" text="Show / Hide usernames" />
+                              <Button minWidth="250.0" mnemonicParsing="false" onAction="#doClearDatabase" style="-fx-border-color: #86b225; -fx-border-radius: 3;" text="Clear database" />
+                              <HBox alignment="TOP_CENTER" spacing="5.0">
+                                 <children>
+                                    <ComboBox fx:id="boxYears" minHeight="26.0" style="-fx-background-color: #86b225;" />
+                                    <Button mnemonicParsing="false" onAction="#doChangeYear" style="-fx-border-color: #86b225; -fx-border-radius: 3;" text="Change year" />
+                                 </children>
+                              </HBox>
                               <Button minWidth="57.0" mnemonicParsing="false" onAction="#doExit" style="-fx-background-color: #86b225;" text="Exit">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                                  <VBox.margin>
-                                    <Insets top="10.0" />
+                                    <Insets top="20.0" />
                                  </VBox.margin>
                               </Button>
                            </children>

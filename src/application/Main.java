@@ -22,8 +22,7 @@ public class Main extends Application {
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.setMinWidth(747);
-			primaryStage.setMinHeight(886);
-			//primaryStage.setResizable(false);
+			primaryStage.setMinHeight(909);
 			primaryStage.show();
 			
 		} catch(Exception e) {

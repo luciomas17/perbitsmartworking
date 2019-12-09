@@ -9,7 +9,7 @@ public class CreateDB {
 
 		Class.forName("org.h2.Driver").newInstance();
 		@SuppressWarnings("unused")
-		Connection conn = DriverManager.getConnection("jdbc:h2:" + "G:/5. Gestione Reparto/CO2/h2db/pws_db", "pws", "pws1234");
+		Connection conn = DriverManager.getConnection("jdbc:h2:" + "//Tn01fs02/Tn_G_Saa$/5. Gestione Reparto/CO2/h2db/pws_db" + "2024", "pws", "pws1234");
 		System.out.println("DB created!");
 	}
 
