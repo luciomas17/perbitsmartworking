@@ -10,7 +10,7 @@ public class CreateTables {
 	public static void main(String[] args) {
 		
 		try {
-			Connection conn = DriverManager.getConnection("jdbc:h2:" + "//Tn01fs02/Tn_G_Saa$/5. Gestione Reparto/CO2/h2db/pws_db2024" + ";IFEXISTS=TRUE", "pws", "pws1234");
+			Connection conn = DriverManager.getConnection("jdbc:h2:" + "//bosch.com/dfsrb/DfsIT/LOC/Tn/Tn_G_TOALL/Smart Working Analysis/h2db/pws_db2020" + ";IFEXISTS=TRUE", "pws", "pws1234");
 			Statement st = conn.createStatement();
 			String sql = "CREATE TABLE IF NOT EXISTS users "
 					+ "(user VARCHAR(255), "
@@ -34,7 +34,7 @@ public class CreateTables {
 		}
 		
 		try {
-			Connection conn = DriverManager.getConnection("jdbc:h2:" + "//Tn01fs02/Tn_G_Saa$/5. Gestione Reparto/CO2/h2db/pws_db2024" + ";IFEXISTS=TRUE", "pws", "pws1234");
+			Connection conn = DriverManager.getConnection("jdbc:h2:" + "//bosch.com/dfsrb/DfsIT/LOC/Tn/Tn_G_TOALL/Smart Working Analysis/h2db/pws_db2020" + ";IFEXISTS=TRUE", "pws", "pws1234");
 			Statement st = conn.createStatement();
 			String sql = "CREATE TABLE IF NOT EXISTS data "
 					+ "(user VARCHAR(255), "
