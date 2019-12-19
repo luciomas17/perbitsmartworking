@@ -69,7 +69,7 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Text>
-                        <GridPane hgap="15.0" maxWidth="665.0" prefWidth="665.0" vgap="5.0">
+                        <GridPane hgap="15.0" maxWidth="665.0" prefWidth="665.0" vgap="2.0">
                           <columnConstraints>
                             <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="80.0" />
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="350.0" />
@@ -200,7 +200,7 @@
                               <Insets top="20.0" />
                            </VBox.margin>
                         </Text>
-                        <GridPane hgap="15.0" maxWidth="675.0" vgap="5.0">
+                        <GridPane hgap="15.0" maxWidth="675.0" vgap="2.0">
                            <columnConstraints>
                               <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="80.0" prefWidth="91.0" />
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="349.0" prefWidth="354.0" />
@@ -291,7 +291,7 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Text>
-                        <GridPane hgap="15.0" maxWidth="665.0" vgap="5.0">
+                        <GridPane hgap="15.0" maxWidth="665.0" vgap="2.0">
                            <columnConstraints>
                               <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="80.0" />
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="350.0" />
@@ -370,6 +370,8 @@
                                        <children>
                                           <Text strokeType="OUTSIDE" strokeWidth="0.0" text="If you can't find it, look for your car" />
                                           <Hyperlink fx:id="linkAutoData" prefHeight="0.0" prefWidth="32.0" text="here" textFill="#86b225" underline="true" />
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="or" />
+                                          <Hyperlink fx:id="linkNextGreenCar" prefHeight="0.0" prefWidth="32.0" text="here" textFill="#86b225" underline="true" />
                                           <Text strokeType="OUTSIDE" strokeWidth="0.0" text="and check the CO₂ emissions section." />
                                        </children>
                                     </HBox>
@@ -403,8 +405,19 @@
                               </CheckBox>
                               <VBox>
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="By checking this box, you're giving us your consent to process the sensitive data you inserted here. " />
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="An automated mail will be generate and sent to the HR office." />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="By checking this box, you're giving your consent to process the sensitive data you inserted here. " />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Robert Bosch S.p.A., as processing Controller of your data, informs you, pursuant to article 13 of EU" textAlignment="JUSTIFY">
+                                       <VBox.margin>
+                                          <Insets top="5.0" />
+                                       </VBox.margin>
+                                    </Text>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Regulation no. 679/2016 that your data will be stored for a period  of one year in order to estimate" textAlignment="JUSTIFY" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="how  much  our  company  has  contributed to  protecting  the environment. Your data  will not be" textAlignment="JUSTIFY" wrappingWidth="522.95703125" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="disclosed, disseminated or transferred abroad but used only for the purpose described above." textAlignment="JUSTIFY" wrappingWidth="523.1875" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="An automated mail will be generate and sent to the HR office.">
+                                       <VBox.margin>
+                                          <Insets top="5.0" />
+                                       </VBox.margin></Text>
                                  </children>
                               </VBox>
                            </children>
@@ -685,7 +698,7 @@
                               <PasswordField fx:id="txtPassword" maxWidth="125.0" style="-fx-border-color: #86b225; -fx-border-radius: 3;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                            </children>
                            <VBox.margin>
-                              <Insets />
+                              <Insets top="15.0" />
                            </VBox.margin>
                         </GridPane>
                         <VBox fx:id="vboxAdmin" alignment="CENTER" disable="true" opacity="0.0" spacing="10.0" style="-fx-border-color: #86b225; -fx-border-radius: 3;">
@@ -695,12 +708,6 @@
                            <children>
                               <Button minWidth="250.0" mnemonicParsing="false" onAction="#doShowHideUsernames" style="-fx-border-color: #86b225; -fx-border-radius: 3;" text="Show / Hide usernames" />
                               <Button minWidth="250.0" mnemonicParsing="false" onAction="#doClearDatabase" style="-fx-border-color: #86b225; -fx-border-radius: 3;" text="Clear database" />
-                              <HBox alignment="TOP_CENTER" spacing="5.0">
-                                 <children>
-                                    <ComboBox fx:id="boxYears" minHeight="26.0" style="-fx-background-color: #86b225;" />
-                                    <Button mnemonicParsing="false" onAction="#doChangeYear" style="-fx-border-color: #86b225; -fx-border-radius: 3;" text="Change year" />
-                                 </children>
-                              </HBox>
                               <Button minWidth="57.0" mnemonicParsing="false" onAction="#doExit" style="-fx-background-color: #86b225;" text="Exit">
                                  <font>
                                     <Font name="System Bold" size="12.0" />

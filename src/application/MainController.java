@@ -168,6 +168,9 @@ public class MainController {
     
     @FXML
     private ComboBox<String> boxYears;
+    
+    @FXML
+    private Hyperlink linkNextGreenCar;
 	
 	private Model model;
 
@@ -1216,31 +1219,6 @@ public class MainController {
 		} 
     }
 	
-	@FXML
-    void doChangeYear(ActionEvent event) {
-		String year = this.boxYears.getSelectionModel().getSelectedItem();
-		model.setYearSelected(year);
-		
-		///////
-		
-		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("dialogFXML.fxml"));
-			BorderPane root = loader.load();
-			DialogController controller = loader.getController();
-			controller.setTxtDialog("Done! Restart the application to see the modifications.");
-			Parent content = root;
-			Scene scene = new Scene(content);
-			Stage window = new Stage();
-			window.setScene(scene);
-			window.setResizable(false);
-			window.show();
-			return;
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		} 
-    }
-	
     public void setModel(Model model) {
     	this.model = model;
     	addItemsToBoxANUEmail();
@@ -1250,21 +1228,16 @@ public class MainController {
     	addItemsToBoxANUFuelType();
     	addItemsToBoxUsersDivisions();
     	setOnActionToLinkAutoData();
+    	setOnActionToLinkNextGreenCar();
     	addItemsToWVUsersOutput();
     	addItemsToWVDataOutput();
     	addItemsToBoxAnalysis();
     	addPathToImgViews();
-    	addItemsToBoxYears();
     	setTxtANUYear();
     }
 
 	private void setTxtANUYear() {
 		this.txtANUYear.setText("days (in " + model.getYearSelected() + ")");
-	}
-
-	private void addItemsToBoxYears() {
-		this.boxYears.getItems().addAll(model.getYears());
-		this.boxYears.getSelectionModel().select(model.getYearSelected());
 	}
 
 	private void addPathToImgViews() {
@@ -1383,6 +1356,19 @@ public class MainController {
             @Override
             public void handle(ActionEvent t) {
             	try {
+					Desktop.getDesktop().browse(new URI("https://www.auto-data.net/en/"));
+				} catch (IOException | URISyntaxException e) {
+					e.printStackTrace();
+				}
+            }
+        });
+	}
+	
+	private void setOnActionToLinkNextGreenCar() {
+		this.linkNextGreenCar.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent t) {
+            	try {
 					Desktop.getDesktop().browse(new URI("https://www.nextgreencar.com/emissions/make-model/"));
 				} catch (IOException | URISyntaxException e) {
 					e.printStackTrace();
@@ -1472,6 +1458,7 @@ public class MainController {
         assert vboxAdmin != null : "fx:id=\"vboxAdmin\" was not injected: check your FXML file 'pswFXML.fxml'.";
         assert txtANUYear != null : "fx:id=\"txtANUyear\" was not injected: check your FXML file 'pswFXML.fxml'.";
         assert boxYears != null : "fx:id=\"boxYears\" was not injected: check your FXML file 'pswFXML.fxml'.";
+        assert linkNextGreenCar != null : "fx:id=\"linkNextGreenCar\" was not injected: check your FXML file 'pswFXML.fxml'.";
 
     }
 }

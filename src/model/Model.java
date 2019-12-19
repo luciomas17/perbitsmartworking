@@ -11,7 +11,7 @@ public class Model {
 	
 	private UserDao userDao;
 	private DataDao dataDao;
-	private List<String> divisions, functions, locations, fuelTypes, emailDomains, analysis, years;
+	private List<String> divisions, functions, locations, fuelTypes, emailDomains, analysis;
 	private boolean overwrite, adminLogged;
 	private int perbitEmployees;
 	private String admin, pwdAdmin;
@@ -39,8 +39,7 @@ public class Model {
 		this.pwdAdmin = "pws1234";
 		this.adminLogged = false;
 		this.treesPerKgOfCO2 = 15;
-		this.years = new ArrayList<>();
-		addItemsToYears();
+		this.yearSelected = "2019";
 	}
 
 	public String getYearSelected() {
@@ -49,15 +48,6 @@ public class Model {
 
 	public void setYearSelected(String yearSelected) {
 		this.yearSelected = yearSelected;
-	}
-
-	private void addItemsToYears() {
-		this.years.add("2019");
-		this.years.add("2020");
-		this.years.add("2021");
-		this.years.add("2022");
-		this.years.add("2023");
-		this.years.add("2024");
 	}
 
 	public boolean isAdminLogged() {
@@ -271,10 +261,6 @@ public class Model {
 
 	public double getTreesPerKgOfCO2() {
 		return this.treesPerKgOfCO2;
-	}
-
-	public List<String> getYears() {
-		return this.years;
 	}
 	
 	
