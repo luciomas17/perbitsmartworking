@@ -721,6 +721,24 @@
                               <Insets bottom="10.0" top="10.0" />
                            </padding>
                         </VBox>
+                        <Text fill="#000000b2" strokeType="OUTSIDE" strokeWidth="0.0" text="To report a bug or make a suggestion, send an email to one of the following email addresses:">
+                           <VBox.margin>
+                              <Insets top="50.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="System Italic" size="12.0" />
+                           </font>
+                        </Text>
+                        <Text fill="#000000b2" strokeType="OUTSIDE" strokeWidth="0.0" text="fixed-term.omar.panebianco@it.bosch.com" underline="true">
+                           <font>
+                              <Font name="System Italic" size="12.0" />
+                           </font>
+                        </Text>
+                        <Text fill="#000000b2" strokeType="OUTSIDE" strokeWidth="0.0" text="omar.panebianco@gmail.com" underline="true">
+                           <font>
+                              <Font name="System Italic" size="12.0" />
+                           </font>
+                        </Text>
                      </children>
                      <padding>
                         <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />

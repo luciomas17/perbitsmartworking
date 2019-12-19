@@ -17,7 +17,7 @@ import model.Model;
 public class ConnectDB {
 	
 	private static Model model = new Model();
-	private static String jdbcURL = "jdbc:h2:" + "//bosch.com/dfsrb/DfsIT/LOC/Tn/Tn_G_TOALL/Smart Working Analysis/h2db/pws_db" + model.getYearSelected() + ";IFEXISTS=TRUE";
+	private static String jdbcURL = "jdbc:h2:" + "//bosch.com/dfsrb/DfsIT/LOC/Tn/Tn_G_TOALL/Smart Working Analysis/h2db/pws_db" + model.getYearSelected() + ";IFEXISTS=TRUE;DB_CLOSE_ON_EXIT=TRUE;FILE_LOCK=NO";
 
 	public static Connection connection() {
 		Connection conn;
