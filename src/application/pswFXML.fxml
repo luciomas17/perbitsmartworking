@@ -414,7 +414,7 @@
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Regulation no. 679/2016 that your data will be stored for a period  of one year in order to estimate" textAlignment="JUSTIFY" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="how  much  our  company  has  contributed to  protecting  the environment. Your data  will not be" textAlignment="JUSTIFY" wrappingWidth="522.95703125" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="disclosed, disseminated or transferred abroad but used only for the purpose described above." textAlignment="JUSTIFY" wrappingWidth="523.1875" />
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="An automated mail will be generate and sent to the HR office.">
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="An automated mail will be generate and sent to your email address.">
                                        <VBox.margin>
                                           <Insets top="5.0" />
                                        </VBox.margin></Text>

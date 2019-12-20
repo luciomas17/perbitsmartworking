@@ -596,11 +596,11 @@ public class MainController {
     	LocalTime time = LocalTime.now();
     	final String from = "Perbit.CO2smartworking@it.bosch.com"; 
 	    final String host = "rb-smtp-int.bosch.com";
-    	String to = "fixed-term.omar.panebianco@it.bosch.com"; //HR office in the future
+    	String to = "Perbit.CO2smartworking@it.bosch.com"; //HR office in the future
 		String cc = email;
 	    String subject = "Perbit CO2 Smart Working - Consent of processing sensisive data for user [" + user + "]";
 	    String body = "[THIS IS AN AUTOMATED MESSAGE - PLEASE DO NOT REPLY DIRECTLY TO THIS EMAIL]\n\n"
-	    		+ "To the attention of PERBIT's HR office,\n\n"
+	    		+ "To the attention of Robert Bosch GmBH Branch in Italy,\n\n"
 	    		+ "The user " + user + " has knowingly given his/her consent to process his/her sensitive data to Perbit CO2 Smart Working application by checking the corresponding checkbox.\n\n"
 	    		+ "This happened\non: " + date + "\nat: " + time + "\n\n"
 	    		+ "Thanks.\n\n"

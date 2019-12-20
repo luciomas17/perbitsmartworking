@@ -39,7 +39,7 @@ public class Model {
 		this.pwdAdmin = "pws1234";
 		this.adminLogged = false;
 		this.treesPerKgOfCO2 = 15;
-		this.yearSelected = "2019";
+		this.yearSelected = "2020";
 	}
 
 	public String getYearSelected() {
